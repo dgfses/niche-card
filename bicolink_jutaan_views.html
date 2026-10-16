@@ -1,0 +1,458 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bicolink — Strategi Jutaan Views per Minggu</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --blue:#3b82f6;--blue-bg:#0a1525;--blue-dim:#1a3060;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --orange:#fb923c;--orange-bg:#1a1008;--orange-dim:#4a2a00;
+  --pur:#c084fc;--pur-bg:#180e2a;--pur-dim:#3a1a5a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 13px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.tab.on{background:var(--green-bg);color:var(--green);border-color:var(--green-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bo{background:var(--orange-bg);color:var(--orange);}
+.bpu{background:var(--pur-bg);color:var(--pur);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ab0ff;}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.t-o{background:var(--orange-bg);border-color:var(--orange-dim);color:var(--orange);}
+.tip b{font-weight:700;}
+
+/* Calculator */
+.calc-box{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px;}
+.calc-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.slider-row label{font-size:12px;color:var(--sub);min-width:170px;}
+.slider-row input[type=range]{flex:1;accent-color:var(--green);}
+.slider-val{font-size:12px;font-weight:700;color:var(--green);min-width:80px;text-align:right;}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:12px;}
+.rg{border-radius:10px;padding:9px 11px;}
+.rg-g{background:var(--green-bg);border:1px solid var(--green-dim);}
+.rg-y{background:var(--yellow-bg);border:1px solid var(--yellow-dim);}
+.rg-b{background:var(--blue-bg);border:1px solid var(--blue-dim);}
+.rg-o{background:var(--orange-bg);border:1px solid var(--orange-dim);}
+.rg-label{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.rg-val{font-size:16px;font-weight:700;}
+.rg-g .rg-val{color:var(--green);}
+.rg-y .rg-val{color:var(--yellow);}
+.rg-b .rg-val{color:var(--blue);}
+.rg-o .rg-val{color:var(--orange);}
+.rg-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* Channel cards */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.ch{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.ch.top{border-width:2px;}
+.ch.tg-top{border-color:var(--green);}
+.ch.tg-hot{border-color:var(--blue-dim);}
+.ch-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.ch-icon{font-size:22px;min-width:28px;}
+.ch-name{font-size:13px;font-weight:700;color:var(--text);}
+.ch-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;}
+.ch-views{font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px;}
+.ch-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.ch-tip{font-size:11px;font-weight:700;color:var(--yellow);background:var(--yellow-bg);padding:2px 8px;border-radius:4px;display:inline-block;margin-top:5px;}
+
+/* Stack table */
+.stack-table{background:var(--s1);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+.st-head{display:grid;grid-template-columns:140px 1fr 110px 110px;background:var(--s2);padding:8px 12px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.st-row{display:grid;grid-template-columns:140px 1fr 110px 110px;padding:9px 12px;border-top:1px solid var(--border);font-size:12px;}
+.st-row:hover{background:var(--s2);}
+.st-platform{font-weight:700;color:var(--text);}
+.st-action{color:var(--sub);}
+.st-views{font-weight:700;color:var(--green);}
+.st-contrib{color:var(--yellow);font-weight:600;}
+.st-total{background:var(--green-bg);border-top:2px solid var(--green-dim);}
+.st-total .st-platform{color:var(--green);}
+.st-total .st-views{color:var(--yellow);font-size:14px;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.d1{background:var(--blue-bg);color:var(--blue);}
+.d2{background:var(--green-bg);color:var(--green);}
+.d3{background:var(--yellow-bg);color:var(--yellow);}
+.d4{background:var(--orange-bg);color:var(--orange);}
+.d5{background:var(--pur-bg);color:var(--pur);}
+.d6{background:var(--green-bg);color:var(--green);}
+.s-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.s-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.to{background:var(--orange-bg);color:var(--orange);}
+
+/* Viral content */
+.vc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.vc.fire{border-color:var(--green);border-width:2px;}
+.vc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.vc-name{font-size:13px;font-weight:700;color:var(--text);}
+.vc-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.vc-eg{font-size:11px;color:var(--muted);margin-top:5px;font-style:italic;border-left:2px solid var(--green);padding-left:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔥 Bicolink — Strategi Jutaan Views per Minggu (Indo Traffic)</h1>
+  <p class="sub">1.000 views = Rp 80.000 | 4 IP per hari | Blueprint skalasi masif</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('kalk',this)">Kalkulator</button>
+    <button class="tab" onclick="show('channel',this)">Sumber Traffic</button>
+    <button class="tab" onclick="show('stack',this)">Stack Platform</button>
+    <button class="tab" onclick="show('konten',this)">Konten Viral</button>
+    <button class="tab" onclick="show('skalasi',this)">Cara Skalasi</button>
+  </div>
+
+  <!-- KALKULATOR -->
+  <div class="panel on" id="p-kalk">
+    <p class="sec">Kalkulator target penghasilan bicolink</p>
+
+    <div class="calc-box">
+      <div class="calc-title">⚙️ Atur target views dan lihat estimasi penghasilan</div>
+      <div class="slider-row">
+        <label>Views per hari</label>
+        <input type="range" id="s-views" min="10000" max="500000" step="10000" value="50000">
+        <span class="slider-val" id="v-views">50.000</span>
+      </div>
+      <div class="slider-row">
+        <label>Rata-rata IP per hari</label>
+        <input type="range" id="s-ip" min="1" max="4" step="1" value="2">
+        <span class="slider-val" id="v-ip">2 views/IP</span>
+      </div>
+      <div class="result-grid" id="results"></div>
+    </div>
+
+    <div class="tip t-g"><b>Cara baca angka bicolink:</b><br>
+    • "Views" di bicolink = jumlah klik unik yang masuk ke link kamu<br>
+    • 4 IP per hari = satu orang bisa klik link berbeda dari kamu sebanyak 4x dalam sehari dan semua dihitung<br>
+    • Artinya: kalau kamu punya 10 link berbeda dan 1 orang klik 4 link = 4 views dihitung<br>
+    • Strategi: buat banyak link berbeda → satu pengunjung bisa hasilkan 4x lipat earnings</div>
+  </div>
+
+  <!-- SUMBER TRAFFIC -->
+  <div class="panel" id="p-channel">
+    <p class="sec">Sumber traffic Indo terbesar — estimasi views per hari</p>
+    <div class="tip t-b"><b>Kunci utama:</b> Untuk jutaan views per minggu, kamu tidak bisa andalkan 1 platform. Harus kombinasi 4–6 platform sekaligus, masing-masing berkontribusi ratusan ribu views. Ini yang disebut "traffic stacking".</div>
+
+    <div class="ch-grid">
+
+      <div class="ch top tg-top">
+        <div class="ch-head"><span class="ch-icon">✈️</span><div class="ch-name">Telegram Channel</div></div>
+        <div class="ch-badges"><span class="badge bg">Paling stabil</span><span class="badge bg">Repeat visitor ✓</span></div>
+        <div class="ch-views">10k–100k views/hari per channel</div>
+        <div class="ch-desc">Channel Telegram viral niche Indo (video pack, konten hiburan, download gratisan) bisa dapat 50k–200k views per post. Tiap link yang kamu share bisa diklik berkali-kali karena member sering forward ke grup lain.</div>
+        <div class="ch-tip">⚡ 1 channel 100k member = 30k–80k klik per post</div>
+      </div>
+
+      <div class="ch top tg-top">
+        <div class="ch-head"><span class="ch-icon">🎵</span><div class="ch-name">TikTok Viral</div></div>
+        <div class="ch-badges"><span class="badge bg">Viral tercepat</span><span class="badge bb">Link di bio</span></div>
+        <div class="ch-views">50k–2jt views per video viral</div>
+        <div class="ch-desc">1 video TikTok yang viral di Indo bisa dapat 100k–2jt views dalam 24 jam. CTR ke bio link sekitar 0.5–2% = 500–40.000 klik ke bicolink dari 1 video viral. Konsistensi posting penting untuk sering viral.</div>
+        <div class="ch-tip">⚡ 1 video viral 1M views = 5.000–20.000 klik bicolink</div>
+      </div>
+
+      <div class="ch top tg-top">
+        <div class="ch-head"><span class="ch-icon">👥</span><div class="ch-name">Facebook Reels + Grup</div></div>
+        <div class="ch-badges"><span class="badge bg">Link langsung di caption</span><span class="badge bb">Indo besar</span></div>
+        <div class="ch-views">20k–500k views per Reels viral</div>
+        <div class="ch-desc">Facebook Reels yang viral di Indonesia bisa dapat ratusan ribu views. Yang terpenting: bisa taruh link bicolink langsung di caption — tidak perlu redirect bio. Ini meningkatkan CTR 3–5x dibanding "link di bio".</div>
+        <div class="ch-tip">⚡ Link di caption = CTR 5–10% vs 0.5–2% di bio</div>
+      </div>
+
+      <div class="ch tg-hot">
+        <div class="ch-head"><span class="ch-icon">💬</span><div class="ch-name">WhatsApp Broadcast + Grup</div></div>
+        <div class="ch-badges"><span class="badge by">High open rate</span><span class="badge bg">95% dibaca</span></div>
+        <div class="ch-views">5k–50k klik per broadcast</div>
+        <div class="ch-desc">WA broadcast list open rate 95%+ — hampir semua orang buka pesan WA. Jika punya 1.000 kontak aktif di broadcast list dan 20% klik = 200 klik. Scale dengan banyak akun WA dan broadcast list yang berbeda-beda.</div>
+        <div class="ch-tip">⚡ 10 akun WA × 1.000 kontak × 20% klik = 2.000 klik/hari</div>
+      </div>
+
+      <div class="ch tg-hot">
+        <div class="ch-head"><span class="ch-icon">📺</span><div class="ch-name">YouTube Shorts</div></div>
+        <div class="ch-badges"><span class="badge bb">Evergreen</span><span class="badge by">Muncul di Google</span></div>
+        <div class="ch-views">10k–500k views per Shorts</div>
+        <div class="ch-desc">Shorts yang sekali viral terus dapat views berbulan-bulan karena muncul di Google Search. Taruh link bicolink di deskripsi dan komentar yang di-pin. Konten niche download = penonton intent tinggi.</div>
+        <div class="ch-tip">⚡ Passive — views terus mengalir dari video lama</div>
+      </div>
+
+      <div class="ch tg-hot">
+        <div class="ch-head"><span class="ch-icon">🌐</span><div class="ch-name">Blog / Website SEO</div></div>
+        <div class="ch-badges"><span class="badge bb">Jangka panjang</span><span class="badge bg">Google traffic</span></div>
+        <div class="ch-views">1k–50k kunjungan/hari (tergantung SEO)</div>
+        <div class="ch-desc">Artikel "download [konten] gratis 2026" yang muncul di Google bisa dapat ribuan pengunjung per hari secara organik. Setiap pengunjung yang klik bicolink = dihitung. Butuh 3–6 bulan untuk SEO bekerja tapi hasilnya passive selamanya.</div>
+        <div class="ch-tip">⚡ 1 artikel viral di Google = ribuan klik/hari tanpa kerja tambahan</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STACK TABLE -->
+  <div class="panel" id="p-stack">
+    <p class="sec">Traffic stack — kombinasi platform untuk jutaan views/minggu</p>
+
+    <div class="stack-table">
+      <div class="st-head">
+        <div>Platform</div>
+        <div>Aksi yang dilakukan</div>
+        <div>Views/hari</div>
+        <div>Views/minggu</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">✈️ Telegram (3 ch)</div>
+        <div class="st-action">Post 3x/hari per channel, niche viral Indo</div>
+        <div class="st-views">60.000</div>
+        <div class="st-contrib">420.000</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">🎵 TikTok (2 akun)</div>
+        <div class="st-action">2–3 video/hari per akun, niche download/entertainment</div>
+        <div class="st-views">50.000</div>
+        <div class="st-contrib">350.000</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">👥 Facebook Reels</div>
+        <div class="st-action">3 Reels/hari, link bicolink langsung di caption</div>
+        <div class="st-views">40.000</div>
+        <div class="st-contrib">280.000</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">💬 WA Broadcast</div>
+        <div class="st-action">10 akun × broadcast harian ke 500 kontak</div>
+        <div class="st-views">15.000</div>
+        <div class="st-contrib">105.000</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">📺 YouTube Shorts</div>
+        <div class="st-action">2 Shorts/hari, link di deskripsi + komentar pin</div>
+        <div class="st-views">20.000</div>
+        <div class="st-contrib">140.000</div>
+      </div>
+      <div class="st-row">
+        <div class="st-platform">📸 Instagram Reels</div>
+        <div class="st-action">2 Reels/hari, link di bio + sebut di video</div>
+        <div class="st-views">15.000</div>
+        <div class="st-contrib">105.000</div>
+      </div>
+      <div class="st-row st-total">
+        <div class="st-platform">🔥 TOTAL STACK</div>
+        <div class="st-action">Semua platform berjalan bersamaan</div>
+        <div class="st-views">200.000/hari</div>
+        <div class="st-contrib">1.400.000/minggu</div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Penghasilan estimasi dengan 1.4 juta views/minggu:</b><br>
+    1.400.000 ÷ 1.000 × Rp 80.000 = <b>Rp 112.000.000 per minggu</b><br>
+    Per bulan: <b>Rp 448.000.000</b><br><br>
+    Ini skenario stack penuh semua platform aktif berjalan optimal. Mulai dari 1–2 platform dulu, scale bertahap.</div>
+
+    <div class="tip t-y"><b>Realistis vs Optimistis:</b><br>
+    Bulan 1–2 (1–2 platform aktif): 50k–150k views/minggu = Rp 4–12jt/minggu<br>
+    Bulan 3–4 (3–4 platform aktif): 300k–600k views/minggu = Rp 24–48jt/minggu<br>
+    Bulan 5–6 (stack penuh): 800k–2jt views/minggu = Rp 64–160jt/minggu</div>
+  </div>
+
+  <!-- KONTEN VIRAL -->
+  <div class="panel" id="p-konten">
+    <p class="sec">Niche konten yang paling banyak diklik untuk bicolink Indo</p>
+
+    <div class="tip t-b"><b>Prinsip konten bicolink:</b> Konten terbaik adalah yang membuat orang <b>HARUS klik link</b> untuk mendapatkan sesuatu yang mereka mau. Bukan konten yang bagus — tapi konten yang menciptakan kebutuhan mendesak untuk klik.</div>
+
+    <div class="vc fire">
+      <div class="vc-head">
+        <div class="vc-name">📱 Video Pack & Template CapCut</div>
+        <div><span class="badge bg">CTR Tertinggi</span></div>
+      </div>
+      <div class="vc-desc">Tunjukkan preview video pack yang menarik (efek keren, transisi smooth, preset aesthetic) → "download gratis di link bio/caption" → bicolink → Mediafire. Orang Indo sangat aktif cari template CapCut gratis. Volume pencarian tinggi, intent download sangat kuat.</div>
+      <div class="vc-eg">"Pack CapCut aesthetic 2026 yang lagi viral — 500+ template, gratis: [bicolink]"</div>
+    </div>
+
+    <div class="vc fire">
+      <div class="vc-head">
+        <div class="vc-name">🎮 Mod APK / Cheat Game</div>
+        <div><span class="badge bg">Volume Terbesar</span></div>
+      </div>
+      <div class="vc-desc">Tunjukkan gameplay dengan mod aktif (diamond unlimited, skin gratis, aimbot) → "download mod di link" → bicolink → file hosting. Niche ini punya demand MASIF di Indo. 1 video TikTok tentang mod FF bisa dapat 500k–2jt views. Valid click rate tertinggi karena intent download sangat kuat.</div>
+      <div class="vc-eg">"Mod FF terbaru 2026 — antiban 100%, diamond unlimited, link download: [bicolink]"</div>
+    </div>
+
+    <div class="vc fire">
+      <div class="vc-head">
+        <div class="vc-name">🎬 Film / Serial Gratis</div>
+        <div><span class="badge bg">Traffic Masif</span></div>
+      </div>
+      <div class="vc-desc">Konten "nonton [judul film/serial] gratis tanpa premium" — ini salah satu niche dengan traffic paling besar di Indonesia. Setiap ada film baru atau serial trending, jutaan orang Indonesia cari cara nonton gratis. 1 post bisa dapat ratusan ribu klik dalam 24 jam.</div>
+      <div class="vc-eg">"Nonton [film trending] full movie gratis, tidak perlu bayar: [bicolink]"</div>
+    </div>
+
+    <div class="vc">
+      <div class="vc-head">
+        <div class="vc-name">📚 Materi / Soal / Jawaban Sekolah</div>
+        <div><span class="badge by">Stabil Sepanjang Tahun</span></div>
+      </div>
+      <div class="vc-desc">Materi pelajaran, kunci jawaban, soal UAS/UTS — demand konstan dari pelajar SMP/SMA Indonesia. Sangat stabil karena ada terus sepanjang tahun ajaran. "Download soal latihan UN gratis" selalu dapat klik dari segmen pelajar yang sangat besar di Indonesia.</div>
+      <div class="vc-eg">"Download soal latihan + kunci jawaban PAT 2026 semua mapel: [bicolink]"</div>
+    </div>
+
+    <div class="vc">
+      <div class="vc-head">
+        <div class="vc-name">🎵 Lagu / Musik Gratis</div>
+        <div><span class="badge bb">Volume Tinggi</span></div>
+      </div>
+      <div class="vc-desc">Download lagu MP3 gratis masih salah satu niche dengan traffic paling besar di Indonesia. "Download [lagu viral] MP3 gratis" mendapat jutaan pencarian. Cocok untuk channel Telegram musik dan blog yang fokus di niche ini.</div>
+      <div class="vc-eg">"Download [lagu trending TikTok] MP3 320kbps gratis: [bicolink]"</div>
+    </div>
+
+    <div class="vc">
+      <div class="vc-head">
+        <div class="vc-name">💰 Dokumen / Template Bisnis</div>
+        <div><span class="badge bb">Audience Dewasa</span></div>
+      </div>
+      <div class="vc-desc">Template proposal, CV profesional, kontrak kerja, business plan — dicari oleh segmen profesional dan mahasiswa. Konversi lebih tinggi dari niche remaja karena audience lebih matang dan lebih willing untuk melewati proses download.</div>
+      <div class="vc-eg">"Download 50+ template CV ATS-friendly gratis 2026: [bicolink]"</div>
+    </div>
+  </div>
+
+  <!-- SKALASI -->
+  <div class="panel" id="p-skalasi">
+    <p class="sec">Cara skalasi dari ratusan ribu ke jutaan views/minggu</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sn d1">1</div>
+        <div>
+          <div class="s-title">Mulai dengan 1 niche + 1 platform — kuasai dulu</div>
+          <div class="s-desc">Jangan langsung multi-platform di awal. Pilih 1 niche (rekomendasi: mod game atau video pack — CTR tertinggi) dan 1 platform (rekomendasi: Telegram atau TikTok). Fokus selama 30 hari sampai dapat 50k–100k views/minggu dari platform itu. Setelah konsisten, baru tambah platform kedua.</div>
+          <div class="s-tag tg">Target: 50k–100k views/minggu dari 1 platform</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d2">2</div>
+        <div>
+          <div class="s-title">Repurpose konten ke semua platform sekaligus</div>
+          <div class="s-desc">Setelah punya konten yang works di platform pertama, upload konten yang SAMA (diedit sedikit) ke semua platform lain. Video TikTok → hapus watermark → upload ke Facebook Reels + YouTube Shorts + Instagram Reels. Link caption masing-masing beda (buat link bicolink berbeda per platform) agar bisa track mana yang paling banyak klik.</div>
+          <div class="s-tag tg">1 konten = 5 platform = 5x views dari 1 usaha</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d3">3</div>
+        <div>
+          <div class="s-title">Buat banyak link bicolink berbeda — maksimalkan 4 IP/hari</div>
+          <div class="s-desc">Karena 1 IP bisa dihitung 4 kali per hari, buat 4+ link bicolink yang berbeda-beda yang mengarah ke konten berbeda. Contoh: Link 1 = video pack, Link 2 = mod game, Link 3 = template CapCut, Link 4 = film gratis. Promosikan semuanya ke audience yang sama — 1 orang bisa klik 4 link dan semuanya dihitung.<br><br>Letakkan semua link di satu landing page (Linktree/Carrd) → share 1 URL saja → pengunjung melihat semua link dan kemungkinan klik lebih dari 1.</div>
+          <div class="s-tag ty">Rp 80rb per 1k views × 4 link diklik = Rp 320rb per 1k visitor</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d4">4</div>
+        <div>
+          <div class="s-title">Scale Telegram dengan network channel (bukan satu channel)</div>
+          <div class="s-desc">Daripada 1 channel besar, buat 5–10 channel Telegram dengan niche berbeda: Channel 1 = mod game, Channel 2 = video pack, Channel 3 = film, Channel 4 = lagu, Channel 5 = materi sekolah. Tiap channel punya link bicolink masing-masing. Cross-promote antar channel — member channel mod game diajak join channel video pack, dan sebaliknya.<br><br>Network 5 channel × 20k member × 30% engagement = 30k views/hari dari Telegram saja.</div>
+          <div class="s-tag tg">Network channel = traffic stable + saling support antar channel</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d5">5</div>
+        <div>
+          <div class="s-title">Buat konten yang naturally viral — "forward magnet"</div>
+          <div class="s-desc">Konten yang paling worth di Telegram adalah yang orang forward ke grup dan kontak lain tanpa diminta. Format yang paling sering di-forward:<br><br>
+          • "Pack gratis yang biasanya berbayar" — scarcity + value tinggi<br>
+          • "Cara yang tidak banyak orang tahu" — informasi eksklusif<br>
+          • Konten update berkala: "Update terbaru setelah patch" — orang forward ke teman yang butuh<br>
+          • "Kumpulan [konten] dalam 1 link" — convenience, orang suka share yang praktis<br><br>
+          Setiap forward = orang baru yang klik link bicolink kamu tanpa kamu perlu tambah kerja apapun.</div>
+          <div class="s-tag to">Forward organik = eksponensial growth tanpa tambahan effort</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d6">6</div>
+        <div>
+          <div class="s-title">Otomasi posting dengan bot Telegram</div>
+          <div class="s-desc">Gunakan bot Telegram (seperti @Combot atau script Python sederhana) untuk jadwalkan posting otomatis ke channel kamu tanpa harus online. Setup sekali, konten terposting otomatis di jam-jam optimal (siang 12:00 dan malam 20:00 WIB). Ini memungkinkan kamu kelola 5–10 channel Telegram sekaligus tanpa kewalahan.<br><br>Untuk konten video pack dan download, sering kali konten lama masih relevan — bisa recycle konten setiap 2–3 minggu ke member baru yang belum pernah lihat.</div>
+          <div class="s-tag tg">Otomasi = kelola 10 channel setara effort 1 channel manual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Timeline jutaan views per minggu:</b><br>
+    <b>Minggu 1–4:</b> 1 niche + 1 platform → 50k–200k views/minggu<br>
+    <b>Bulan 2:</b> Tambah 2–3 platform → 200k–500k views/minggu<br>
+    <b>Bulan 3:</b> Network channel + multi-link strategy → 500k–1jt views/minggu<br>
+    <b>Bulan 4+:</b> Stack penuh + otomasi → 1jt–3jt+ views/minggu<br><br>
+    Kunci: konsistensi posting, konten yang forward-worthy, dan manfaatkan penuh aturan 4 IP/hari dengan multi-link strategy.</div>
+  </div>
+
+</div>
+
+<script>
+function fmt(n){return n.toLocaleString('id-ID');}
+function calc(){
+  const views = parseInt(document.getElementById('s-views').value);
+  const ip = parseInt(document.getElementById('s-ip').value);
+  document.getElementById('v-views').textContent = fmt(views);
+  document.getElementById('v-ip').textContent = ip + ' views/IP';
+  const effViews = views * ip;
+  const perDay = Math.round(effViews / 1000 * 80000);
+  const perWeek = perDay * 7;
+  const perMonth = perDay * 30;
+  document.getElementById('results').innerHTML = `
+    <div class="rg rg-b"><div class="rg-label">Views efektif/hari</div><div class="rg-val">${fmt(effViews)}</div><div class="rg-sub">setelah 4 IP dihitung</div></div>
+    <div class="rg rg-g"><div class="rg-label">Penghasilan/hari</div><div class="rg-val">Rp ${fmt(perDay)}</div><div class="rg-sub">@ Rp 80rb/1k views</div></div>
+    <div class="rg rg-y"><div class="rg-label">Penghasilan/minggu</div><div class="rg-val">Rp ${fmt(perWeek)}</div><div class="rg-sub">7 hari</div></div>
+    <div class="rg rg-o"><div class="rg-label">Penghasilan/bulan</div><div class="rg-val">Rp ${fmt(perMonth)}</div><div class="rg-sub">30 hari</div></div>
+  `;
+}
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+document.getElementById('s-views').addEventListener('input',calc);
+document.getElementById('s-ip').addEventListener('input',calc);
+calc();
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

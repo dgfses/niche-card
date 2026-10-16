@@ -1,0 +1,459 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Twitter/X — Adult Content + Bicolink Indonesia</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --blue:#1d9bf0;--blue-bg:#0a1a28;--blue-dim:#1a3a50;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --pur:#c084fc;--pur-bg:#180e2a;--pur-dim:#3a1a5a;
+  --gray:#a0a0a0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.tab.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bpu{background:var(--pur-bg);color:var(--pur);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ac8ff;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.tip b{font-weight:700;}
+
+/* Step cards */
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.d1{background:var(--blue-bg);color:var(--blue);}
+.d2{background:var(--green-bg);color:var(--green);}
+.d3{background:var(--yellow-bg);color:var(--yellow);}
+.d4{background:var(--pur-bg);color:var(--pur);}
+.d5{background:var(--red-bg);color:var(--red);}
+.s-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.s-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.tr{background:var(--red-bg);color:var(--red);}
+
+/* Tweet template */
+.tweet{background:var(--s1);border:1px solid var(--blue-dim);border-radius:14px;padding:13px 15px;margin-bottom:10px;}
+.tweet-lbl{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.tweet-body{font-size:13px;color:var(--text);line-height:1.8;border-left:2px solid var(--blue);padding-left:10px;}
+.tweet-why{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6;}
+.tweet-views{font-size:11px;font-weight:700;color:var(--green);background:var(--green-bg);padding:2px 8px;border-radius:4px;margin-top:5px;display:inline-block;}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+.st{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.st.b{border-color:var(--blue-dim);background:var(--blue-bg);}
+.st.g{border-color:var(--green-dim);background:var(--green-bg);}
+.st-l{font-size:10px;color:var(--muted);margin-bottom:2px;}
+.st-v{font-size:17px;font-weight:700;}
+.st.b .st-v{color:var(--blue);}
+.st.g .st-v{color:var(--green);}
+.st-s{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* Do don't */
+.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.dd-ok{background:var(--green-bg);border:1px solid var(--green-dim);border-radius:12px;padding:12px 14px;}
+.dd-no{background:var(--red-bg);border:1px solid var(--red-dim);border-radius:12px;padding:12px 14px;}
+.dd-title{font-size:12px;font-weight:700;margin-bottom:7px;}
+.dd-ok .dd-title{color:var(--green);}
+.dd-no .dd-title{color:var(--red);}
+.dd-item{font-size:12px;line-height:1.8;}
+.dd-ok .dd-item{color:var(--green);}
+.dd-no .dd-item{color:var(--red);}
+
+/* Scale table */
+.tbl{background:var(--s1);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--s2);text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr.hl td{background:var(--green-bg);}
+tr.hl td:first-child{color:var(--green);font-weight:700;}
+.g{color:var(--green);font-weight:600;}
+.y{color:var(--yellow);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐦 Twitter/X — Strategi Adult Content + Bicolink Indonesia</h1>
+  <p class="sub">Setup akun, format konten, cara dapat follower, dan integrasi bicolink</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('setup',this)">Setup Akun</button>
+    <button class="tab" onclick="show('konten',this)">Format Konten</button>
+    <button class="tab" onclick="show('template',this)">Template Tweet</button>
+    <button class="tab" onclick="show('follower',this)">Cara Dapat Follower</button>
+    <button class="tab" onclick="show('scale',this)">Scale Multi-Akun</button>
+    <button class="tab" onclick="show('rules',this)">Do & Don't</button>
+  </div>
+
+  <!-- SETUP AKUN -->
+  <div class="panel on" id="p-setup">
+    <p class="sec">Setup akun Twitter/X yang benar untuk adult content Indo</p>
+
+    <div class="stats">
+      <div class="st b"><div class="st-l">User Twitter Indo</div><div class="st-v">24 juta+</div><div class="st-s">aktif bulanan</div></div>
+      <div class="st g"><div class="st-l">Adult allowed</div><div class="st-v">Resmi ✓</div><div class="st-s">setelah aktifkan settings</div></div>
+      <div class="st"><div class="st-l">Link di tweet</div><div class="st-v">Langsung</div><div class="st-s">tidak perlu bio dulu</div></div>
+      <div class="st"><div class="st-l">Klik per tweet</div><div class="st-v">50–5.000</div><div class="st-s">tergantung follower</div></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div class="step">
+        <div class="sn d1">1</div>
+        <div>
+          <div class="s-title">Aktifkan konten sensitif di settings</div>
+          <div class="s-desc">Ini langkah pertama yang wajib. Tanpa ini, media yang kamu upload akan disembunyikan dari orang lain.<br><br>
+          <b style="color:var(--text)">Di HP:</b> Profil → Settings → Privacy and Safety → Your Tweets → centang "Mark media you tweet as containing material that may be sensitive"<br><br>
+          <b style="color:var(--text)">Di web:</b> Settings → Privacy and Safety → Content you see → Display media that may contain sensitive content → ON<br><br>
+          Setelah ini aktif, konten yang kamu upload tidak otomatis disembunyikan, dan orang yang sudah aktifkan "sensitive content" di akun mereka bisa melihat kontenmu secara penuh.</div>
+          <div class="s-tag tb">Wajib aktif sebelum mulai posting apapun</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d2">2</div>
+        <div>
+          <div class="s-title">Setup profil yang menarik dan konsisten</div>
+          <div class="s-desc">
+          <b style="color:var(--text)">Username:</b> Pilih yang relate dengan niche tapi tidak terlalu eksplisit. Contoh: "@koleksi_harian", "@packindo18", "@exclusivepackid". Hindari kata yang terlalu vulgar — akun bisa lebih mudah kena report massal.<br><br>
+          <b style="color:var(--text)">Display name:</b> Bisa lebih ekspresif dari username — pakai emoji dan kata yang lebih descriptif: "Pack Eksklusif 🔞 | Update Tiap Hari"<br><br>
+          <b style="color:var(--text)">Bio:</b> Maksimal 160 karakter. Contoh: "🔥 Pack & konten eksklusif tiap hari | 18+ only | Klik link untuk akses penuh 👇 | Update: [link bicolink utama]"<br><br>
+          <b style="color:var(--text)">Header image:</b> Pakai preview konten yang menarik tapi masih "tease" — bikin orang penasaran. Jangan terlalu eksplisit di header karena ini yang pertama dilihat bahkan sebelum orang follow.</div>
+          <div class="s-tag tg">Bio + header = kesan pertama yang menentukan orang follow atau tidak</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d3">3</div>
+        <div>
+          <div class="s-title">Taruh 4 link bicolink berbeda di bio</div>
+          <div class="s-desc">Twitter mengizinkan 1 link di bio. Untuk menaruh 4 link bicolink sekaligus, buat halaman Linktree atau landing page sederhana → isi dengan 4 tombol yang masing-masing menuju link bicolink berbeda.<br><br>
+          Contoh struktur landing page bicolink:<br>
+          🔥 Pack Terbaru — [bicolink 1]<br>
+          📦 Koleksi Pack Vol.1 — [bicolink 2]<br>
+          🎬 Video Eksklusif — [bicolink 3]<br>
+          📱 Pack TikTok Viral — [bicolink 4]<br><br>
+          Dengan cara ini 1 pengunjung yang klik semua = 4x penghasilan bicolink dari 1 orang.</div>
+          <div class="s-tag tg">4 link = 4x penghasilan dari 1 visitor yang klik semua</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d4">4</div>
+        <div>
+          <div class="s-title">Isi feed dengan 5–10 tweet awal sebelum promosi</div>
+          <div class="s-desc">Akun kosong = tidak ada yang mau follow. Sebelum mulai promosi, isi feed dengan 5–10 tweet konten yang relevan: preview teaser, quote/caption menarik, atau konten yang relate dengan niche. Ini memberi kesan bahwa akun aktif dan worth di-follow.</div>
+          <div class="s-tag ty">Isi feed dulu sebelum mulai cari follower</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT KONTEN -->
+  <div class="panel" id="p-konten">
+    <p class="sec">Format konten yang paling banyak klik bicolink di Twitter</p>
+
+    <div class="tip t-b"><b>Prinsip Twitter adult content:</b> Twitter adalah platform teks + media. Yang viral di sini bukan video panjang — tapi kombinasi media yang menarik + teks singkat yang memancing rasa ingin tahu atau rasa takut ketinggalan (FOMO). Bicolink link bisa langsung di tweet, tidak perlu redirect bio.</div>
+
+    <div style="display:flex;flex-direction:column;gap:0;margin-bottom:14px;">
+
+      <div class="step">
+        <div class="sn d1">🖼️</div>
+        <div>
+          <div class="s-title">Format 1 — Thread "tease" dengan link di akhir (CTR tertinggi)</div>
+          <div class="s-desc">Tweet 1: media menarik + hook singkat<br>
+          Tweet 2: lebih banyak preview / info<br>
+          Tweet 3: link bicolink + CTA<br><br>
+          Orang yang sudah engaged dengan tweet 1 dan 2 hampir pasti klik link di tweet 3. CTR thread jauh lebih tinggi dari single tweet karena audience sudah "invested".</div>
+          <div class="s-tag tb">Thread CTR 3–5x lebih tinggi dari single tweet</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d2">🔗</div>
+        <div>
+          <div class="s-title">Format 2 — Single tweet + media + link langsung</div>
+          <div class="s-desc">Satu tweet berisi: 1 media teaser + teks singkat yang menarik + link bicolink langsung. Ini format paling simple dan paling banyak dipakai. Ideal untuk posting harian yang cepat dan tidak butuh banyak effort.<br><br>
+          Contoh: "[media preview] 🔥 Pack terbaru update hari ini — download GRATIS sebelum dihapus: [bicolink link]"</div>
+          <div class="s-tag tg">Paling mudah dibuat, cocok untuk posting harian rutin</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d3">🔁</div>
+        <div>
+          <div class="s-title">Format 3 — Quote tweet + tambah bicolink</div>
+          <div class="s-desc">Quote tweet konten viral yang relevan dari akun lain → tambahkan komentar + link bicolink kamu. Orang yang melihat tweet yang di-quote sudah interested dengan kontennya — kamu hanya perlu kasih "akses lebih" via bicolink. Teknik ini hemat waktu dan memanfaatkan viral tweet orang lain.</div>
+          <div class="s-tag ty">Hemat effort, manfaatkan momentum viral tweet lain</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d4">📊</div>
+        <div>
+          <div class="s-title">Format 4 — Poll + follow-up dengan bicolink</div>
+          <div class="s-desc">Buat poll yang relate dengan niche: "Pack mana yang mau kalian lihat besok? A/B/C/D" → engagement naik karena semua orang mau jawab → setelah poll selesai, buat tweet follow-up: "Yang minta pack [pilihan terbanyak], ini linknya: [bicolink]". Orang yang udah vote merasa perlu klik karena mereka yang request.</div>
+          <div class="s-tag tg">Poll = engagement tinggi + klik follow-up hampir pasti</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tip t-g"><b>Waktu posting terbaik untuk audience Indo di Twitter:</b><br>
+    🕑 12:00–14:00 WIB — jam makan siang, orang buka HP<br>
+    🕗 19:00–22:00 WIB — prime time, traffic tertinggi<br>
+    📅 Jumat malam dan Sabtu = engagement 40% lebih tinggi dari hari kerja biasa</div>
+  </div>
+
+  <!-- TEMPLATE TWEET -->
+  <div class="panel" id="p-template">
+    <p class="sec">Template tweet siap pakai — tinggal ganti media dan link</p>
+
+    <div class="tweet">
+      <div class="tweet-lbl">⚡ Template #1 — Single tweet dengan urgency</div>
+      <div class="tweet-body">🔥 pack baru hari ini<br><br>
+biasanya gak disebar ke semua orang<br>
+tapi hari ini gratis buat yang gerak cepat<br><br>
+link download (aktif 24 jam): [bicolink]<br><br>
+#packindo #update #gratis</div>
+      <div class="tweet-why">Singkat, ada urgency "24 jam", tidak ada kata eksplisit yang trigger filter.</div>
+      <div class="tweet-views">Estimasi CTR: 3–8% dari impressi</div>
+    </div>
+
+    <div class="tweet">
+      <div class="tweet-lbl">🧵 Template #2 — Thread 3 tweet</div>
+      <div class="tweet-body">Tweet 1:<br>
+gw hampir ga mau share ini<br>
+tapi karena udah 10k follower, jadi dikasih gratis<br>
+[media preview terbaik kamu]<br><br>
+— Tweet 2 —<br>
+ini isinya:<br>
+✅ [deskripsi isi pack 1]<br>
+✅ [deskripsi isi pack 2]<br>
+✅ [deskripsi isi pack 3]<br>
+total ada [X] item, biasanya dijual [harga]<br><br>
+— Tweet 3 —<br>
+link download gratis:<br>
+[bicolink 1] ← full pack<br>
+[bicolink 2] ← bonus pack<br><br>
+RT biar orang lain juga bisa dapet 🙏</div>
+      <div class="tweet-why">Thread = orang yang engaged dengan tweet 1–2 hampir pasti klik link di tweet 3. RT request = viral organik.</div>
+      <div class="tweet-views">Estimasi CTR: 8–20% dari yang baca sampai tweet 3</div>
+    </div>
+
+    <div class="tweet">
+      <div class="tweet-lbl">📊 Template #3 — Poll + follow-up</div>
+      <div class="tweet-body">Tweet poll:<br>
+besok mau upload pack yang mana?<br><br>
+🅰️ [kategori A]<br>
+🅱️ [kategori B]<br>
+🆑 [kategori C]<br>
+🆘 semua sekalian<br><br>
+— Tweet follow-up (besok) —<br>
+[kategori pemenang] menang poll kemarin<br>
+jadi hari ini gw upload semuanya<br><br>
+yang kemarin vote, ini link untuk kalian dulu:<br>
+[bicolink link]</div>
+      <div class="tweet-why">Yang sudah vote merasa "berhak" dapat hasilnya — konversi klik sangat tinggi. Poll juga boost engagement yang meningkatkan distribusi akun.</div>
+      <div class="tweet-views">Estimasi CTR: 15–30% dari yang vote</div>
+    </div>
+
+    <div class="tweet">
+      <div class="tweet-lbl">🔁 Template #4 — "Reward follower baru"</div>
+      <div class="tweet-body">kalau kalian baru follow gw<br>
+ini reward buat kalian 🎁<br><br>
+gw simpan pack terbaik bulan ini di link ini:<br>
+[bicolink 1] — pack vol.1<br>
+[bicolink 2] — pack vol.2<br>
+[bicolink 3] — pack vol.3<br>
+[bicolink 4] — pack bonus<br><br>
+RT biar follower lain kalian juga tau 🙏</div>
+      <div class="tweet-why">4 link sekaligus = maksimalkan 4 IP per hari per orang. "Reward follower baru" = orang baru langsung feel valued dan mau RT.</div>
+      <div class="tweet-views">4 link = 4x penghasilan bicolink dari 1 orang yang klik semua</div>
+    </div>
+
+  </div>
+
+  <!-- CARA DAPAT FOLLOWER -->
+  <div class="panel" id="p-follower">
+    <p class="sec">Cara dapat follower Twitter adult Indo dari nol</p>
+
+    <div class="tip t-b"><b>Kenyataan growth Twitter adult Indo:</b> Akun adult yang konsisten posting dengan konten berkualitas bisa tumbuh 500–2.000 follower per bulan secara organik. Satu tweet yang di-RT oleh akun besar bisa bawa 500–5.000 follower baru dalam 24 jam.</div>
+
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div class="step">
+        <div class="sn d1">1</div>
+        <div>
+          <div class="s-title">Follow + engage akun adult Indo yang sudah besar</div>
+          <div class="s-desc">Cari akun adult Indo dengan 10k–100k follower. Follow mereka, like dan reply tweet mereka dengan komentar yang menarik — bukan "bagus!" tapi komentar yang menambah value atau relate dengan kontennya. Orang yang lihat komentar kamu akan klik profil. Lakukan ini di 20–30 tweet per hari selama minggu pertama.</div>
+          <div class="s-tag tg">Komentar menarik di tweet populer = ratusan orang klik profil kamu</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d2">2</div>
+        <div>
+          <div class="s-title">Minta RT secara eksplisit di setiap tweet konten bagus</div>
+          <div class="s-desc">Tambahkan "RT biar orang lain juga bisa dapet" atau "share ke teman yang butuh ini" di akhir tweet konten terbaik kamu. Orang sering tidak RT kalau tidak diminta — dengan meminta secara eksplisit, RT rate bisa naik 3–5x. Setiap RT = exposure ke seluruh follower orang yang RT.</div>
+          <div class="s-tag tg">1 RT dari akun 5.000 follower = 5.000 orang baru lihat akunmu</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d3">3</div>
+        <div>
+          <div class="s-title">Posting konsisten 3–5 tweet per hari</div>
+          <div class="s-desc">Algoritma Twitter reward akun yang aktif. Akun yang posting 3–5 kali per hari mendapat distribusi lebih luas dari yang posting sekali. Variasikan: 2 tweet konten dengan link bicolink + 1 tweet poll/engagement + 1 tweet teaser tanpa link (untuk reach organik). Pakai TweetDeck atau Buffer untuk jadwal posting otomatis.</div>
+          <div class="s-tag ty">Konsistensi posting = algoritma kasih distribusi lebih luas</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d4">4</div>
+        <div>
+          <div class="s-title">Kolaborasi saling RT dengan akun serupa</div>
+          <div class="s-desc">Cari 5–10 akun adult Indo dengan follower mirip (500–5.000 follower). DM mereka: "Mau saling RT/mention untuk boost masing-masing?" Kebanyakan mau karena menguntungkan kedua pihak. Buat jadwal: hari ini kamu RT mereka, besok mereka RT kamu. Ini cara paling cepat tumbuh di awal karena langsung expose ke audience yang relevan.</div>
+          <div class="s-tag tg">Saling RT = pertumbuhan exponensial tanpa keluar uang</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d1">5</div>
+        <div>
+          <div class="s-title">Manfaatkan trending hashtag adult Indo</div>
+          <div class="s-desc">Monitor hashtag yang sedang trending di komunitas adult Indo. Ketika ada hashtag yang ramai (#packindo, hashtag terkait event, dll), post konten kamu dengan hashtag itu saat sedang trending. Tweet yang masuk ke trending hashtag pada waktu yang tepat bisa dapat ribuan impressi organik gratis.</div>
+          <div class="s-tag tb">Trending hashtag = organic reach masif tanpa followers awal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCALE -->
+  <div class="panel" id="p-scale">
+    <p class="sec">Scale multi-akun — dari ratusan ke jutaan views per minggu</p>
+
+    <div class="tip t-b"><b>Multi-akun strategy:</b> Dengan 5–10 akun Twitter yang saling mendukung, views total bisa dikalikan berlipat. Ini legal di Twitter selama setiap akun punya konten unik dan tidak menggunakan akun lain untuk manipulasi trending/voting.</div>
+
+    <div class="tbl"><table>
+      <thead><tr>
+        <th>Jumlah akun</th><th>Follower per akun</th><th>Views/minggu total</th><th>Est. klik bicolink/minggu</th><th>Est. penghasilan</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>1 akun</td><td>1.000</td><td>~50.000</td><td>~2.500</td><td class="y">Rp 200rb</td></tr>
+        <tr><td>1 akun</td><td>5.000</td><td>~200.000</td><td>~10.000</td><td class="y">Rp 800rb</td></tr>
+        <tr><td>1 akun</td><td>20.000</td><td>~800.000</td><td>~40.000</td><td class="g">Rp 3.2jt</td></tr>
+        <tr class="hl"><td>5 akun</td><td>5.000/akun</td><td>~1.000.000</td><td>~50.000</td><td class="g">Rp 4jt/minggu</td></tr>
+        <tr class="hl"><td>10 akun</td><td>5.000/akun</td><td>~2.000.000</td><td>~100.000</td><td class="g">Rp 8jt/minggu</td></tr>
+      </tbody>
+    </table></div>
+
+    <div style="display:flex;flex-direction:column;gap:0;margin-bottom:14px;">
+      <div class="step">
+        <div class="sn d1">🔢</div>
+        <div>
+          <div class="s-title">Setup 5 akun dengan niche berbeda</div>
+          <div class="s-desc">Akun 1: video pack + CapCut<br>
+          Akun 2: konten foto eksklusif<br>
+          Akun 3: mod game + cheat<br>
+          Akun 4: konten hiburan/entertainment<br>
+          Akun 5: update harian / mix content<br><br>
+          Setiap akun punya link bicolink berbeda di bio dan di tweet. Akun-akun ini saling RT satu sama lain untuk expose ke audience masing-masing.</div>
+          <div class="s-tag tg">5 akun × 2.000 follower = 10.000 reach per tweet</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn d2">🔄</div>
+        <div>
+          <div class="s-title">Saling RT antar akun sendiri</div>
+          <div class="s-desc">Ketika akun 1 post konten bagus → akun 2, 3, 4, 5 langsung RT. Ini tidak melanggar TOS selama kontennya memang bagus dan akun-akun tidak hanya RT satu sama lain tanpa konten asli. Twitter tidak suka "RT ring" yang tidak natural — pastikan setiap akun juga punya interaksi dengan akun lain di luar jaringanmu.</div>
+          <div class="s-tag tb">1 tweet diRT 5 akun = 5x jangkauan organik</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DO DON'T -->
+  <div class="panel" id="p-rules">
+    <p class="sec">Do & Don't — agar akun tidak disuspend</p>
+    <div class="tip t-y"><b>Fakta penting:</b> Twitter lebih permisif dari platform lain TAPI tetap punya batas. Yang paling sering bikin akun suspended bukan kontennya — tapi perilaku akun yang dianggap spam atau automasi berlebihan.</div>
+
+    <div class="dd-grid">
+      <div class="dd-ok">
+        <div class="dd-title">✅ DO — Lakukan ini</div>
+        <div class="dd-item">
+          ✓ Aktifkan "mark media sensitive"<br>
+          ✓ Posting 3–5 tweet/hari konsisten<br>
+          ✓ Reply dan engage dengan follower<br>
+          ✓ Minta RT secara eksplisit<br>
+          ✓ Variasikan konten (tidak semua link)<br>
+          ✓ Gunakan hashtag relevan tapi tidak berlebihan<br>
+          ✓ Isi profil lengkap + bio jelas<br>
+          ✓ Konten orisinal, bukan repost semua<br>
+          ✓ Batasi follow 100–200/hari<br>
+          ✓ Taruh link bicolink di tweet langsung
+        </div>
+      </div>
+      <div class="dd-no">
+        <div class="dd-title">🚫 DON'T — Jangan lakukan</div>
+        <div class="dd-item">
+          ✗ Follow/unfollow massal cepat (kena spam filter)<br>
+          ✗ Tweet yang sama identik berulang kali<br>
+          ✗ Terlalu banyak link per tweet (1–2 maksimal)<br>
+          ✗ Konten CSAM atau underage apapun<br>
+          ✗ Automasi tweet 100% tanpa interaksi nyata<br>
+          ✗ Beli follower fake (turunkan engagement rate)<br>
+          ✗ Reply spam di thread orang lain dengan link<br>
+          ✗ Pakai software bot yang tidak natural<br>
+          ✗ Kata eksplisit di username/display name<br>
+          ✗ Abaikan notifikasi dan komentar follower
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Kalau akun kena suspend:</b> Twitter sering suspend akun baru yang tumbuh terlalu cepat sebagai langkah keamanan otomatis. Ini biasanya bisa di-appeal di twitter.com/account/suspended. Kalau tidak bisa di-recover, buat akun baru — tapi pertumbuhan organik awal akan lebih lambat. Ini alasan kenapa punya 5+ akun itu penting: kalau 1 kena suspend, yang lain tetap jalan.</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

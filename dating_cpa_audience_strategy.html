@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dating CPA — Strategi Gain Audience</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#777;--sub:#aaa;
+  --pink:#f472b6;--pink-bg:#2a0f1a;--pink-dim:#5a1f3a;
+  --blue:#6c8aff;--blue-bg:#1a1f3a;--blue-dim:#2a3560;
+  --green:#4ade80;--green-bg:#0d2a1a;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#2a1f00;
+  --red:#f87171;--red-bg:#2a0f0f;
+  --purple:#c084fc;--purple-bg:#1e1030;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);transition:.15s;}
+.tab:hover{color:var(--text);}
+.tab.on{background:var(--pink-bg);color:var(--pink);border-color:var(--pink-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.bp{background:var(--pink-bg);color:var(--pink);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bpu{background:var(--purple-bg);color:var(--purple);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-pink{background:var(--pink-bg);border-color:var(--pink-dim);color:var(--pink);}
+.t-green{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-blue{background:var(--blue-bg);border-color:var(--blue-dim);color:var(--blue);}
+.t-yellow{background:var(--yellow-bg);border-color:#4a3a00;color:var(--yellow);}
+.tip b{font-weight:600;}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.fn{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.fn:last-child{border-bottom:none;}
+.fn-dot{width:34px;height:34px;min-width:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.d1{background:var(--pink-bg);}
+.d2{background:var(--blue-bg);}
+.d3{background:var(--purple-bg);}
+.d4{background:var(--green-bg);}
+.d5{background:var(--yellow-bg);}
+.fn-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.fn-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.fn-earn{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);display:inline-block;padding:2px 8px;border-radius:4px;margin-top:5px;}
+.fn-pink{font-size:11px;font-weight:600;color:var(--pink);background:var(--pink-bg);display:inline-block;padding:2px 8px;border-radius:4px;margin-top:5px;}
+
+/* CONTENT types */
+.ct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:14px;}
+.ct{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.ct.fire{border-color:var(--pink);border-width:2px;}
+.ct.hot{border-color:var(--blue);border-width:2px;}
+.ct-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.ct-icon{font-size:20px;}
+.ct-name{font-size:13px;font-weight:600;color:var(--text);}
+.ct-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.ct-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.ct-ctr{font-size:11px;font-weight:600;color:var(--pink);margin-top:6px;}
+.ct-eg{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;}
+
+/* PLATFORM */
+.plat{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.plat.best{border-color:var(--pink);border-width:2px;}
+.plat-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.plat-icon{font-size:22px;}
+.plat-name{font-size:13px;font-weight:600;}
+.plat.best .plat-name{color:var(--pink);}
+.plat-stat{font-size:11px;color:var(--muted);}
+.plat-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.plat-trick{font-size:11.5px;font-weight:600;color:var(--green);margin-top:7px;padding:6px 10px;background:var(--green-bg);border-radius:6px;}
+
+/* HOOK SCRIPTS */
+.hook{background:var(--s1);border:1px solid var(--pink-dim);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.hook-lbl{font-size:10px;font-weight:600;color:var(--pink);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.hook-script{font-size:13px;color:var(--text);line-height:1.75;border-left:2px solid var(--pink);padding-left:10px;font-style:italic;}
+.hook-why{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6;}
+.hook-platform{font-size:10px;color:var(--blue);background:var(--blue-bg);padding:2px 7px;border-radius:4px;display:inline-block;margin-top:5px;font-weight:600;}
+
+/* GROWTH TACTICS */
+.gt{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.gt.prio{border-color:var(--pink);}
+.gt-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.gt-icon{font-size:20px;}
+.gt-name{font-size:13px;font-weight:600;color:var(--text);}
+.gt-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.gt-result{font-size:11px;font-weight:600;color:var(--pink);margin-top:6px;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+.st{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.st.p{border-color:var(--pink-dim);background:var(--pink-bg);}
+.st.g{border-color:var(--green-dim);background:var(--green-bg);}
+.st-lbl{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.st-val{font-size:17px;font-weight:700;color:var(--text);}
+.st.p .st-val{color:var(--pink);}
+.st.g .st-val{color:var(--green);}
+.st-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* timeline */
+.tl{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.tl-item{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);}
+.tl-item:last-child{border-bottom:none;}
+.tl-dot{width:10px;height:10px;min-width:10px;border-radius:50%;margin-top:5px;}
+.dp{background:var(--pink);}
+.db{background:var(--blue);}
+.dg{background:var(--green);}
+.tl-month{font-size:11px;font-weight:600;color:var(--pink);min-width:90px;}
+.tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.tl-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.tl-result{font-size:11px;font-weight:600;color:var(--green);margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>💑 Dating & Relationship → CPA — Strategi Gain Audience</h1>
+  <p class="sub">Blueprint lengkap dari konten → audience → klik CPA dating</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('funnel',this)">Alur Funnel</button>
+    <button class="tab" onclick="show('konten',this)">Jenis Konten</button>
+    <button class="tab" onclick="show('platform',this)">Platform</button>
+    <button class="tab" onclick="show('hook',this)">Script Hook</button>
+    <button class="tab" onclick="show('growth',this)">Cara Gain Follower</button>
+    <button class="tab" onclick="show('timeline',this)">Timeline Hasil</button>
+  </div>
+
+  <!-- FUNNEL -->
+  <div class="panel on" id="p-funnel">
+    <p class="lbl">Alur lengkap dari konten ke komisi CPA</p>
+    <div class="tip t-pink"><b>Mindset utama:</b> Kamu bukan jual aplikasi dating — kamu jual <b>harapan</b>. Orang yang single dan sedang suka seseorang akan klik hampir apapun yang menjanjikan solusi. Tugasmu adalah membangun rasa percaya dulu lewat konten, baru arahkan ke CPA.</div>
+
+    <div class="funnel">
+      <div class="fn">
+        <div class="fn-dot d1">📱</div>
+        <div>
+          <div class="fn-title">Step 1 — Konten short-form yang relate dengan perasaan mereka</div>
+          <div class="fn-desc">Buat video/konten yang bikin orang yang nonton merasa "ini gue banget". Tips PDKT, tanda-tanda dia suka, cara baca sinyal, hal yang bikin gebetan tertarik — konten yang langsung relevan dengan kehidupan single mereka sekarang. Ini yang bikin mereka follow dan balik lagi.</div>
+          <div class="fn-pink">Tujuan: dapat follower & kepercayaan dulu</div>
+        </div>
+      </div>
+      <div class="fn">
+        <div class="fn-dot d2">🔗</div>
+        <div>
+          <div class="fn-title">Step 2 — CTA ke "komunitas / info lanjutan" di bio</div>
+          <div class="fn-desc">Di setiap konten, CTA bukan langsung "daftar di sini" — terlalu hard sell dan orang langsung skip. Gunakan: "tanda ke-3 yang paling jarang diketahui orang ada di link bio", "panduan lengkap PDKT ada di link", atau "gabung komunitas single aktif di link bio". Halus tapi efektif.</div>
+          <div class="fn-pink">Kunci: jangan bilang "cari jodoh" — bilang "info selengkapnya"</div>
+        </div>
+      </div>
+      <div class="fn">
+        <div class="fn-dot d3">📄</div>
+        <div>
+          <div class="fn-title">Step 3 — Landing page / Linktree sebagai jembatan</div>
+          <div class="fn-desc">Landing page sederhana berisi: "Mau ketemu orang yang tepat? Ribuan single aktif sudah daftar di sini 👇" + tombol CTA yang menuju link CPA kamu. Desain harus terasa personal dan hangat, bukan seperti iklan. Tambahkan 1–2 "testimoni singkat" untuk social proof.</div>
+          <div class="fn-pink">Landing page = jembatan antara konten dan konversi</div>
+        </div>
+      </div>
+      <div class="fn">
+        <div class="fn-dot d4">💑</div>
+        <div>
+          <div class="fn-title">Step 4 — CPA dating (bicolink / safelinku / CrakRevenue)</div>
+          <div class="fn-desc">User klik tombol di landing page → masuk ke platform CPA dating. Mereka cukup daftar dengan email (SOI) atau konfirmasi email (DOI) untuk kamu dapat komisi. Tidak perlu mereka bayar apapun. Semakin natural perjalanan dari konten → CPA, semakin tinggi konversi.</div>
+          <div class="fn-earn">+ $0.50–4 per registrasi (SOI/DOI Indo)</div>
+        </div>
+      </div>
+      <div class="fn">
+        <div class="fn-dot d5">🔄</div>
+        <div>
+          <div class="fn-title">Step 5 — Nurture audience untuk klik berulang</div>
+          <div class="fn-desc">Audience yang sudah follow tapi belum klik CPA = aset berharga. Posting konten secara konsisten supaya mereka terus engage. Setiap 3–5 post konten nilai, 1 post CTA ke CPA. Rasio ini membuat audience tidak merasa di-spam tapi tetap terus terpapar offer kamu.</div>
+          <div class="fn-earn">✓ 1 follower bisa klik CPA beberapa kali setelah exposure berulang</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KONTEN -->
+  <div class="panel" id="p-konten">
+    <p class="lbl">Jenis konten dating yang paling tinggi CTR ke CPA</p>
+    <div class="tip t-pink"><b>Rahasia niche dating:</b> Konten terbaik bukan yang memberikan semua jawaban — tapi yang menciptakan <b>kebutuhan akan jawaban lebih lanjut</b>. Kasih cukup untuk bikin mereka penasaran, sisanya ada di link bio.</div>
+    <div class="ct-grid">
+
+      <div class="ct fire">
+        <div class="ct-head"><span class="ct-icon">🔍</span><div class="ct-name">Tanda-tanda / Sinyal</div></div>
+        <div class="ct-badges"><span class="badge bp">CTR tertinggi</span><span class="badge bg">Selalu relate</span></div>
+        <div class="ct-desc">Konten "tanda dia suka kamu", "tanda dia mau move on", "tanda kamu ghosting". Format list selalu perform — kasih 2 dari 5, sisanya di link bio.</div>
+        <div class="ct-ctr">✦ CTR ke link: 8–15% — tertinggi dari semua format</div>
+        <div class="ct-eg">Contoh: "5 Tanda Dia Suka Tapi Takut Maju (nomor 4 bikin kaget)"</div>
+      </div>
+
+      <div class="ct fire">
+        <div class="ct-head"><span class="ct-icon">💬</span><div class="ct-name">Tips Chat / Text</div></div>
+        <div class="ct-badges"><span class="badge bp">Sangat actionable</span><span class="badge bg">Viral tinggi</span></div>
+        <div class="ct-desc">"Cara balas chat gebetan biar dia ketagihan", "kalimat pembuka chat yang works", "cara chat biar tidak di-ghosting". Orang langsung screenshot dan share — viral organik tinggi.</div>
+        <div class="ct-ctr">✦ Share rate tinggi = jangkauan organik meluas otomatis</div>
+        <div class="ct-eg">Contoh: "Balas chat kayak gini biar dia yang duluan chat kamu tiap hari"</div>
+      </div>
+
+      <div class="ct fire">
+        <div class="ct-head"><span class="ct-icon">❓</span><div class="ct-name">Pertanyaan / Quiz</div></div>
+        <div class="ct-badges"><span class="badge bp">Engagement tinggi</span><span class="badge bb">Komentar deras</span></div>
+        <div class="ct-desc">"Kalau dia melakukan ini, dia suka kamu atau cuma pengen diperhatiin?" — buat orang komen situasi mereka. Komentar masuk banyak = algoritma suka = jangkauan naik. Balas komentar dengan "jawaban lengknya di link bio".</div>
+        <div class="ct-ctr">✦ Komentar tinggi = distribusi algoritma naik otomatis</div>
+        <div class="ct-eg">Contoh: "Dia chat tiap malam tapi belum nembak — menurut kalian gimana?"</div>
+      </div>
+
+      <div class="ct hot">
+        <div class="ct-head"><span class="ct-icon">🧠</span><div class="ct-name">Psikologi Hubungan</div></div>
+        <div class="ct-badges"><span class="badge bb">Shareable</span><span class="badge bg">Authority builder</span></div>
+        <div class="ct-desc">"Kenapa orang yang kamu suka jarang balas chat kamu", "psikologi di balik love bombing", "attachment style dan kenapa kamu selalu milih yang salah". Bikin kamu terlihat expert — audience lebih percaya dan mau klik link.</div>
+        <div class="ct-ctr">✦ Builds trust = konversi CPA lebih tinggi jangka panjang</div>
+        <div class="ct-eg">Contoh: "Kenapa orang anxious attachment selalu jatuh ke avoidant"</div>
+      </div>
+
+      <div class="ct hot">
+        <div class="ct-head"><span class="ct-icon">😭</span><div class="ct-name">Konten Relatable / Curhat</div></div>
+        <div class="ct-badges"><span class="badge bb">Save rate tinggi</span><span class="badge bg">Emotional connect</span></div>
+        <div class="ct-desc">"Hal yang kamu rasain waktu suka seseorang yang mungkin tidak suka balik", "malam minggu sendiri", "nunggu chat yang tidak datang". Konten yang bikin orang ngerasa dipahami — save dan share sangat tinggi.</div>
+        <div class="ct-ctr">✦ Save rate tinggi = algoritma distribusikan lebih luas</div>
+        <div class="ct-eg">Contoh: "POV: buka HP tiap 5 menit nunggu dia balas 💔"</div>
+      </div>
+
+      <div class="ct">
+        <div class="ct-head"><span class="ct-icon">✅</span><div class="ct-name">Red/Green Flags</div></div>
+        <div class="ct-badges"><span class="badge by">Format populer</span><span class="badge bg">Evergreen</span></div>
+        <div class="ct-desc">"Red flag yang sering dianggap normal", "green flag yang jarang dibahas", "7 red flag dia ghosting kamu". Format ini selalu viral karena orang langsung tag teman atau pasangan. Komentar "ini mantan gue banget" selalu deras.</div>
+        <div class="ct-ctr">✦ Tag-a-friend organik = reach gratis tanpa iklan</div>
+        <div class="ct-eg">Contoh: "5 Red Flag yang Kamu Pikir Normal Padahal Tidak"</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PLATFORM -->
+  <div class="panel" id="p-platform">
+    <p class="lbl">Platform terbaik untuk niche dating & CPA — ranking</p>
+    <div class="stats">
+      <div class="st p"><div class="st-lbl">Platform terbaik</div><div class="st-val">TikTok</div><div class="st-sub">viral paling cepat</div></div>
+      <div class="st g"><div class="st-lbl">Konversi terbaik</div><div class="st-val">Instagram</div><div class="st-sub">audience engagement</div></div>
+      <div class="st"><div class="st-lbl">Evergreen terbaik</div><div class="st-val">YT Shorts</div><div class="st-sub">muncul di Google</div></div>
+      <div class="st"><div class="st-lbl">Direct link</div><div class="st-val">Facebook</div><div class="st-sub">link di caption langsung</div></div>
+    </div>
+
+    <div class="plat best">
+      <div class="plat-head"><span class="plat-icon">🎵</span><div><div class="plat-name">TikTok ⭐ Prioritas Utama untuk Dating Niche</div><div class="plat-stat">Algoritma paling powerful untuk akun baru di niche ini</div></div></div>
+      <div class="plat-body">Dating dan relationship adalah salah satu niche paling viral di TikTok Indonesia. #hubungan, #pdkt, #tips-cinta selalu trending. Algoritma TikTok mendistribusikan konten emosional dan relatable sangat jauh — video pertama bisa langsung dapat jutaan views tanpa follower. Audience TikTok Indonesia di niche ini mayoritas usia 17–28 tahun, single, dan sangat responsif terhadap konten yang relate.</div>
+      <div class="plat-trick">✦ Taruh link Linktree di bio. Di setiap video sebutkan "link di bio" secara verbal + tulis di caption + masukkan teks overlay di video. Tiga titik masuk = CTR maksimal.</div>
+    </div>
+
+    <div class="plat">
+      <div class="plat-head"><span class="plat-icon">📸</span><div><div class="plat-name">Instagram Reels + Stories — Terbaik untuk Konversi</div><div class="plat-stat">Audience lebih mature, konversi ke CPA lebih tinggi</div></div></div>
+      <div class="plat-body">Audience Instagram di niche dating cenderung lebih dewasa (20–30 tahun) dan lebih serius — konversi ke CPA dating lebih tinggi dibanding TikTok yang lebih muda. Gunakan Reels untuk distribusi baru + Stories untuk engagement audience yang sudah follow. Link sticker di Stories bisa langsung ke landing page CPA kamu.</div>
+      <div class="plat-trick">✦ Stories link sticker langsung ke CPA = tidak perlu mereka buka bio dulu. Konversi lebih tinggi karena lebih sedikit langkah.</div>
+    </div>
+
+    <div class="plat">
+      <div class="plat-head"><span class="plat-icon">👥</span><div><div class="plat-name">Facebook — Direct Link di Caption</div><div class="plat-stat">Demografi 24–35 thn — paling serius cari pasangan</div></div></div>
+      <div class="plat-body">Audience Facebook di niche dating lebih tua dan lebih serius mencari pasangan — conversion rate ke CPA dating secara persentase lebih tinggi meski jumlah klikan lebih sedikit dari TikTok. Yang paling penting: Facebook adalah satu-satunya platform yang bisa taruh link CPA langsung di caption post — tidak perlu bio dulu.</div>
+      <div class="plat-trick">✦ Post konten dating di Facebook Reels + masukkan link CPA langsung di caption. Tidak ada platform lain yang bisa ini.</div>
+    </div>
+
+    <div class="plat">
+      <div class="plat-head"><span class="plat-icon">📺</span><div><div class="plat-name">YouTube Shorts — Traffic Evergreen Jangka Panjang</div><div class="plat-stat">Muncul di Google Search — passive traffic bulanan</div></div></div>
+      <div class="plat-body">Video Shorts tentang "tanda dia suka kamu" atau "cara PDKT yang benar" bisa muncul di Google Search dan mendapat views berbulan-bulan setelah diupload. Berbeda dengan TikTok yang cepat expired. Untuk niche dating, banyak orang yang Google "tanda dia suka aku" — Shorts bisa muncul di sana.</div>
+      <div class="plat-trick">✦ Taruh link landing page CPA di deskripsi Shorts + komentar yang di-pin. Konten evergreen = passive klik ke CPA tanpa perlu posting baru.</div>
+    </div>
+
+  </div>
+
+  <!-- HOOK SCRIPTS -->
+  <div class="panel" id="p-hook">
+    <p class="lbl">Script hook siap pakai — dating niche</p>
+    <div class="tip t-pink"><b>Formula dasar:</b> Hook (3 detik pertama yang bikin stop scroll) → Isi (kasih nilai tapi tidak semua) → CTA (arahkan ke link bio secara natural). Jangan langsung jualan di hook — bangun penasaran dulu.</div>
+
+    <div class="hook">
+      <div class="hook-lbl">💑 Script #1 — Tanda-tanda (CTR tertinggi)</div>
+      <div class="hook-script">"Kalau dia melakukan 3 hal ini ke kamu... dia suka, tapi takut bilang. Yang pertama: [kasih tanda 1]. Yang kedua: [kasih tanda 2]. Tanda ketiga — ini yang paling jarang orang tahu dan paling akurat — ada di link bio. Gratis, cuma 30 detik."</div>
+      <div class="hook-why">Kenapa works: incomplete information gap — otak tidak bisa tenang sebelum tahu tanda ke-3. "30 detik" = menurunkan hambatan klik, terasa tidak ribet.</div>
+      <div class="hook-platform">TikTok • Reels • Shorts</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-lbl">💬 Script #2 — Tips chat (share rate tinggi)</div>
+      <div class="hook-script">"Kalau gebetan kamu susah diajak ngobrol, coba balas chatnya kayak gini. Jangan bilang [contoh buruk] — coba bilang [contoh bagus] karena ini langsung trigger rasa penasaran dia. Ada 4 kalimat lagi yang lebih powerful di link bio. Udah ribuan orang coba dan works."</div>
+      <div class="hook-why">Kenapa works: kasih satu contoh konkret yang bisa langsung dicoba — ini membangun kepercayaan bahwa kamu punya konten yang worth diklik. "Ribuan orang" = social proof.</div>
+      <div class="hook-platform">TikTok • Reels • Facebook Reels</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-lbl">😭 Script #3 — Relatable / Emosional (save rate tinggi)</div>
+      <div class="hook-script">"Pernah nunggu chat seseorang tapi yang datang cuma notif dari orang lain? Itu bukan kelemahan kamu — itu namanya anxious attachment, dan ada caranya. Kalau kamu mau ketemu orang yang benar-benar mau duluan chat kamu duluan, link di bio."</div>
+      <div class="hook-why">Kenapa works: validasi perasaan dulu sebelum offer solusi. Orang tidak merasa dijual sesuatu — mereka merasa dipahami. CTA terasa seperti solusi, bukan iklan.</div>
+      <div class="hook-platform">TikTok • Instagram Reels</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-lbl">🚩 Script #4 — Red flag (tag-a-friend viral)</div>
+      <div class="hook-script">"3 red flag yang sering dikira normal tapi sebenarnya nggak. Nomor 1: [red flag]. Nomor 2: [red flag]. Nomor 3... ini yang paling berbahaya tapi paling susah kamu notice kalau lagi suka sama seseorang. Ada di link bio. Tag teman yang perlu tau ini."</div>
+      <div class="hook-why">Kenapa works: "tag teman yang perlu tau ini" = CTA yang natural untuk share. Orang yang punya teman dengan situasi ini akan tag — reach organik gratis tanpa keluar uang.</div>
+      <div class="hook-platform">TikTok • Facebook • Instagram</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-lbl">🎯 Script #5 — CTA langsung ke CPA (untuk yang sudah punya audience)</div>
+      <div class="hook-script">"Udah lama single? Bukan karena kamu kurang, tapi karena belum ketemu orang yang tepat di tempat yang tepat. Di link bio ada platform yang teman gue pakai dan sekarang udah jadian 3 bulan. Gratis daftarnya, cuma butuh 1 menit. Coba dulu, nggak ada ruginya."</div>
+      <div class="hook-why">Kenapa works: personal recommendation terasa lebih jujur dari iklan biasa. "Teman gue" = social proof personal. "Gratis" + "1 menit" = hambatan masuk sangat rendah. Pakai ini setelah audience sudah percaya dengan kontenmu.</div>
+      <div class="hook-platform">Instagram Stories • Facebook • YouTube</div>
+    </div>
+
+  </div>
+
+  <!-- GROWTH -->
+  <div class="panel" id="p-growth">
+    <p class="lbl">Cara gain follower / audience — dating niche spesifik</p>
+    <div class="tip t-blue"><b>Prinsip growth niche dating:</b> Orang tidak follow akun dating karena penasaran siapa kamu — mereka follow karena kontenmu <b>relate dengan situasi mereka sekarang</b>. Setiap post harus bikin mereka pikir "ini gue banget".</div>
+
+    <div class="gt prio">
+      <div class="gt-head"><span class="gt-icon">🎯</span><div class="gt-name">1. Konsistensi posting — 1 konten per hari minimal</div></div>
+      <div class="gt-body">Di niche dating, konsistensi lebih penting dari kualitas produksi. Video sederhana dengan teks di layar yang relate jauh lebih efektif dari video cinematic tapi jarang upload. TikTok algoritma reward akun yang posting harian — akun baru yang upload 1x/hari selama 30 hari tumbuh 10–20x lebih cepat dari yang upload 2–3x seminggu.</div>
+      <div class="gt-result">Target: 30 hari posting harian tanpa jeda = momentum awal terbentuk</div>
+    </div>
+
+    <div class="gt prio">
+      <div class="gt-head"><span class="gt-icon">💬</span><div class="gt-name">2. Reply SEMUA komentar di 1 jam pertama</div></div>
+      <div class="gt-body">Algoritma TikTok dan Instagram melihat engagement rate dalam 1 jam pertama setelah post untuk menentukan seberapa luas mendistribusikan konten. Reply setiap komentar yang masuk dalam 1 jam pertama — ini meningkatkan engagement rate dan mendorong algoritma mendistribusikan konten lebih jauh ke FYP/Explore orang lain.</div>
+      <div class="gt-result">Komentar dibalas = engagement rate naik = distribusi algoritma lebih luas</div>
+    </div>
+
+    <div class="gt prio">
+      <div class="gt-head"><span class="gt-icon">🔥</span><div class="gt-name">3. Stitch / Duet konten dating yang sudah viral</div></div>
+      <div class="gt-body">Cari video dating yang sudah viral di TikTok (100k+ views) → Stitch atau Duet dengan pendapat/tambahan kamu. Video stitch dari konten viral langsung mendapat exposure dari audience video aslinya. Ini cara paling cepat dapat ribuan views untuk akun baru tanpa perlu follower.</div>
+      <div class="gt-result">1 stitch dari video viral 1M views = bisa dapat 10k–100k views organik</div>
+    </div>
+
+    <div class="gt">
+      <div class="gt-head"><span class="gt-icon">📊</span><div class="gt-name">4. Pakai format "POV" dan "kalau kamu..."</div></div>
+      <div class="gt-body">"POV: kamu suka seseorang tapi dia cuma anggap kamu teman" — format POV sangat tinggi watch time di TikTok karena orang merasakan situasinya sendiri. Watch time tinggi = sinyal positif ke algoritma. Kombinasikan dengan musik trending yang sad/romantic untuk boost distribution.</div>
+      <div class="gt-result">Watch time tinggi = algoritma distribusikan ke lebih banyak FYP</div>
+    </div>
+
+    <div class="gt">
+      <div class="gt-head"><span class="gt-icon">🤝</span><div class="gt-name">5. Kolaborasi dengan akun dating lain yang satu niche</div></div>
+      <div class="gt-body">Cari akun TikTok/Instagram dengan niche sama (tips hubungan, relationship advice) yang sudah punya 5k–50k follower. Tawarkan kolaborasi: kamu bikin konten tentang mereka, mereka mention kamu. Atau buat konten bareng. Audience mereka langsung terpapar ke akun kamu — lebih targeted dari iklan.</div>
+      <div class="gt-result">1 kolaborasi dengan akun 20k = bisa dapat 500–2000 follower baru</div>
+    </div>
+
+    <div class="gt">
+      <div class="gt-head"><span class="gt-icon">📌</span><div class="gt-name">6. Aktif di kolom komentar akun dating besar</div></div>
+      <div class="gt-body">Buka akun relationship besar (100k+), komentari postingan mereka dengan insight yang bermanfaat dan spesifik — bukan cuma "setuju" atau "nice". Komentar yang thoughtful sering dapat ratusan likes dan orang yang curious langsung klik profil kamu. Ini traffic gratis dari akun orang lain.</div>
+      <div class="gt-result">Komentar yang di-like banyak = ratusan orang klik profil kamu organik</div>
+    </div>
+
+    <div class="gt">
+      <div class="gt-head"><span class="gt-icon">📲</span><div class="gt-name">7. Bangun Telegram sebagai home base audience</div></div>
+      <div class="gt-body">Arahkan semua follower TikTok/Instagram ke channel Telegram kamu. Di Telegram, posting konten eksklusif + CTA ke CPA lebih sering. Audience Telegram lebih engaged dan konversi CPA lebih tinggi karena mereka sudah melalui beberapa langkah untuk sampai sana — high-intent audience.</div>
+      <div class="gt-result">Telegram member = aset yang kamu miliki, tidak bergantung algoritma platform lain</div>
+    </div>
+
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="panel" id="p-timeline">
+    <p class="lbl">Ekspektasi realistis — timeline pertumbuhan & penghasilan</p>
+    <div class="tip t-yellow"><b>Penting:</b> Dating niche tumbuh lebih cepat dari kebanyakan niche lain karena kontennya sangat emosional dan shareable. Tapi konsistensi 60–90 hari pertama sangat menentukan. Banyak yang berhenti di minggu ke-3 saat belum ada hasil — jangan jadi mereka.</div>
+
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-dot dp"></div>
+        <div>
+          <div class="tl-month">Minggu 1–2</div>
+          <div class="tl-title">Setup & eksperimen format</div>
+          <div class="tl-desc">Buat akun TikTok + Instagram + Facebook. Setup bio, foto profil menarik, Linktree/landing page CPA. Upload 2–3 format konten berbeda untuk lihat mana yang dapat engagement paling tinggi. Belum expect banyak follower.</div>
+          <div class="tl-result">Target: 100–500 follower awal, identifikasi format terbaik</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dp"></div>
+        <div>
+          <div class="tl-month">Minggu 3–4</div>
+          <div class="tl-title">Double down pada format yang works</div>
+          <div class="tl-desc">Analisis konten mana yang dapat view dan engagement paling tinggi → buat lebih banyak konten dengan format yang sama. Mulai Stitch konten dating viral. Aktif reply semua komentar. Mulai ada klik ke bio tapi konversi CPA masih kecil.</div>
+          <div class="tl-result">Target: 500–2.000 follower | 10–50 klik ke CPA/bulan</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot db"></div>
+        <div>
+          <div class="tl-month">Bulan 2</div>
+          <div class="tl-title">Momentum mulai terbentuk</div>
+          <div class="tl-desc">Akun sudah ada riwayat cukup, algoritma mulai mengenali niche kamu. Beberapa video mulai dapat 10k–50k views. Follower tumbuh lebih cepat. Mulai ada penghasilan CPA yang konsisten meski masih kecil. Bangun Telegram channel mulai sekarang.</div>
+          <div class="tl-result">Target: 2k–10k follower | $20–80 dari CPA/bulan</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot db"></div>
+        <div>
+          <div class="tl-month">Bulan 3</div>
+          <div class="tl-title">Viral pertama — tipping point</div>
+          <div class="tl-desc">Di bulan ke-3, hampir semua kreator dating niche yang konsisten punya minimal 1 video yang "meledak". Satu video viral bisa bawa 5k–50k follower baru dalam beberapa hari. Penghasilan CPA mulai terasa lebih signifikan.</div>
+          <div class="tl-result">Target: 10k–50k follower | $80–200 dari CPA/bulan</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dg"></div>
+        <div>
+          <div class="tl-month">Bulan 4–6</div>
+          <div class="tl-title">Scale — multi-platform + optimasi funnel</div>
+          <div class="tl-desc">Dengan audience yang sudah ada, mulai optimize funnel CPA (A/B test landing page, coba DOI vs SOI). Tambahkan YouTube Shorts untuk passive traffic. Telegram channel mulai berisi ratusan member yang high-intent. Pertimbangkan menambah CPA network kedua.</div>
+          <div class="tl-result">Target: 50k–200k follower | $200–600 dari CPA/bulan</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dg"></div>
+        <div>
+          <div class="tl-month">Bulan 6–12</div>
+          <div class="tl-title">Monetisasi stabil + diversifikasi</div>
+          <div class="tl-desc">Penghasilan CPA sudah konsisten. Bisa tambahkan: konten berbayar (ebook tips PDKT), affiliate produk dating (parfum, fashion), atau endorsement produk yang relevan. Audience yang sudah percaya = jauh lebih mudah konversi ke apapun yang kamu rekomendasikan.</div>
+          <div class="tl-result">Target: 200k+ follower | $400–1.000+ dari semua stream/bulan</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-green"><b>Satu hal yang paling penting:</b> Di niche dating, <b>konsistensi adalah keunggulan kompetitif</b>. Banyak akun mulai lalu berhenti saat belum ada hasil. Kalau kamu tetap posting saat yang lain berhenti — kamu yang akhirnya menang. 90 hari pertama adalah periode yang paling menentukan.</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Short-Form → Link Strategy 2026</title>
+<style>
+:root{
+  --bg:#0f0f0f;--surface:#1a1a1a;--surface2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#888;--sub:#aaa;
+  --accent:#6c8aff;--accent-bg:#1a1f3a;--accent-muted:#3a4a8a;
+  --green:#4ade80;--green-bg:#0d2a1a;
+  --yellow:#fbbf24;--yellow-bg:#2a1f00;
+  --red:#f87171;--red-bg:#2a0f0f;
+  font-size:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;min-height:100vh;}
+.wrap{max-width:720px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.subtitle{font-size:12px;color:var(--muted);margin-bottom:16px;}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--surface);color:var(--muted);transition:.15s;}
+.tab:hover{color:var(--text);}
+.tab.active{background:var(--accent-bg);color:var(--accent);border-color:var(--accent-muted);}
+
+.panel{display:none;}
+.panel.active{display:block;}
+
+.sec-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+
+/* Tip boxes */
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.tip-blue{background:var(--accent-bg);border-color:var(--accent-muted);color:var(--accent);}
+.tip-green{background:var(--green-bg);border-color:#1a4a2a;color:var(--green);}
+.tip-yellow{background:var(--yellow-bg);border-color:#4a3a00;color:var(--yellow);}
+.tip b{font-weight:600;}
+
+/* Niche grid */
+.niche-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.nc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.nc.fire{border-color:var(--green);border-width:2px;}
+.nc.hot{border-color:var(--accent);border-width:2px;}
+.nc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.nc-icon{font-size:20px;}
+.nc-name{font-size:13px;font-weight:600;color:var(--text);}
+.nc-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;}
+.bg{background:var(--green-bg);color:var(--green);}
+.ba{background:var(--accent-bg);color:var(--accent);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.nc-desc{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.nc-tag{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);display:inline-block;padding:2px 8px;border-radius:4px;margin-top:6px;}
+.nc-tag.blue{color:var(--accent);background:var(--accent-bg);}
+
+/* Platform */
+.pr{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.pr.best{border-color:var(--accent);background:var(--accent-bg);}
+.pr-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.pr-icon{font-size:22px;}
+.pr-name{font-size:13px;font-weight:600;}
+.pr.best .pr-name{color:var(--accent);}
+.pr-stat{font-size:11px;color:var(--muted);}
+.pr-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.pr.best .pr-body{color:var(--accent);}
+.pr-trick{font-size:11.5px;font-weight:600;color:var(--green);margin-top:7px;padding:6px 10px;background:var(--green-bg);border-radius:6px;}
+
+/* Stats grid */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:14px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.stat.a{border-color:var(--accent-muted);background:var(--accent-bg);}
+.stat.g{border-color:#1a4a2a;background:var(--green-bg);}
+.stat-label{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.stat-val{font-size:17px;font-weight:600;color:var(--text);}
+.stat.a .stat-val{color:var(--accent);}
+.stat.g .stat-val{color:var(--green);}
+.stat-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* Hook */
+.hook{background:var(--surface);border:1px solid var(--accent-muted);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.hook-label{font-size:10px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px;}
+.hook-text{font-size:13px;color:var(--text);line-height:1.7;font-style:italic;border-left:2px solid var(--accent);padding-left:10px;}
+.hook-why{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6;}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;gap:0;}
+.fl{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.fl:last-child{border-bottom:none;}
+.fl-dot{width:34px;height:34px;min-width:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.d1{background:var(--accent-bg);}
+.d2{background:#1a2a1a;}
+.d3{background:var(--yellow-bg);}
+.d4{background:var(--accent-bg);}
+.d5{background:var(--green-bg);}
+.fl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.fl-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.fl-earn{font-size:11px;font-weight:600;color:var(--green);margin-top:5px;background:var(--green-bg);display:inline-block;padding:2px 8px;border-radius:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Short-Form → Link Strategy 2026</h1>
+  <p class="subtitle">Niche, platform, hook, dan alur konversi untuk traffic Indonesia</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="show('niche',this)">Niche Terbaik</button>
+    <button class="tab" onclick="show('platform',this)">Platform</button>
+    <button class="tab" onclick="show('hook',this)">Formula Hook</button>
+    <button class="tab" onclick="show('alur',this)">Alur ke Link</button>
+  </div>
+
+  <!-- NICHE -->
+  <div class="panel active" id="p-niche">
+    <p class="sec-label">Niche yang paling efektif drive link klik — 2026</p>
+    <div class="tip tip-blue"><b>Prinsip utama:</b> Niche terbaik bukan yang paling populer, tapi yang paling mudah bikin orang <b>butuh klik link</b> untuk dapat sesuatu — download, info lanjutan, atau aksi tertentu.</div>
+    <div class="niche-grid">
+
+      <div class="nc fire">
+        <div class="nc-head"><span class="nc-icon">💑</span><div class="nc-name">Dating & Relationship</div></div>
+        <div class="nc-badges"><span class="badge bg">CTR tertinggi</span><span class="badge ba">CPA dating ✓</span></div>
+        <div class="nc-desc">Tips kencan, tanda suka, cara PDKT — penonton hampir selalu single dan mudah terpancing klik ke platform dating. Kasih 2 tips → "tanda ke-3 ada di link bio".</div>
+        <div class="nc-tag">→ Monetisasi: CPA dating (bicolink / safelinku)</div>
+      </div>
+
+      <div class="nc fire">
+        <div class="nc-head"><span class="nc-icon">🍳</span><div class="nc-name">Food & Recipes</div></div>
+        <div class="nc-badges"><span class="badge bg">Evergreen</span><span class="badge bg">Pinterest ✓</span></div>
+        <div class="nc-desc">Video masak 15–30 detik yang berhenti sebelum langkah terakhir → "resep lengkap + ukuran bahan di link bio". Double monetisasi: blog AdSense + shortlink PDF.</div>
+        <div class="nc-tag">→ Monetisasi: Blog AdSense + shortlink PDF resep</div>
+      </div>
+
+      <div class="nc hot">
+        <div class="nc-head"><span class="nc-icon">💰</span><div class="nc-name">Tips Penghasilan / Side Hustle</div></div>
+        <div class="nc-badges"><span class="badge bg">Viral tinggi</span><span class="badge by">Kompetitif</span></div>
+        <div class="nc-desc">"Cara dapat uang dari HP" atau "side hustle yang bisa dimulai hari ini" → link ke blog. Teaser cara ke-1 saja, lengkapnya di link. Indonesia sangat responsif niche ini.</div>
+        <div class="nc-tag blue">→ Monetisasi: Shortlink + affiliate + AdSense</div>
+      </div>
+
+      <div class="nc hot">
+        <div class="nc-head"><span class="nc-icon">✂️</span><div class="nc-name">Video Editing / CapCut Tips</div></div>
+        <div class="nc-badges"><span class="badge ba">Langsung relevan</span><span class="badge bg">Niche kamu ✓</span></div>
+        <div class="nc-desc">Tutorial efek CapCut atau transisi keren → "template pack gratis di link bio". Sangat relevan dengan video pack yang kamu bangun. Penonton langsung tahu link = download pack.</div>
+        <div class="nc-tag">→ Monetisasi: Shortlink video pack (strategi utama kamu)</div>
+      </div>
+
+      <div class="nc hot">
+        <div class="nc-head"><span class="nc-icon">🎭</span><div class="nc-name">Entertainment / Gosip Ringan</div></div>
+        <div class="nc-badges"><span class="badge bg">Volume tinggi</span><span class="badge ba">Indo banget</span></div>
+        <div class="nc-desc">Fakta mengejutkan, ranking, "yang nomor 3 bikin kaget" → "lihat semua di link". Volume klik sangat besar, cocok untuk shortlink murni karena butuh banyak klik.</div>
+        <div class="nc-tag blue">→ Monetisasi: Shortlink volume tinggi (ShrtFly)</div>
+      </div>
+
+      <div class="nc">
+        <div class="nc-head"><span class="nc-icon">🎮</span><div class="nc-name">Gaming / Tips / Pack Game</div></div>
+        <div class="nc-badges"><span class="badge bg">Loyal audience</span><span class="badge ba">Indo besar</span></div>
+        <div class="nc-desc">Tips, cheat, atau skin/pack gratis ML/PUBG/FF → link download. Download niche = shortlink sangat natural, orang sudah expect ada proses sebelum download.</div>
+        <div class="nc-tag blue">→ Monetisasi: Shortlink download pack game</div>
+      </div>
+
+      <div class="nc">
+        <div class="nc-head"><span class="nc-icon">💪</span><div class="nc-name">Health & Fitness</div></div>
+        <div class="nc-badges"><span class="badge bg">High intent</span><span class="badge bg">Affiliate bagus</span></div>
+        <div class="nc-desc">Tips diet, workout 5 menit → link ke artikel lengkap. Penonton health content punya purchase intent tinggi → cocok untuk affiliate suplemen atau ebook diet.</div>
+        <div class="nc-tag blue">→ Monetisasi: Blog + affiliate + shortlink</div>
+      </div>
+
+      <div class="nc">
+        <div class="nc-head"><span class="nc-icon">🧠</span><div class="nc-name">Fakta Psikologi / Life Hack</div></div>
+        <div class="nc-badges"><span class="badge bg">Shareable</span><span class="badge by">CR rendah</span></div>
+        <div class="nc-desc">"Psikologi yang tidak diajarkan di sekolah" → link ke artikel. Sangat shareable = jangkauan besar, tapi konversi klik lebih rendah. Cocok untuk traffic volume → AdSense.</div>
+        <div class="nc-tag blue">→ Monetisasi: Blog AdSense (traffic besar)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PLATFORM -->
+  <div class="panel" id="p-platform">
+    <p class="sec-label">Platform short-form 2026 — mana terbaik untuk drive link?</p>
+    <div class="stats">
+      <div class="stat a"><div class="stat-label">YouTube Shorts MAU</div><div class="stat-val">2 Miliar</div><div class="stat-sub">terbesar 2026</div></div>
+      <div class="stat g"><div class="stat-label">Daily views Shorts</div><div class="stat-val">70 Miliar</div><div class="stat-sub">per hari global</div></div>
+      <div class="stat"><div class="stat-label">Total semua platform</div><div class="stat-val">80M+</div><div class="stat-sub">views/hari</div></div>
+      <div class="stat"><div class="stat-label">Konten AI 2026</div><div class="stat-val">15–25%</div><div class="stat-sub">dari total konten</div></div>
+    </div>
+
+    <div class="pr best">
+      <div class="pr-head"><span class="pr-icon">📺</span><div><div class="pr-name">YouTube Shorts ⭐ Terbaik untuk drive link</div><div class="pr-stat">2 miliar MAU • 70 miliar views/hari • evergreen</div></div></div>
+      <div class="pr-body">Satu-satunya short-form yang muncul di Google Search. Shorts tentang "cara masak rendang" bisa muncul di halaman 1 Google — traffic terus mengalir berbulan-bulan. Algoritma 2026 aktif promosikan Shorts dari kreator yang punya long-form content juga.</div>
+      <div class="pr-trick">✦ Taruh link di deskripsi + komentar yang di-pin. "Link lengkap di deskripsi dan komentar pertama." Dua titik masuk = CTR lebih tinggi.</div>
+    </div>
+
+    <div class="pr">
+      <div class="pr-head"><span class="pr-icon">👥</span><div><div class="pr-name">Facebook Reels — paling diremehkan, paling worth it</div><div class="pr-stat">Kompetisi rendah, demografi 25–45 thn Indonesia</div></div></div>
+      <div class="pr-body">Facebook Reels paling diabaikan kreator tapi ini peluang besar. Kompetisi jauh lebih rendah dari TikTok/Shorts. Demografi pengguna (25–45 tahun) punya purchasing power lebih tinggi. Dan yang paling penting...</div>
+      <div class="pr-trick">✦ SATU-SATUNYA short-form yang bisa taruh link langsung klik di caption post. Manfaatkan ini! Tidak ada platform lain yang bisa.</div>
+    </div>
+
+    <div class="pr">
+      <div class="pr-head"><span class="pr-icon">🎵</span><div><div class="pr-name">TikTok — terbaik untuk viral cepat</div><div class="pr-stat">Cultural trendsetter 2026, reach akun baru terbaik</div></div></div>
+      <div class="pr-body">Algoritma TikTok paling kuat untuk jangkauan akun baru — video pertama bisa dapat jutaan views tanpa follower. Kelemahannya: konten cepat "expired" 24–48 jam. Link hanya di bio, tidak bisa di caption.</div>
+      <div class="pr-trick">✦ Sebutkan "link di bio" secara verbal di video + tulis di caption. TikTok mulai test direct link di caption untuk kreator Indo terpilih.</div>
+    </div>
+
+    <div class="pr">
+      <div class="pr-head"><span class="pr-icon">📸</span><div><div class="pr-name">Instagram Reels — terbaik untuk konversi audience yang sudah kenal kamu</div><div class="pr-stat">Best untuk nurture audience existing</div></div></div>
+      <div class="pr-body">Algoritma 2026 sangat prioritaskan original content — Reels repost dari TikTok yang ada watermark dapat distribusi jauh lebih rendah. Kekuatan: link sticker di Stories gratis untuk semua akun.</div>
+      <div class="pr-trick">✦ Link in bio + Stories dengan link sticker untuk redirect ke shortlink atau landing page. Stories link = tidak perlu 10k followers lagi.</div>
+    </div>
+
+    <div class="tip tip-green" style="margin-top:10px"><b>Strategi repurpose paling efisien:</b> Buat 1 video di CapCut → hapus watermark → upload ke TikTok + Reels + YouTube Shorts + Facebook Reels sekaligus. Semua arahkan ke 1 landing page yang sama. Kerja sekali = 4 sumber traffic.</div>
+  </div>
+
+  <!-- HOOK -->
+  <div class="panel" id="p-hook">
+    <p class="sec-label">Formula hook + CTA untuk drive klik ke link — 2026</p>
+    <div class="tip tip-yellow"><b>Aturan 3 detik:</b> Penonton memutuskan skip atau lanjut dalam 3 detik pertama. Hook di awal video lebih penting dari seluruh sisa konten. Berikut formula yang terbukti bekerja untuk audience Indonesia:</div>
+
+    <div class="hook">
+      <div class="hook-label">🔥 Hook #1 — Curiosity Gap (paling universal)</div>
+      <div class="hook-text">"Ada satu hal yang orang sukses lakukan setiap pagi yang 99% orang Indonesia tidak tahu... [pause] dan bisa kamu download gratis di link bio."</div>
+      <div class="hook-why">Kenapa works: menciptakan rasa penasaran yang tidak bisa diselesaikan tanpa klik link. Otak manusia tidak nyaman dengan informasi yang tidak lengkap (Zeigarnik Effect).</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">⏰ Hook #2 — FOMO + Urgency</div>
+      <div class="hook-text">"Pack CapCut ini lagi viral sekarang dan aku kasih GRATIS... tapi cuma sampai malam ini. Link di bio, download sekarang sebelum dihapus."</div>
+      <div class="hook-why">Kenapa works: keterbatasan waktu memaksa keputusan impulsif. "Sebelum dihapus" sangat efektif di audience Indonesia — takut ketinggalan sesuatu yang gratis.</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🎭 Hook #3 — Social Proof + Teaser</div>
+      <div class="hook-text">"Video ini udah dipakai 50.000 kreator Indonesia... ini dia presetnya [tampilkan sebentar tapi tidak jelas] — yang mau, link ada di bio, gratis."</div>
+      <div class="hook-why">Kenapa works: angka besar + "gratis" = kombinasi yang hampir tidak bisa diabaikan. Tampilkan produknya sebentar tapi jangan kasih semua detailnya.</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">💑 Hook #4 — Dating Niche (khusus CPA)</div>
+      <div class="hook-text">"3 tanda dia suka kamu tapi takut bilang... [kasih 2 tanda] tanda ke-3 yang paling sering bikin orang salah baca situasi, ada di link bio."</div>
+      <div class="hook-why">Kenapa works: berhenti sebelum informasi paling penting → penonton yang single atau punya crush hampir pasti klik. Conversion ke CPA dating sangat tinggi dari hook ini.</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🍳 Hook #5 — Food/Recipes</div>
+      <div class="hook-text">"Ini resep yang sama persis kayak restoran bintang 5... [tunjukkan hasil akhir yang menggugah selera] bahan-bahannya ada di link bio, PDF gratis."</div>
+      <div class="hook-why">Kenapa works: tampilkan hasil yang impressive dulu, baru kasih "akses". Orang sudah terlanjur mau sebelum kamu minta mereka klik. Foto/video makanan yang lezat = 70% pekerjaan sudah selesai.</div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🎮 Hook #6 — Gaming / Download Pack</div>
+      <div class="hook-text">"Skin/pack ini biasanya bayar Rp 150.000... aku kasih gratis. Cuma buat yang follow dulu. Link download ada di bio, gratis 100%."</div>
+      <div class="hook-why">Kenapa works: nilai yang jelas (harga aslinya berapa) + gratis + syarat mudah (follow) = motivasi sangat tinggi untuk ambil action segera.</div>
+    </div>
+  </div>
+
+  <!-- ALUR -->
+  <div class="panel" id="p-alur">
+    <p class="sec-label">Alur konversi — dari short-form video ke penghasilan</p>
+    <div class="tip tip-yellow"><b>Masalah utama short-form → link:</b> Hampir semua platform tidak memperbolehkan link langsung di video (kecuali Facebook). Solusinya: funnel 2–3 langkah yang natural dan tidak terasa memaksa.</div>
+
+    <div class="flow">
+      <div class="fl">
+        <div class="fl-dot d1">📱</div>
+        <div>
+          <div class="fl-title">Langkah 1 — Video short-form dengan hook kuat (15–45 detik)</div>
+          <div class="fl-desc">Buat video yang kasih nilai nyata tapi tidak lengkap. Hook di 3 detik pertama, isi konten yang bikin penasaran, CTA jelas di akhir: "link di bio" atau "komentar pertama". Tidak perlu tampil muka — bisa footage, text overlay, atau hands-only video.</div>
+        </div>
+      </div>
+      <div class="fl">
+        <div class="fl-dot d2">🔗</div>
+        <div>
+          <div class="fl-title">Langkah 2 — Link in bio → Linktree / landing page sederhana</div>
+          <div class="fl-desc">Bio hanya bisa 1 link — pakai Linktree gratis atau landing page Carrd untuk tampilkan semua pilihan sekaligus. Contoh isi: "📥 Download Pack Gratis", "🍳 Resep Lengkap", "💑 Cari Pasangan". Tiap tombol menuju tujuan berbeda.</div>
+          <div class="fl-earn">Pintu masuk — belum ada penghasilan di sini</div>
+        </div>
+      </div>
+      <div class="fl">
+        <div class="fl-dot d3">💸</div>
+        <div>
+          <div class="fl-title">Langkah 3a — Shortlink (penghasilan per klik)</div>
+          <div class="fl-desc">User klik tombol di landing page → masuk ShrtFly/ShrinkEarn → iklan tampil 5–10 detik → redirect ke Mediafire/konten. Untuk niche video pack, PDF resep, atau konten download apapun.</div>
+          <div class="fl-earn">+ Rp 30–80 per klik valid (Tier 2 Indo)</div>
+        </div>
+      </div>
+      <div class="fl">
+        <div class="fl-dot d4">📰</div>
+        <div>
+          <div class="fl-title">Langkah 3b — Blog artikel (AdSense + double monetisasi)</div>
+          <div class="fl-desc">Untuk niche food/tips → arahkan ke artikel blog lengkap. Di artikel: AdSense tayang otomatis + ada tombol shortlink untuk download PDF. Dua penghasilan dari satu kunjungan. Paling worth untuk traffic Pinterest + YouTube Shorts.</div>
+          <div class="fl-earn">+ AdSense Rp 80–325/pageview + shortlink klik</div>
+        </div>
+      </div>
+      <div class="fl">
+        <div class="fl-dot d5">💑</div>
+        <div>
+          <div class="fl-title">Langkah 3c — CPA Dating (penghasilan per registrasi)</div>
+          <div class="fl-desc">Untuk niche dating → arahkan ke landing page CPA. User cukup daftar ke platform dating (tidak perlu bayar) → kamu dapat komisi SOI/DOI. Paling cocok untuk konten relationship/dating tips di TikTok dan Reels.</div>
+          <div class="fl-earn">+ $0.50–4 per registrasi SOI/DOI Indo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip tip-green" style="margin-top:10px"><b>Stack strategi paling optimal:</b> Buat konten CapCut tips (video pack) → posting ke 4 platform sekaligus → semua ke 1 landing page → landing page punya 2 tombol: shortlink download pack + link ke dating CPA. Satu video, dua stream penghasilan, empat platform traffic.</div>
+  </div>
+
+</div>
+
+<script>
+function show(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

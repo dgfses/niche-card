@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Facebook Reels → Monetisasi Ads 2026</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --blue:#1877F2;--blue-bg:#0a1525;--blue-dim:#1a3060;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --pink:#f472b6;--pink-bg:#220a15;--pink-dim:#5a1535;
+  --pur:#c084fc;--pur-bg:#180e2a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 13px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.tab.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.bp{background:var(--pink-bg);color:var(--pink);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ab0ff;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.t-p{background:var(--pink-bg);border-color:var(--pink-dim);color:var(--pink);}
+.tip b{font-weight:700;}
+
+/* Requirement cards */
+.req-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:14px;}
+.rq{border-radius:12px;padding:12px 14px;border:1px solid;}
+.rq-hard{background:var(--blue-bg);border-color:var(--blue-dim);}
+.rq-med{background:#0a1a0a;border-color:#1a3a1a;}
+.rq-soft{background:var(--yellow-bg);border-color:var(--yellow-dim);}
+.rq-num{font-size:22px;font-weight:700;margin-bottom:3px;}
+.rq-hard .rq-num{color:var(--blue);}
+.rq-med .rq-num{color:var(--green);}
+.rq-soft .rq-num{color:var(--yellow);}
+.rq-label{font-size:11px;color:var(--sub);margin-bottom:4px;}
+.rq-desc{font-size:11px;line-height:1.5;}
+.rq-hard .rq-desc{color:#7ab0ff;}
+.rq-med .rq-desc{color:var(--green);}
+.rq-soft .rq-desc{color:var(--yellow);}
+
+/* Roadmap */
+.roadmap{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.rm{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
+.rm:last-child{border-bottom:none;}
+.rm-phase{min-width:80px;font-size:11px;font-weight:700;padding-top:2px;}
+.rm-dot{width:32px;height:32px;min-width:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.dp1{background:var(--yellow-bg);color:var(--yellow);}
+.dp2{background:#0a1a20;color:#5ab0ff;}
+.dp3{background:var(--green-bg);color:var(--green);}
+.dp4{background:var(--pink-bg);color:var(--pink);}
+.rm-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.rm-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.rm-target{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:5px;}
+.rt-y{background:var(--yellow-bg);color:var(--yellow);}
+.rt-b{background:var(--blue-bg);color:var(--blue);}
+.rt-g{background:var(--green-bg);color:var(--green);}
+.rt-p{background:var(--pink-bg);color:var(--pink);}
+
+/* Double monetization */
+.dbl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.dbl-card{border-radius:14px;padding:14px;}
+.dbl-a{background:var(--blue-bg);border:2px solid var(--blue);}
+.dbl-b{background:var(--green-bg);border:2px solid var(--green);}
+.dbl-head{font-size:14px;font-weight:700;margin-bottom:10px;}
+.dbl-a .dbl-head{color:var(--blue);}
+.dbl-b .dbl-head{color:var(--green);}
+.dbl-row{font-size:12px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.dbl-row:last-child{border-bottom:none;}
+.dbl-a .dbl-row{color:#7ab0ff;}
+.dbl-b .dbl-row{color:var(--green);}
+.dbl-label{color:var(--sub);font-size:11px;}
+
+/* Content tips */
+.ct{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.ct.fire{border-color:var(--green);border-width:2px;}
+.ct-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.ct-icon{font-size:20px;min-width:26px;}
+.ct-name{font-size:13px;font-weight:700;color:var(--text);}
+.ct-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.ct-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:5px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.tr{background:var(--red-bg);color:var(--red);}
+
+/* Earnings calculator */
+.calc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;}
+.calc-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.calc-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.calc-row:last-child{border-bottom:none;font-weight:700;}
+.calc-label{color:var(--sub);}
+.calc-val{font-weight:600;color:var(--green);}
+.calc-row:last-child .calc-label{color:var(--text);}
+.calc-row:last-child .calc-val{color:var(--yellow);font-size:14px;}
+
+/* Avoid list */
+.avoid{background:var(--red-bg);border:1px solid var(--red-dim);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.avoid-title{font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px;}
+.avoid-item{font-size:12px;color:var(--red);line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📱 Facebook Reels Fan Page → Monetisasi Ads 2026</h1>
+  <p class="sub">Syarat, roadmap, dan strategi double income: FB Ads + CPA</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('syarat',this)">Syarat Monetisasi</button>
+    <button class="tab" onclick="show('roadmap',this)">Roadmap ke Monetisasi</button>
+    <button class="tab" onclick="show('konten',this)">Konten yang Qualify</button>
+    <button class="tab" onclick="show('double',this)">Double Income</button>
+    <button class="tab" onclick="show('hitung',this)">Kalkulasi Penghasilan</button>
+  </div>
+
+  <!-- SYARAT -->
+  <div class="panel on" id="p-syarat">
+    <p class="sec">Syarat Facebook Content Monetization Program (CMP) 2026</p>
+
+    <div class="tip t-b"><b>Update penting 2026:</b> Meta sudah menggabungkan semua program lama (Reels Play Bonus, In-Stream Ads, Performance Bonus) menjadi satu program terpadu: <b>Facebook Content Monetization (CMP)</b>. Daftar sekali, dapat penghasilan dari semua jenis konten — Reels, video panjang, dan foto sekaligus.</div>
+
+    <div class="req-grid">
+      <div class="rq rq-hard">
+        <div class="rq-label">Followers minimum</div>
+        <div class="rq-num">10.000</div>
+        <div class="rq-desc">Page followers — bukan friends personal profile. Ini threshold utama yang paling butuh waktu.</div>
+      </div>
+      <div class="rq rq-hard">
+        <div class="rq-label">Watch time (60 hari)</div>
+        <div class="rq-num">600.000</div>
+        <div class="rq-desc">Menit total ditonton dalam 60 hari terakhir. Artinya ~10.000 menit/hari secara konsisten.</div>
+      </div>
+      <div class="rq rq-med">
+        <div class="rq-label">Reels views/bulan</div>
+        <div class="rq-num">100.000</div>
+        <div class="rq-desc">Untuk Reels Ads spesifik. Views bulan berjalan di semua Reels yang kamu upload.</div>
+      </div>
+      <div class="rq rq-med">
+        <div class="rq-label">Video aktif</div>
+        <div class="rq-num">5+</div>
+        <div class="rq-desc">Minimal 5 video aktif di Page. Video yang dihapus tidak dihitung.</div>
+      </div>
+      <div class="rq rq-soft">
+        <div class="rq-label">Umur Page</div>
+        <div class="rq-num">30+</div>
+        <div class="rq-desc">Page harus berumur minimal 30 hari sebelum bisa apply. Buat sekarang.</div>
+      </div>
+      <div class="rq rq-soft">
+        <div class="rq-label">Usia akun</div>
+        <div class="rq-num">18+</div>
+        <div class="rq-desc">Admin Page harus berusia 18 tahun ke atas. Akun harus dalam good standing.</div>
+      </div>
+    </div>
+
+    <div class="tip t-y"><b>⚠️ CMP saat ini invite-only.</b> Setelah memenuhi semua syarat, kamu tidak langsung bisa daftar — Meta akan mengirim undangan ke dashboard kamu. Biasanya undangan muncul dalam 1 minggu setelah semua syarat terpenuhi. Cek di: <b>Meta Business Suite → Monetization → View Page Eligibility</b>.</div>
+
+    <div class="tip t-r"><b>Yang bikin demonetisasi / tidak qualify:</b><br>
+    • Watermark TikTok / platform lain yang terlihat di video<br>
+    • Konten yang melanggar Community Standards<br>
+    • Video yang bukan original (repost tanpa kredit)<br>
+    • Page yang pernah kena strike / penalty<br>
+    • Audio musik yang tidak dilisensikan (pakai Facebook Sound Collection)</div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="panel" id="p-roadmap">
+    <p class="sec">Roadmap — dari 0 ke monetisasi Facebook Reels</p>
+
+    <div class="roadmap">
+      <div class="rm">
+        <div class="rm-dot dp1">📄</div>
+        <div>
+          <div class="rm-title">Fase 1 — Setup & Fondasi (Hari 1–7)</div>
+          <div class="rm-desc">Buat Facebook Page dengan nama bertema dating US. Set ke Professional Mode. Isi bio lengkap dalam bahasa Inggris. Hubungkan ke Meta Business Suite. Siapkan template Reels di CapCut. Upload 5–8 Reels pertama sebelum mulai promosi — Page kosong tidak menarik orang untuk follow.</div>
+          <div class="rm-target rt-y">Target: Page siap, 5 Reels live, bio lengkap</div>
+        </div>
+      </div>
+      <div class="rm">
+        <div class="rm-dot dp1">🚀</div>
+        <div>
+          <div class="rm-title">Fase 2 — Volume & Konsistensi (Bulan 1–2)</div>
+          <div class="rm-desc">Upload <b>2–3 Reels per hari</b> tanpa jeda. Ini fase paling krusial — algoritma Facebook butuh data engagement dari akunmu untuk tahu ke siapa mendistribusikan kontenmu. Variasikan format: tips list, POV, storytime, relatable humor. Repurpose TikTok trending sounds (hapus watermark dulu dengan CapCut). Fokus pada watch time — video yang ditonton sampai selesai mendapat distribusi lebih luas.</div>
+          <div class="rm-target rt-b">Target: 1.000–5.000 followers | 20k–50k views/bulan</div>
+        </div>
+      </div>
+      <div class="rm">
+        <div class="rm-dot dp2">📈</div>
+        <div>
+          <div class="rm-title">Fase 3 — Scale & Optimasi (Bulan 2–4)</div>
+          <div class="rm-desc">Analisis Reels mana yang dapat views tertinggi → buat lebih banyak dengan format yang sama. Mulai engage aktif di komentar — balas semua komentar dalam 1 jam pertama untuk boost distribusi. Lakukan "Reel series" — konten bersambung yang bikin orang balik untuk lihat episode berikutnya. Ini meningkatkan watch time secara signifikan.</div>
+          <div class="rm-target rt-b">Target: 5.000–10.000 followers | 50k–150k views/bulan</div>
+        </div>
+      </div>
+      <div class="rm">
+        <div class="rm-dot dp3">🎯</div>
+        <div>
+          <div class="rm-title">Fase 4 — Monetisasi Eligible (Bulan 4–6)</div>
+          <div class="rm-desc">Setelah 10.000 followers tercapai, cek Meta Business Suite untuk eligibility. Jika sudah memenuhi watch time 600.000 menit/60 hari dan 100k Reels views/bulan — apply atau tunggu invite. Proses review Meta biasanya 1–2 minggu. Setelah approved, ads otomatis muncul di Reels kamu tanpa perlu setup apapun.</div>
+          <div class="rm-target rt-g">Target: 10.000+ followers | 100k+ Reels views/bulan | MONETIZED ✓</div>
+        </div>
+      </div>
+      <div class="rm">
+        <div class="rm-dot dp4">💰</div>
+        <div>
+          <div class="rm-title">Fase 5 — Double Monetisasi (Setelah approved)</div>
+          <div class="rm-desc">Setelah Facebook Ads aktif di Reels, tambahkan CPA dating link di caption setiap Reels. Sekarang setiap Reels punya dua sumber income: Meta bayar kamu untuk ads yang tampil, PLUS kamu dapat komisi CPA setiap ada yang klik link dan daftar. Satu konten = dua stream penghasilan tanpa kerja dua kali.</div>
+          <div class="rm-target rt-p">Target: $200–800/bulan FB Ads + $200–600/bulan CPA = $400–1.400/bulan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KONTEN YANG QUALIFY -->
+  <div class="panel" id="p-konten">
+    <p class="sec">Tipe konten Reels yang dapat views banyak & qualify monetisasi</p>
+
+    <div class="tip t-b"><b>2 syarat konten untuk monetisasi:</b> (1) Original — tidak ada watermark platform lain, bukan repost mentah. (2) Policy compliant — tidak ada nudity, hate speech, atau konten yang melanggar. Dating niche sangat aman selama kontennya tentang tips dan advice, bukan konten dewasa.</div>
+
+    <div class="ct fire">
+      <div class="ct-head"><span class="ct-icon">📋</span><div class="ct-name">Format List / Tips — Watch time tertinggi</div></div>
+      <div class="ct-body">
+        "5 signs he likes you but is scared" — format list dengan teks overlay. Orang nonton sampai selesai karena ingin tahu semua poinnya. Watch time tinggi = distribusi luas = lebih banyak views = lebih dekat ke threshold monetisasi.<br><br>
+        <b>Cara buat tanpa tampil muka:</b> Teks overlay besar di layar, background video aesthetic (coffee shop, nature, city lights), musik dari Facebook Sound Collection. Edit di CapCut, hapus watermark, upload ke Facebook.
+      </div>
+      <div class="ct-tag tg">✓ Watch time completion rate 60–80% — terbaik untuk boost metrics</div>
+    </div>
+
+    <div class="ct fire">
+      <div class="ct-head"><span class="ct-icon">😂</span><div class="ct-name">Relatable Humor / Meme Format — Share rate tertinggi</div></div>
+      <div class="ct-body">
+        "Dating in 2026 be like..." — humor yang sangat relate dengan situasi dating modern. Orang share ke teman yang single atau ke pasangan yang relate. Share tinggi = reach organik meluas gratis.<br><br>
+        Contoh yang works: "When you finally get a text back after 3 hours... it's 'k'", "The audacity of people who ghost you then like your posts", "Me: I'm done with dating. Also me at 2am:..."<br><br>
+        Format: teks singkat di layar, trending audio, durasi 7–15 detik. Cepat, funny, langsung habis.
+      </div>
+      <div class="ct-tag tg">✓ Share rate 3–5x lebih tinggi dari tips konten biasa</div>
+    </div>
+
+    <div class="ct fire">
+      <div class="ct-head"><span class="ct-icon">🎭</span><div class="ct-name">POV / Storytime — Paling viral untuk dating niche</div></div>
+      <div class="ct-body">
+        "POV: You finally stop chasing and watch what happens" — format POV membuat penonton merasakan situasi secara langsung. Sangat powerful untuk watch time karena orang nonton sampai selesai untuk tahu bagaimana "ceritanya".<br><br>
+        Tidak perlu muka — cukup teks yang menceritakan situasi dengan musik yang match emosi ceritanya. "POV: you texted first for 6 months. Then stopped. Day 1, 3, 7, 14..." — format hari demi hari sangat adiktif.
+      </div>
+      <div class="ct-tag tg">✓ Highest replays — orang tonton ulang = watch time double</div>
+    </div>
+
+    <div class="ct">
+      <div class="ct-head"><span class="ct-icon">🚩</span><div class="ct-name">Red Flag / Green Flag — Viral + shareable</div></div>
+      <div class="ct-body">
+        Format ini tidak pernah mati di dating niche. "Red flags we normalize" atau "Green flags that are actually rare" — orang tag pasangan atau teman, comment pengalaman mereka, share ke stories. Engagement tinggi di komentar memberi sinyal positif ke algoritma Facebook untuk distribusi lebih luas.<br><br>
+        Bonus: minta orang share ke "someone who needs to see this" di akhir video — organic distribution gratis.
+      </div>
+      <div class="ct-tag tb">→ Komentar deras = sinyal positif ke algoritma</div>
+    </div>
+
+    <div class="avoid">
+      <div class="avoid-title">🚫 Hindari ini — bikin demonetisasi atau views rendah</div>
+      <div class="avoid-item">
+        ✗ Watermark TikTok / Instagram yang terlihat — langsung demonetisasi<br>
+        ✗ Musik yang tidak ada di Facebook Sound Collection tanpa izin<br>
+        ✗ Konten terlalu "sales-y" — Facebook algorithm menekan konten yang terlihat iklan<br>
+        ✗ Repost konten orang lain tanpa transformasi — flagged sebagai non-original<br>
+        ✗ Clickbait caption yang tidak match isi video — bounce rate tinggi = watch time turun<br>
+        ✗ Konten dewasa / suggestive yang melanggar Community Standards
+      </div>
+    </div>
+  </div>
+
+  <!-- DOUBLE INCOME -->
+  <div class="panel" id="p-double">
+    <p class="sec">Double monetisasi — FB Content Ads + CPA dating dalam 1 Reels</p>
+
+    <div class="tip t-g"><b>Ini yang membuat strategi ini sangat kuat:</b> Satu Reels bisa menghasilkan dari DUA sumber sekaligus — Facebook membayar kamu untuk ads yang tampil di videomu, PLUS kamu dapat komisi CPA setiap orang klik link di caption dan daftar ke platform dating. Tidak ada konflik — Meta tidak melarang CPA link di caption selama kontennya bukan spam.</div>
+
+    <div class="dbl">
+      <div class="dbl-card dbl-a">
+        <div class="dbl-head">📺 Facebook Content Ads</div>
+        <div class="dbl-row"><span class="dbl-label">Model bayar</span><br>Per views / watch time</div>
+        <div class="dbl-row"><span class="dbl-label">Payout US audience</span><br>$3–15 per 1.000 views (RPM)</div>
+        <div class="dbl-row"><span class="dbl-label">Kapan dapat</span><br>Setelah 10k followers + approved</div>
+        <div class="dbl-row"><span class="dbl-label">Perlu aksi user?</span><br>Tidak — tampil otomatis</div>
+        <div class="dbl-row"><span class="dbl-label">Posisi di Reels</span><br>Banner bawah / sticker / post-loop</div>
+      </div>
+      <div class="dbl-card dbl-b">
+        <div class="dbl-head">💑 CPA Dating Link</div>
+        <div class="dbl-row"><span class="dbl-label">Model bayar</span><br>Per registrasi (SOI/DOI)</div>
+        <div class="dbl-row"><span class="dbl-label">Payout US audience</span><br>$2–8 per lead</div>
+        <div class="dbl-row"><span class="dbl-label">Kapan dapat</span><br>Mulai hari ini, tanpa threshold</div>
+        <div class="dbl-row"><span class="dbl-label">Perlu aksi user?</span><br>Ya — klik + daftar</div>
+        <div class="dbl-row"><span class="dbl-label">Posisi di Reels</span><br>Link di caption bawah video</div>
+      </div>
+    </div>
+
+    <div class="tip t-b"><b>Cara pasang CPA link di caption Reels:</b><br>
+    1. Buat Reels seperti biasa<br>
+    2. Di kolom caption, tulis konten post + di bagian bawah: "🔗 Free dating guide + best platform I found: [link CPA kamu]"<br>
+    3. Facebook mengizinkan link di caption — link langsung bisa diklik dari post<br>
+    4. Untuk hasil terbaik, sebut link-nya secara verbal di video juga: "link in caption below this video"<br><br>
+    Setelah approved Facebook Ads: ads tampil otomatis di videomu → kamu dapat RPM. Secara bersamaan, orang yang tertarik klik caption link → dapat komisi CPA.</div>
+
+    <div class="ct fire">
+      <div class="ct-head"><span class="ct-icon">✍️</span><div class="ct-name">Template caption Reels yang bisa langsung dipakai</div></div>
+      <div class="ct-body">
+        <b style="color:var(--text)">Versi subtle (untuk build trust dulu):</b><br>
+        "5 signs someone genuinely likes you 👆<br><br>
+        Save this for later 🔖<br>
+        If you're looking for someone serious, I put together a guide with the platform that actually worked for me: [CPA link]<br><br>
+        #dating #relationshipadvice #singles #datingtips"<br><br>
+        <b style="color:var(--text)">Versi direct (untuk audience yang sudah warm):</b><br>
+        "Real talk: if you're tired of ghosting and situationships, here's the platform I recommended to my friends — different crowd, different results. Free signup: [CPA link] 🔗<br><br>
+        #dating #findlove #onlinedating #relationship"
+      </div>
+      <div class="ct-tag tg">✓ Hashtag dating niche US: #dating #relationshipadvice #singles #datingtips #findlove</div>
+    </div>
+  </div>
+
+  <!-- KALKULASI -->
+  <div class="panel" id="p-hitung">
+    <p class="sec">Estimasi penghasilan — setelah monetisasi approved</p>
+
+    <div class="tip t-b"><b>Asumsi skenario:</b> Page dengan 15.000 followers, posting 2 Reels/hari, 70% audience dari US. Total views: ~200.000/bulan. CPA conversion rate 1.5% dari yang klik link.</div>
+
+    <div class="calc">
+      <div class="calc-title">📊 Skenario: 200.000 Reels views/bulan (US audience 70%)</div>
+      <div class="calc-row">
+        <div class="calc-label">Facebook Content Ads RPM (US, dating niche)</div>
+        <div class="calc-val">$8–12 per 1.000 views</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">Penghasilan FB Ads (200k views × $10 RPM)</div>
+        <div class="calc-val">~$200/bulan</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">Klik ke CPA link (2% CTR dari 200k views)</div>
+        <div class="calc-val">~4.000 klik</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">Konversi CPA (1.5% dari klik → daftar SOI)</div>
+        <div class="calc-val">~60 lead</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">Penghasilan CPA (60 lead × $3 SOI US)</div>
+        <div class="calc-val">~$180/bulan</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label" style="color:var(--text);font-weight:700">TOTAL estimasi/bulan</div>
+        <div class="calc-val" style="color:var(--yellow);font-size:14px">~$380 ($200 FB + $180 CPA)</div>
+      </div>
+    </div>
+
+    <div class="calc">
+      <div class="calc-title">🔥 Skenario scale: 1.000.000 views/bulan</div>
+      <div class="calc-row">
+        <div class="calc-label">Facebook Content Ads (1M views × $10 RPM)</div>
+        <div class="calc-val">~$1.000/bulan</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">CPA (2% CTR × 1.5% konversi × $3)</div>
+        <div class="calc-val">~$900/bulan</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label" style="color:var(--text);font-weight:700">TOTAL estimasi/bulan</div>
+        <div class="calc-val" style="color:var(--yellow);font-size:14px">~$1.900/bulan</div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Jalan tercepat ke 10.000 followers:</b><br>
+    • 2–3 Reels/hari tanpa jeda selama 60 hari = ~120–180 Reels<br>
+    • Fokus format yang terbukti dapat views: tips list, POV, relatable humor<br>
+    • Satu Reels viral (100k+ views) bisa bawa 500–2.000 followers sekaligus<br>
+    • Reply semua komentar di jam pertama setelah posting<br>
+    • Pakai trending audio dari Facebook Sound Collection<br>
+    • Cross-promote di TikTok dan Instagram (tapi upload ulang tanpa watermark)</div>
+
+    <div class="tip t-y"><b>Timeline realistis:</b><br>
+    Bulan 1–2: 0 → 3.000 followers (belum monetisasi, tapi CPA link aktif)<br>
+    Bulan 3–4: 3.000 → 10.000 followers (mendekati threshold)<br>
+    Bulan 4–5: Apply/terima invite CMP → FB Ads aktif<br>
+    Bulan 5+: Double income FB Ads + CPA berjalan bersamaan</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

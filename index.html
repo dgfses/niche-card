@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Niche Strategy Hub — Portal Modul & Kartu Strategi</title>
+  <meta name="description" content="Dashboard 1 Halaman untuk Semua Kartu Strategi Niche, Bicolink, Dating CPA, Social Media, dan Anti-Ban.">
+  <style>
+    :root {
+      --bg: #0b0d11;
+      --card-bg: #14171f;
+      --card-hover: #191e28;
+      --border: #232834;
+      --border-hover: #3b4255;
+      --text: #f0f2f5;
+      --sub: #9aa1b2;
+      --muted: #5e6678;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.2);
+      --green: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.12);
+      --purple: #a855f7;
+      --purple-bg: rgba(168, 85, 247, 0.12);
+      --orange: #f97316;
+      --orange-bg: rgba(249, 115, 22, 0.12);
+      --pink: #ec4899;
+      --pink-bg: rgba(236, 72, 153, 0.12);
+      --cyan: #06b6d4;
+      --cyan-bg: rgba(6, 182, 212, 0.12);
+      --red: #ef4444;
+      --red-bg: rgba(239, 68, 68, 0.12);
+      --radius: 14px;
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glow */
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.03) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pill-badge span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(24px, 4vw, 34px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--sub);
+      max-width: 620px;
+      margin: 0 auto 20px;
+    }
+
+    /* Search & Filter Bar */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 28px;
+      background: rgba(20, 23, 31, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 13.5px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      color: var(--sub);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .filter-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .filter-count {
+      display: inline-block;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .filter-btn.active .filter-count {
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+    }
+
+    /* Grid of Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-icon {
+      font-size: 26px;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #0d0f14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .card-cat {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .cat-bicolink { background: var(--orange-bg); color: var(--orange); }
+    .cat-dating { background: var(--pink-bg); color: var(--pink); }
+    .cat-facebook { background: rgba(59, 130, 246, 0.12); color: #60a5fa; }
+    .cat-adult { background: var(--red-bg); color: var(--red); }
+    .cat-antiban { background: var(--green-bg); color: var(--green); }
+    .cat-gaming { background: var(--purple-bg); color: var(--purple); }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--sub);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      flex-grow: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #0d0f14;
+      color: var(--sub);
+      border: 1px solid var(--border);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-read {
+      flex: 1;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .btn-read:hover {
+      background: #2563eb;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .btn-open {
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      color: var(--sub);
+      font-size: 12px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .btn-open:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+      background: var(--card-hover);
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--muted);
+      display: none;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .empty-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    /* Modal / In-Page Reader */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 999;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-window {
+      background: #0f0f0f;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 900px;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);
+      animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px) scale(0.98); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      background: #14171f;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .modal-icon {
+      font-size: 20px;
+    }
+
+    .modal-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-btn {
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      color: var(--sub);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .modal-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+      background: var(--card-hover);
+    }
+
+    .btn-close {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .btn-close:hover {
+      background: rgba(239, 68, 68, 0.25);
+      color: #fff;
+    }
+
+    .modal-body {
+      flex: 1;
+      position: relative;
+      background: #0f0f0f;
+    }
+
+    .modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Modal Navigation Bar */
+    .modal-nav-footer {
+      background: #14171f;
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .modal-nav-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .nav-btn {
+      background: #0d0f14;
+      border: 1px solid var(--border);
+      color: var(--sub);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid #191c24;
+    }
+
+    footer a {
+      color: var(--sub);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 16px 12px 40px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .controls { padding: 12px; }
+      .modal-window { height: 96vh; border-radius: 12px; }
+      .modal-header { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <div class="container">
+    <header>
+      <div class="pill-badge">
+        <span class="dot"></span>
+        <span>12 Blueprint Modul &bull; Siap Online</span>
+      </div>
+      <h1>Niche Strategy & Card Hub</h1>
+      <p class="subtitle">Akses semua strategi traffic Bicolink, Dating CPA, Facebook Reels, Adult Traffic, dan Anti-Ban dalam 1 halaman terpusat.</p>
+    </header>
+
+    <!-- Search & Category Filters -->
+    <div class="controls">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari strategi, judul, kata kunci (contoh: bicolink, dating, telegram, US)...">
+      </div>
+
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-category="all">
+          <span>🌟 Semua Modul</span>
+          <span class="filter-count" id="count-all">12</span>
+        </button>
+        <button class="filter-btn" data-category="bicolink">
+          <span>🔥 Bicolink & Shortlink</span>
+          <span class="filter-count" id="count-bicolink">4</span>
+        </button>
+        <button class="filter-btn" data-category="dating">
+          <span>💑 Dating & CPA</span>
+          <span class="filter-count" id="count-dating">3</span>
+        </button>
+        <button class="filter-btn" data-category="facebook">
+          <span>📱 Facebook & Reels</span>
+          <span class="filter-count" id="count-facebook">2</span>
+        </button>
+        <button class="filter-btn" data-category="adult">
+          <span>🔞 Adult Niche (18+)</span>
+          <span class="filter-count" id="count-adult">2</span>
+        </button>
+        <button class="filter-btn" data-category="antiban">
+          <span>🛡️ Anti-Ban & Infra</span>
+          <span class="filter-count" id="count-antiban">1</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="cards-grid" id="cardsGrid">
+
+      <!-- Card 1 -->
+      <div class="card" data-category="bicolink" data-file="bicolink_jutaan_views.html" data-title="Bicolink — Strategi Jutaan Views per Minggu" data-icon="🔥" data-tags="Bicolink, Shortlink, Kalkulator, Skalasi">
+        <div class="card-top">
+          <div class="card-icon">🔥</div>
+          <span class="card-cat cat-bicolink">Bicolink</span>
+        </div>
+        <h2 class="card-title">Bicolink — Strategi Jutaan Views per Minggu</h2>
+        <p class="card-desc">1.000 views = Rp 80.000 dengan 4 IP per hari. Blueprint lengkap skalasi traffic Indo masif, kalkulator RPM, dan stack platform.</p>
+        <div class="card-tags">
+          <span class="tag">Kalkulator</span>
+          <span class="tag">Sumber Traffic</span>
+          <span class="tag">Konten Viral</span>
+          <span class="tag">Skalasi</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('bicolink_jutaan_views.html', '🔥 Bicolink — Strategi Jutaan Views per Minggu')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="bicolink_jutaan_views.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" data-category="bicolink" data-file="alternatif_telegram_bicolink.html" data-title="Alternatif Telegram untuk Traffic Bicolink" data-icon="🔄" data-tags="Telegram, Discord, WhatsApp Channel, Facebook Group">
+        <div class="card-top">
+          <div class="card-icon">🔄</div>
+          <span class="card-cat cat-bicolink">Bicolink</span>
+        </div>
+        <h2 class="card-title">Alternatif Telegram untuk Traffic Bicolink</h2>
+        <p class="card-desc">Platform pengganti Telegram (Discord, WA Channel, Group Tertutup) yang bisa nampung jutaan visitor Indo setiap minggu.</p>
+        <div class="card-tags">
+          <span class="tag">Discord Server</span>
+          <span class="tag">WA Channel</span>
+          <span class="tag">FB Group</span>
+          <span class="tag">Line OA</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('alternatif_telegram_bicolink.html', '🔄 Alternatif Telegram untuk Traffic Bicolink')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="alternatif_telegram_bicolink.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card" data-category="bicolink" data-file="cheat_mod_game_niche.html" data-title="Niche Cheat & Mod Game 2026" data-icon="🎮" data-tags="Cheat Game, Mod APK, Komunitas, Download Link">
+        <div class="card-top">
+          <div class="card-icon">🎮</div>
+          <span class="card-cat cat-gaming">Gaming</span>
+        </div>
+        <h2 class="card-title">Niche Cheat & Mod Game — Web & Komunitas</h2>
+        <p class="card-desc">Peta lengkap ekosistem cheat dan mod game Indonesia untuk bisnis shortlink traffic tinggi dan konversi download.</p>
+        <div class="card-tags">
+          <span class="tag">Website Global</span>
+          <span class="tag">Lokal Indo</span>
+          <span class="tag">Komunitas</span>
+          <span class="tag">Game Niche</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('cheat_mod_game_niche.html', '🎮 Niche Cheat & Mod Game 2026')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="cheat_mod_game_niche.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card" data-category="bicolink" data-file="shortform_link_strategy.html" data-title="Short-Form + Link Strategy 2026" data-icon="🎬" data-tags="TikTok, Reels, Shorts, Hook, Landing Page">
+        <div class="card-top">
+          <div class="card-icon">🎬</div>
+          <span class="card-cat cat-bicolink">Short-Form</span>
+        </div>
+        <h2 class="card-title">Short-Form → Link Strategy 2026</h2>
+        <p class="card-desc">Formula hook video pendek (TikTok, Reels, Shorts) untuk mengarahkan penonton ke link bio & landing page bicolink.</p>
+        <div class="card-tags">
+          <span class="tag">Formula Hook</span>
+          <span class="tag">Alur ke Link</span>
+          <span class="tag">Platform Terbaik</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('shortform_link_strategy.html', '🎬 Short-Form → Link Strategy 2026')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="shortform_link_strategy.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card" data-category="dating" data-file="dating_cpa_audience_strategy.html" data-title="Dating CPA — Strategi Gain Audience" data-icon="💑" data-tags="Dating CPA, Funnel, Hook Script, Audience, Follower">
+        <div class="card-top">
+          <div class="card-icon">💑</div>
+          <span class="card-cat cat-dating">Dating CPA</span>
+        </div>
+        <h2 class="card-title">Dating CPA — Strategi Gain Audience</h2>
+        <p class="card-desc">Blueprint lengkap dari konten → audience → klik offer CPA dating. Termasuk formula hook, jenis konten, dan timeline hasil.</p>
+        <div class="card-tags">
+          <span class="tag">Alur Funnel</span>
+          <span class="tag">Script Hook</span>
+          <span class="tag">Gain Follower</span>
+          <span class="tag">Timeline</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('dating_cpa_audience_strategy.html', '💑 Dating CPA — Strategi Gain Audience')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="dating_cpa_audience_strategy.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card" data-category="dating" data-file="fb_group_vs_page_organic.html" data-title="Group vs Page — Organic Audience CPA" data-icon="🇺🇸" data-tags="Facebook Group, Fanpage, CPA US, Organic Reach">
+        <div class="card-top">
+          <div class="card-icon">🇺🇸</div>
+          <span class="card-cat cat-dating">Dating CPA</span>
+        </div>
+        <h2 class="card-title">Group vs Page + Organic Audience CPA</h2>
+        <p class="card-desc">Perbandingan mendalam Group vs Page serta blueprint gain audience US secara organik khusus konversi CPA Dating.</p>
+        <div class="card-tags">
+          <span class="tag">Group vs Page</span>
+          <span class="tag">Setup Benar</span>
+          <span class="tag">Organic Growth</span>
+          <span class="tag">Jadwal Konten</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('fb_group_vs_page_organic.html', '🇺🇸 Group vs Page — Organic CPA')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="fb_group_vs_page_organic.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card" data-category="dating" data-file="us_facebook_dating_strategy.html" data-title="US Facebook Groups — Dating CPA Strategy" data-icon="🗽" data-tags="US Facebook, Target Groups, Template Post, Do and Dont">
+        <div class="card-top">
+          <div class="card-icon">🗽</div>
+          <span class="card-cat cat-dating">Dating CPA</span>
+        </div>
+        <h2 class="card-title">US Facebook Groups — Dating CPA Strategy</h2>
+        <p class="card-desc">Cara gain audience US dan share link CPA dating di Facebook groups secara aman tanpa mudah terkena flag/banned.</p>
+        <div class="card-tags">
+          <span class="tag">Target Groups</span>
+          <span class="tag">Setup Profil US</span>
+          <span class="tag">Template Post</span>
+          <span class="tag">Do & Don't</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('us_facebook_dating_strategy.html', '🗽 US Facebook Groups — Dating CPA')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="us_facebook_dating_strategy.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="card" data-category="facebook" data-file="fb_reels_monetize_to_ads.html" data-title="Facebook Reels Fan Page → Monetisasi Ads 2026" data-icon="📱" data-tags="Facebook Reels, Fan Page, Ads Monetisasi, Double Income">
+        <div class="card-top">
+          <div class="card-icon">📱</div>
+          <span class="card-cat cat-facebook">Facebook</span>
+        </div>
+        <h2 class="card-title">Facebook Reels → Monetisasi Ads 2026</h2>
+        <p class="card-desc">Syarat, roadmap, dan strategi double income: penghasilan dari Facebook Ads on Reels + penempatan link CPA.</p>
+        <div class="card-tags">
+          <span class="tag">Syarat Ads</span>
+          <span class="tag">Roadmap</span>
+          <span class="tag">Konten Qualify</span>
+          <span class="tag">Double Income</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('fb_reels_monetize_to_ads.html', '📱 Facebook Reels → Monetisasi Ads 2026')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="fb_reels_monetize_to_ads.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="card" data-category="facebook" data-file="setup_fb_twitter_bicolink.html" data-title="Setup FB & Twitter untuk Bicolink" data-icon="⚙️" data-tags="Setup Profil, Settings, Linktree, Checklist Akun">
+        <div class="card-top">
+          <div class="card-icon">⚙️</div>
+          <span class="card-cat cat-facebook">Facebook & X</span>
+        </div>
+        <h2 class="card-title">Setup Akun Facebook & Twitter untuk Bicolink</h2>
+        <p class="card-desc">Panduan komprehensif dari nol: setup profil, privacy settings, bio copywriting, linktree, dan checklist upload reels.</p>
+        <div class="card-tags">
+          <span class="tag">Buat Page</span>
+          <span class="tag">Settings Penting</span>
+          <span class="tag">Formula Bio</span>
+          <span class="tag">Checklist</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('setup_fb_twitter_bicolink.html', '⚙️ Setup Akun FB & Twitter untuk Bicolink')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="setup_fb_twitter_bicolink.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="card" data-category="adult" data-file="platform_adult_bicolink.html" data-title="Platform Adult Content — Traffic Bicolink Indo" data-icon="🔞" data-tags="Adult 18+, High CTR, Platform Toleran, Traffic Indo">
+        <div class="card-top">
+          <div class="card-icon">🔞</div>
+          <span class="card-cat cat-adult">Adult (18+)</span>
+        </div>
+        <h2 class="card-title">Platform Adult Content → Traffic Bicolink Indo</h2>
+        <p class="card-desc">Rangkuman platform toleran adult dengan audiens non tech-savvy untuk mengoptimalkan rasio klik (CTR) link bicolink.</p>
+        <div class="card-tags">
+          <span class="tag">Twitter/X Utama</span>
+          <span class="tag">Web Sendiri</span>
+          <span class="tag">Estimasi Cuan</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('platform_adult_bicolink.html', '🔞 Platform Adult Content — Traffic Bicolink')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="platform_adult_bicolink.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 11 -->
+      <div class="card" data-category="adult" data-file="twitter_adult_bicolink_strategy.html" data-title="Twitter/X — Adult Content + Bicolink Indonesia" data-icon="🐦" data-tags="Twitter/X, Adult, Template Tweet, Scale Multi-Akun">
+        <div class="card-top">
+          <div class="card-icon">🐦</div>
+          <span class="card-cat cat-adult">Adult (18+)</span>
+        </div>
+        <h2 class="card-title">Twitter/X — Adult Content + Bicolink Indo</h2>
+        <p class="card-desc">Setup akun X, format konten viral, template tweet konversi tinggi, cara panen follower, dan strategi scale multi-akun.</p>
+        <div class="card-tags">
+          <span class="tag">Format Konten</span>
+          <span class="tag">Template Tweet</span>
+          <span class="tag">Multi Akun</span>
+          <span class="tag">Do & Don't</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('twitter_adult_bicolink_strategy.html', '🐦 Twitter/X — Adult Content + Bicolink')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="twitter_adult_bicolink_strategy.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Card 12 -->
+      <div class="card" data-category="antiban" data-file="website_anti_ban.html" data-title="Website Anti-Ban Indonesia 2026" data-icon="🛡️" data-tags="Anti-Ban, Offshore Hosting, Domain Rotasi, Cloudflare">
+        <div class="card-top">
+          <div class="card-icon">🛡️</div>
+          <span class="card-cat cat-antiban">Anti-Ban</span>
+        </div>
+        <h2 class="card-title">Website Anti-Ban Indonesia — Panduan Lengkap</h2>
+        <p class="card-desc">Hosting offshore, manajemen rotasi domain, konfigurasi Cloudflare, dan disaster recovery agar website kebal blokir.</p>
+        <div class="card-tags">
+          <span class="tag">Offshore Hosting</span>
+          <span class="tag">Strategi Domain</span>
+          <span class="tag">Cloudflare Setup</span>
+          <span class="tag">Backup Sistem</span>
+        </div>
+        <div class="card-footer">
+          <button class="btn-read" onclick="openReader('website_anti_ban.html', '🛡️ Website Anti-Ban Indonesia 2026')">
+            <span>📖 Baca Modul</span>
+          </button>
+          <a href="website_anti_ban.html" target="_blank" class="btn-open" title="Buka di tab baru">↗</a>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔎</div>
+        <p>Tidak ditemukan modul yang cocok dengan pencarian Anda.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- In-Page Reader Modal -->
+  <div class="modal-overlay" id="readerModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon" id="modalIcon">📖</span>
+          <span class="modal-title" id="modalTitle">Judul Modul</span>
+        </div>
+        <div class="modal-actions">
+          <a href="#" target="_blank" id="modalExternalLink" class="modal-btn" title="Buka di Tab Baru">
+            <span>Tab Baru</span> ↗
+          </a>
+          <button class="modal-btn btn-close" onclick="closeReader()" title="Tutup (ESC)">
+            ✕ Tutup
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <iframe id="readerFrame" class="modal-iframe" src="about:blank"></iframe>
+      </div>
+
+      <div class="modal-nav-footer">
+        <span id="modalIndexInfo">Modul 1 dari 12</span>
+        <div class="modal-nav-btns">
+          <button class="nav-btn" id="prevCardBtn" onclick="navigateCard(-1)">← Sebelumnya</button>
+          <button class="nav-btn" id="nextCardBtn" onclick="navigateCard(1)">Selanjutnya →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Niche Strategy Portal &bull; Dibuat untuk deployment statis Vercel &bull; Siap Online</p>
+  </footer>
+
+  <script>
+    // State
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let currentCardIndex = 0;
+
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const emptyState = document.getElementById('emptyState');
+    const readerModal = document.getElementById('readerModal');
+    const readerFrame = document.getElementById('readerFrame');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalExternalLink = document.getElementById('modalExternalLink');
+    const modalIndexInfo = document.getElementById('modalIndexInfo');
+    const prevCardBtn = document.getElementById('prevCardBtn');
+    const nextCardBtn = document.getElementById('nextCardBtn');
+
+    // Update Counts
+    function updateCounts() {
+      const counts = { all: cards.length, bicolink: 0, dating: 0, facebook: 0, adult: 0, antiban: 0 };
+      cards.forEach(card => {
+        const cat = card.dataset.category;
+        if (counts[cat] !== undefined) counts[cat]++;
+      });
+      for (const [key, val] of Object.entries(counts)) {
+        const el = document.getElementById('count-' + key);
+        if (el) el.textContent = val;
+      }
+    }
+    updateCounts();
+
+    // Filter Logic
+    function applyFilters() {
+      const query = searchQuery.toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardCat = card.dataset.category;
+        const title = card.dataset.title.toLowerCase();
+        const tags = (card.dataset.tags || '').toLowerCase();
+        const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+
+        const matchesCat = (currentCategory === 'all' || cardCat === currentCategory);
+        const matchesSearch = !query || title.includes(query) || tags.includes(query) || desc.includes(query);
+
+        if (matchesCat && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.classList.add('show');
+      } else {
+        emptyState.classList.remove('show');
+      }
+    }
+
+    // Category button clicks
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category;
+        applyFilters();
+      });
+    });
+
+    // Search input typing
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      applyFilters();
+    });
+
+    // Reader Modal functions
+    function openReader(fileUrl, title) {
+      const index = cards.findIndex(c => c.dataset.file === fileUrl);
+      if (index !== -1) {
+        currentCardIndex = index;
+      }
+      loadModalContent();
+      readerModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function loadModalContent() {
+      const card = cards[currentCardIndex];
+      if (!card) return;
+
+      const file = card.dataset.file;
+      const title = card.dataset.title;
+      const icon = card.dataset.icon || '📖';
+
+      modalTitle.textContent = title;
+      modalIcon.textContent = icon;
+      modalExternalLink.href = file;
+      readerFrame.src = file;
+      modalIndexInfo.textContent = `Modul ${currentCardIndex + 1} dari ${cards.length}`;
+
+      prevCardBtn.disabled = currentCardIndex <= 0;
+      nextCardBtn.disabled = currentCardIndex >= cards.length - 1;
+    }
+
+    function navigateCard(direction) {
+      const nextIndex = currentCardIndex + direction;
+      if (nextIndex >= 0 && nextIndex < cards.length) {
+        currentCardIndex = nextIndex;
+        loadModalContent();
+      }
+    }
+
+    function closeReader() {
+      readerModal.classList.remove('open');
+      readerFrame.src = 'about:blank';
+      document.body.style.overflow = '';
+    }
+
+    // Close on backdrop click
+    readerModal.addEventListener('click', (e) => {
+      if (e.target === readerModal) {
+        closeReader();
+      }
+    });
+
+    // Keyboard shortcuts: ESC to close, Left/Right arrow for prev/next
+    document.addEventListener('keydown', (e) => {
+      if (readerModal.classList.contains('open')) {
+        if (e.key === 'Escape') closeReader();
+        if (e.key === 'ArrowLeft' && !prevCardBtn.disabled) navigateCard(-1);
+        if (e.key === 'ArrowRight' && !nextCardBtn.disabled) navigateCard(1);
+      }
+    });
+
+    // Card click opens reader (if not clicking the open new tab button)
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-open')) return;
+        currentCardIndex = idx;
+        loadModalContent();
+        readerModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  </script>
+</body>
+</html>

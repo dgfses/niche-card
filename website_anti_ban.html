@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Website Anti-Ban Indonesia 2026</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --blue:#3b82f6;--blue-bg:#0a1525;--blue-dim:#1a3060;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --orange:#fb923c;--orange-bg:#1a1008;--orange-dim:#4a2a00;
+  --pur:#c084fc;--pur-bg:#180e2a;--pur-dim:#3a1a5a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 13px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.tab.on{background:var(--green-bg);color:var(--green);border-color:var(--green-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bo{background:var(--orange-bg);color:var(--orange);}
+.bpu{background:var(--pur-bg);color:var(--pur);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ab0ff;}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.t-o{background:var(--orange-bg);border-color:var(--orange-dim);color:var(--orange);}
+.tip b{font-weight:700;}
+
+/* Layer cards */
+.layer{background:var(--s1);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:10px;}
+.layer.top{border-width:2px;border-color:var(--green);}
+.layer.mid{border-color:var(--blue-dim);}
+.layer-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.layer-num{width:28px;height:28px;min-width:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.n1{background:var(--green-bg);color:var(--green);}
+.n2{background:var(--blue-bg);color:var(--blue);}
+.n3{background:var(--yellow-bg);color:var(--yellow);}
+.n4{background:var(--pur-bg);color:var(--pur);}
+.n5{background:var(--orange-bg);color:var(--orange);}
+.layer-name{font-size:13px;font-weight:700;color:var(--text);}
+.layer-sub{font-size:11px;color:var(--muted);}
+.layer-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px;}
+.layer-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.layer-result{font-size:11px;font-weight:700;padding:4px 9px;border-radius:5px;display:inline-block;margin-top:6px;}
+.lr-g{background:var(--green-bg);color:var(--green);}
+.lr-b{background:var(--blue-bg);color:var(--blue);}
+.lr-y{background:var(--yellow-bg);color:var(--yellow);}
+
+/* Hosting table */
+.tbl{background:var(--s1);border-radius:12px;border:1px solid var(--border);overflow-x:auto;margin-bottom:14px;}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:500px;}
+th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border);background:var(--s2);text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr.rec td{background:var(--green-bg);}
+tr.rec td:first-child{color:var(--green);font-weight:700;}
+.g{color:var(--green);font-weight:600;}
+.y{color:var(--yellow);font-weight:600;}
+.r{color:var(--red);}
+
+/* Domain strategy */
+.domain-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.dg{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px 13px;}
+.dg.fire{border-color:var(--green);}
+.dg-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.dg-body{font-size:12px;color:var(--sub);line-height:1.6;}
+.dg-eg{font-size:11px;font-weight:700;color:var(--green);margin-top:5px;font-family:monospace;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:28px;height:28px;min-width:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.s-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.s-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.to{background:var(--orange-bg);color:var(--orange);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛡️ Website Anti-Ban Indonesia — Panduan Lengkap 2026</h1>
+  <p class="sub">Hosting, domain, CDN, dan backup strategy agar website tidak bisa dimatikan</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('cara',this)">Cara Kerja Ban</button>
+    <button class="tab" onclick="show('hosting',this)">Hosting Anti-Ban</button>
+    <button class="tab" onclick="show('domain',this)">Strategi Domain</button>
+    <button class="tab" onclick="show('cloudflare',this)">Cloudflare Setup</button>
+    <button class="tab" onclick="show('backup',this)">Sistem Backup</button>
+    <button class="tab" onclick="show('setup',this)">Setup Lengkap</button>
+  </div>
+
+  <!-- CARA KERJA BAN -->
+  <div class="panel on" id="p-cara">
+    <p class="sec">Kenapa website bisa diblokir dan bagaimana cara bypassnya</p>
+
+    <div class="tip t-b"><b>3 cara Kominfo memblokir website:</b> DNS blocking (paling umum), IP blocking, dan deep packet inspection (DPI). Masing-masing punya cara bypass yang berbeda. Dengan setup yang benar, semua bisa diatasi.</div>
+
+    <div class="layer top">
+      <div class="layer-head">
+        <div class="layer-num n1">1</div>
+        <div>
+          <div class="layer-name">DNS Blocking — cara paling umum, paling mudah dibypass</div>
+          <div class="layer-sub">95% pemblokiran Kominfo menggunakan metode ini</div>
+        </div>
+      </div>
+      <div class="layer-body">Ketika kamu ketik "namasitus.com", HP kamu tanya ke DNS server ISP (Telkomsel/Indosat/XL): "IP berapa sih namasitus.com?" — ISP yang sudah dapat perintah Kominfo akan jawab "tidak ada" atau kasih IP halaman blokir.<br><br>
+      <b style="color:var(--text)">Cara bypass:</b> Paksa semua pengunjung website pakai DNS alternatif (Cloudflare 1.1.1.1 atau Google 8.8.8.8) lewat pengaturan di Cloudflare. Atau lebih efektif lagi: setup DNS-over-HTTPS di website sehingga request DNS dienkripsi dan ISP tidak bisa intercept.</div>
+      <div class="layer-result lr-g">✓ Cloudflare gratis sudah handle ini otomatis — pasang dan selesai</div>
+    </div>
+
+    <div class="layer mid">
+      <div class="layer-head">
+        <div class="layer-num n2">2</div>
+        <div>
+          <div class="layer-name">IP Blocking — blokir langsung IP server</div>
+          <div class="layer-sub">Lebih jarang, tapi lebih sulit dibypass tanpa Cloudflare</div>
+        </div>
+      </div>
+      <div class="layer-body">ISP memblokir IP address server langsung, bukan domain-nya. Ini lebih serius karena mengganti domain tidak membantu kalau IP-nya masih sama.<br><br>
+      <b style="color:var(--text)">Cara bypass:</b> Cloudflare adalah solusi utama — Cloudflare menyembunyikan IP asli server kamu dan menampilkan IP Cloudflare sebagai gantinya. IP Cloudflare tidak akan diblokir karena dipakai jutaan website besar termasuk layanan pemerintah. Tanpa Cloudflare, harus ganti hosting dan IP baru setiap kali diblokir.</div>
+      <div class="layer-result lr-b">✓ Cloudflare = IP asli server tersembunyi, tidak bisa diblokir langsung</div>
+    </div>
+
+    <div class="layer">
+      <div class="layer-head">
+        <div class="layer-num n3">3</div>
+        <div>
+          <div class="layer-name">Deep Packet Inspection (DPI) — paling jarang, paling sulit</div>
+          <div class="layer-sub">Hanya dipakai untuk website yang sangat diprioritaskan untuk diblokir</div>
+        </div>
+      </div>
+      <div class="layer-body">DPI menganalisis isi traffic secara langsung meskipun sudah pakai HTTPS. Ini teknologi mahal yang biasanya hanya dipakai untuk situs yang dianggap berbahaya serius oleh pemerintah.<br><br>
+      <b style="color:var(--text)">Cara bypass:</b> HTTPS + Cloudflare + domain yang tidak terlihat mencurigakan. Website biasa dengan konten yang tidak terlalu eksplisit di halaman utama (konten di balik login/klik) jarang kena DPI. Jangan pakai keyword eksplisit di nama domain atau meta tag halaman.</div>
+      <div class="layer-result lr-y">⚠ Jarang terjadi untuk website kecil — tidak perlu terlalu khawatir ini</div>
+    </div>
+  </div>
+
+  <!-- HOSTING -->
+  <div class="panel" id="p-hosting">
+    <p class="sec">Hosting terbaik untuk website adult yang sulit di-takedown</p>
+    <div class="tip t-r"><b>Jangan pakai hosting Indonesia</b> untuk website adult. Hosting lokal tunduk pada hukum Indonesia dan akan langsung takedown website kamu begitu ada laporan. Pakai hosting di luar negeri yang tidak kooperatif dengan permintaan takedown tanpa proses hukum internasional yang panjang.</div>
+
+    <div class="tbl"><table>
+      <thead><tr>
+        <th>Hosting</th><th>Lokasi server</th><th>Harga/bln</th><th>Adult?</th><th>DMCA policy</th>
+      </tr></thead>
+      <tbody>
+        <tr class="rec"><td>Hostinger ⭐</td><td>Singapura/EU</td><td>$2.99</td><td class="g">Ya (dengan TOS)</td><td class="g">Standar, tidak agresif</td></tr>
+        <tr class="rec"><td>Contabo ⭐</td><td>Jerman/US</td><td>$4.50</td><td class="g">Ya</td><td class="g">Lambat proses</td></tr>
+        <tr><td>RackNerd</td><td>US</td><td>$2.50</td><td class="g">Ya</td><td class="y">Standar</td></tr>
+        <tr><td>Namecheap</td><td>US</td><td>$3.88</td><td class="y">Terbatas</td><td class="y">Aktif follow DMCA</td></tr>
+        <tr><td>Hetzner</td><td>Jerman/Finlandia</td><td>€4.15</td><td class="g">Ya</td><td class="g">Lambat proses</td></tr>
+        <tr><td>DigitalOcean</td><td>Singapura/US</td><td>$6</td><td class="y">Terbatas</td><td class="r">Cepat take down</td></tr>
+        <tr><td>Hosting lokal Indo</td><td>Indonesia</td><td>Rp 30rb</td><td class="r">Tidak</td><td class="r">Langsung takedown</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="tip t-g"><b>Rekomendasi terbaik: Contabo (Jerman)</b> — server di Jerman memiliki perlindungan privasi paling kuat di dunia (GDPR). Takedown request dari Indonesia harus melalui proses hukum bilateral yang sangat panjang. Harga murah ($4.50/bln untuk VPS 4GB RAM), uptime bagus, dan team support tidak agresif untuk adult content.</div>
+    <div class="tip t-b"><b>Alternatif: Hostinger (Singapura)</b> — lebih dekat secara geografis, loading lebih cepat untuk user Indonesia, harga murah, dan shared hosting lebih mudah setup daripada VPS Contabo. Adult content diperbolehkan selama tidak illegal (CSAM, dll).</div>
+  </div>
+
+  <!-- DOMAIN -->
+  <div class="panel" id="p-domain">
+    <p class="sec">Strategi domain yang sulit diblokir dan diidentifikasi</p>
+
+    <div class="tip t-y"><b>Prinsip domain anti-ban:</b> Domain tidak boleh terlihat seperti website adult dari namanya saja. Nama yang terlalu eksplisit = langsung diblokir via keyword filter otomatis. Pilih nama yang netral, ambigu, atau terlihat seperti website konten biasa.</div>
+
+    <div class="domain-grid">
+      <div class="dg fire">
+        <div class="dg-name">Nama netral + TLD aman</div>
+        <div class="dg-body">Nama yang bisa diartikan banyak hal — tidak ada keyword eksplisit. Gunakan TLD yang tidak langsung diasosiasikan adult.</div>
+        <div class="dg-eg">koleksiindo.store<br>paketharian.xyz<br>mediahub.site</div>
+      </div>
+      <div class="dg fire">
+        <div class="dg-name">TLD yang susah diblokir</div>
+        <div class="dg-body">.xyz, .store, .site, .online — murah, tidak ada koneksi ke adult content, lebih susah diblokir massal karena banyak dipakai website biasa juga.</div>
+        <div class="dg-eg">namasitus.xyz<br>namasitus.store<br>namasitus.online</div>
+      </div>
+      <div class="dg">
+        <div class="dg-name">Beli 3+ domain sekaligus</div>
+        <div class="dg-body">Kalau domain utama diblokir, langsung ganti ke domain backup. Beri tahu audience domain backup via Twitter/WA sebelum diblokir.</div>
+        <div class="dg-eg">domain1.xyz (utama)<br>domain2.store (backup 1)<br>domain3.online (backup 2)</div>
+      </div>
+      <div class="dg">
+        <div class="dg-name">Hindari kata ini di domain</div>
+        <div class="dg-body">Kata-kata yang langsung kena filter otomatis Kominfo dan memicu review cepat.</div>
+        <div class="dg-eg" style="color:var(--red)">xxx, adult, bokep,<br>porno, sex, 18plus,<br>hot, nakal, vulgar</div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Strategi domain terbaik:</b> Beli 3 domain dengan nama netral dari registrar yang berbeda (misal Porkbun, Namecheap, dan DomaiNesia). Set semua 3 domain ke website yang sama. Kalau domain pertama diblokir, langsung announce domain kedua ke audience kamu di Twitter. Proses ini bisa diulangi terus karena domain murah — Rp 20–50rb per tahun per domain.</div>
+  </div>
+
+  <!-- CLOUDFLARE -->
+  <div class="panel" id="p-cloudflare">
+    <p class="sec">Cloudflare — setup gratis yang memberi proteksi enterprise</p>
+
+    <div class="tip t-b"><b>Cloudflare gratis adalah lapisan perlindungan terpenting.</b> Tanpa Cloudflare, IP server kamu terekspos dan bisa diblokir langsung. Dengan Cloudflare, yang terekspos adalah IP Cloudflare yang dipakai jutaan website — tidak akan diblokir ISP karena akan mematikan ribuan website lain sekaligus.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sn n1">1</div>
+        <div>
+          <div class="s-title">Daftar Cloudflare gratis di cloudflare.com</div>
+          <div class="s-desc">Buat akun di cloudflare.com → Add a Site → masukkan domain kamu → pilih plan Free. Cloudflare akan scan DNS records domain kamu secara otomatis. Proses daftar 5 menit.</div>
+          <div class="s-tag tg">Free plan sudah lebih dari cukup untuk proteksi anti-ban</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n2">2</div>
+        <div>
+          <div class="s-title">Ganti nameserver domain ke Cloudflare</div>
+          <div class="s-desc">Cloudflare akan kasih 2 nameserver baru (contoh: anna.ns.cloudflare.com). Login ke registrar domain kamu (Porkbun/Namecheap) → Domain Settings → Nameservers → ganti ke nameserver Cloudflare. Propagasi 5–30 menit. Setelah ini semua traffic ke domain kamu lewat Cloudflare dulu.</div>
+          <div class="s-tag tg">Setelah ini IP asli server tersembunyi 100%</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n3">3</div>
+        <div>
+          <div class="s-title">Aktifkan fitur perlindungan di dashboard Cloudflare</div>
+          <div class="s-desc">
+          <b style="color:var(--text)">SSL/TLS:</b> Set ke "Full (strict)" — enkripsi end-to-end, lebih susah di-inspect<br>
+          <b style="color:var(--text)">Under Attack Mode:</b> Aktifkan kalau ada serangan/traffic mencurigakan<br>
+          <b style="color:var(--text)">Browser Integrity Check:</b> ON — block bot dan scraper<br>
+          <b style="color:var(--text)">Rocket Loader:</b> ON — website lebih cepat<br>
+          <b style="color:var(--text)">Always Use HTTPS:</b> ON — redirect semua HTTP ke HTTPS
+          </div>
+          <div class="s-tag tb">Semua setting ini ada di Free plan, tidak perlu upgrade</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n4">4</div>
+        <div>
+          <div class="s-title">Sembunyikan nama server asli (origin server)</div>
+          <div class="s-desc">Pastikan DNS record utama (A record) punya ikon oranye "proxied" di Cloudflare — ini artinya traffic lewat Cloudflare dan IP asli tersembunyi. Jangan ada record yang "DNS only" (abu-abu) kecuali untuk subdomain yang memang mau kamu ekspos (seperti mail server).<br><br>
+          Penting: jangan pernah sebut nama hosting atau IP server di mana pun secara publik — ini yang paling sering jadi celah exposure IP asli.</div>
+          <div class="s-tag tg">Ikon oranye = IP tersembunyi. Abu-abu = IP terekspos</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n5">5</div>
+        <div>
+          <div class="s-title">Setup Cloudflare Page Rules untuk konten sensitif</div>
+          <div class="s-desc">Di Page Rules, tambahkan rule: URL match "*namasitus.xyz/*" → Security Level: High + Cache Level: No Cache untuk halaman yang berisi konten sensitif. Ini mencegah Cloudflare meng-cache konten sensitif di server mereka yang mungkin trigger review.<br><br>
+          Untuk halaman utama/landing yang tampak normal, biarkan caching aktif untuk performa lebih baik.</div>
+          <div class="s-tag ty">Konten sensitif tidak di-cache Cloudflare = lebih aman dari review otomatis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKUP SYSTEM -->
+  <div class="panel" id="p-backup">
+    <p class="sec">Sistem backup — agar tidak panik saat satu domain diblokir</p>
+
+    <div class="tip t-g"><b>Prinsip utama:</b> Website tidak bisa benar-benar "anti-ban" 100% — yang bisa kamu lakukan adalah memastikan waktu downtime sangat singkat (menit, bukan hari) dan audience kamu selalu tahu ke mana harus pergi selanjutnya.</div>
+
+    <div class="layer top">
+      <div class="layer-head">
+        <div class="layer-num n1">📌</div>
+        <div>
+          <div class="layer-name">Sistem 3 Domain — rotasi otomatis</div>
+        </div>
+      </div>
+      <div class="layer-badges"><span class="badge bg">Wajib punya</span><span class="badge bg">Setup sekali</span></div>
+      <div class="layer-body">Beli 3 domain sekaligus dengan nama berbeda. Semua 3 domain point ke server yang sama — jadi kalau 1 diblokir, 2 lainnya langsung bisa dipakai tanpa setup ulang apapun.<br><br>
+      Umumkan ke audience di Twitter/WA: "Website utama: domain1.xyz | Backup 1: domain2.store | Backup 2: domain3.online". Kalau domain1 diblokir, audience langsung tahu pakai domain2. Kamu tidak perlu umumkan lagi karena mereka sudah tahu dari awal.</div>
+      <div class="layer-result lr-g">✓ Kalau 1 diblokir, 2 lainnya aktif dalam hitungan detik</div>
+    </div>
+
+    <div class="layer mid">
+      <div class="layer-head">
+        <div class="layer-num n2">🔔</div>
+        <div>
+          <div class="layer-name">Twitter sebagai "anchor" permanen</div>
+        </div>
+      </div>
+      <div class="layer-badges"><span class="badge bb">Paling stabil</span></div>
+      <div class="layer-body">Twitter/X adalah platform yang paling kecil kemungkinannya diblokir secara permanen di Indonesia — kalau Twitter diblokir, itu masalah yang jauh lebih besar dari sekedar website kamu. Jadikan akun Twitter sebagai sumber kebenaran utama: selalu announce domain aktif terbaru di bio Twitter.<br><br>
+      Audience yang sudah follow Twitter kamu tidak akan pernah kehilangan akses ke kontenmu, apapun yang terjadi dengan domain website.</div>
+      <div class="layer-result lr-b">✓ Twitter = jangkar yang tidak bisa diputus selama Twitter masih jalan</div>
+    </div>
+
+    <div class="layer">
+      <div class="layer-head">
+        <div class="layer-num n3">📧</div>
+        <div>
+          <div class="layer-name">Push notification + email list</div>
+        </div>
+      </div>
+      <div class="layer-badges"><span class="badge by">Paling powerful jangka panjang</span></div>
+      <div class="layer-body">Pasang OneSignal (push notification gratis hingga 30.000 subscriber) di website. Setiap pengunjung yang klik "Allow" notifikasi bisa kamu kirimi update kapanpun — termasuk pemberitahuan "domain lama diblokir, pindah ke sini".<br><br>
+      Push notif dikirim langsung ke browser/HP mereka, tidak bergantung pada platform apapun. Ini aset paling berharga yang kamu miliki karena tidak bisa diambil oleh siapapun.</div>
+      <div class="layer-result lr-y">✓ 30.000 subscriber push notif = 30.000 orang bisa kamu hubungi langsung kapanpun</div>
+    </div>
+  </div>
+
+  <!-- SETUP LENGKAP -->
+  <div class="panel" id="p-setup">
+    <p class="sec">Setup lengkap dari nol — urutan yang benar</p>
+
+    <div class="tip t-b"><b>Total biaya setup anti-ban:</b> Domain 3x ~Rp 60–150rb/tahun + Hosting Contabo/Hostinger ~Rp 70rb/bulan + Cloudflare gratis + WordPress gratis + OneSignal gratis = <b>~Rp 70rb/bulan + Rp 150rb sekali untuk domain</b>. Sangat murah untuk infrastruktur yang solid.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sn n1">1</div>
+        <div>
+          <div class="s-title">Beli 3 domain dengan nama netral (hari 1)</div>
+          <div class="s-desc">Beli dari Porkbun.com (paling murah, ~$9/tahun untuk .com atau $2/tahun untuk .xyz). Beli 3 sekaligus dengan nama yang berbeda tapi serupa: misalnya "koleksiindo.xyz", "paketharian.store", "mediahubid.online". Bayar dengan kartu debit/PayPal.</div>
+          <div class="s-tag tg">3 domain = ~$6–27/tahun total, setara Rp 100–440rb</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n2">2</div>
+        <div>
+          <div class="s-title">Setup hosting Contabo atau Hostinger (hari 1)</div>
+          <div class="s-desc">Daftar Contabo VPS S (4GB RAM, €4.50/bln) atau Hostinger Premium (1GB, $2.99/bln). Untuk pemula Hostinger lebih mudah — ada cPanel dan instalasi WordPress 1-klik. Contabo lebih powerful tapi butuh sedikit pengetahuan server. Bayar dengan kartu/PayPal.</div>
+          <div class="s-tag tb">Hostinger = lebih mudah. Contabo = lebih kuat dan lebih privat</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n3">3</div>
+        <div>
+          <div class="s-title">Hubungkan semua 3 domain ke Cloudflare (hari 1)</div>
+          <div class="s-desc">Daftar Cloudflare → tambahkan ketiga domain → ubah nameserver di Porkbun ke nameserver Cloudflare. Set A record semua 3 domain ke IP server hosting yang sama. Aktifkan proxy (ikon oranye) untuk semua. Sekarang ketiga domain mengarah ke website yang sama dan IP asli tersembunyi.</div>
+          <div class="s-tag tg">Semua gratis, setup 30 menit</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n4">4</div>
+        <div>
+          <div class="s-title">Install WordPress + tema sederhana (hari 1–2)</div>
+          <div class="s-desc">Di cPanel Hostinger: Softaculous → WordPress → Install. Pilih tema ringan seperti Astra atau GeneratePress. Ini template kosong yang akan kamu isi dengan halaman konten dan bicolink. WordPress memudahkan pengelolaan banyak halaman dan plugin yang dibutuhkan.</div>
+          <div class="s-tag tb">1-klik install = WordPress aktif dalam 2 menit</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n5">5</div>
+        <div>
+          <div class="s-title">Pasang plugin wajib (hari 2)</div>
+          <div class="s-desc">
+          <b style="color:var(--text)">Wordfence Security</b> — proteksi dari brute force dan malware<br>
+          <b style="color:var(--text)">WP Super Cache</b> — website lebih cepat<br>
+          <b style="color:var(--text)">OneSignal Push Notification</b> — kumpulkan subscriber push notif<br>
+          <b style="color:var(--text)">UpdraftPlus</b> — backup otomatis ke Google Drive<br>
+          <b style="color:var(--text)">WP Content Copy Protection</b> — cegah orang mudah copy konten
+          </div>
+          <div class="s-tag tg">Semua gratis, install dari dashboard WordPress</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n1">6</div>
+        <div>
+          <div class="s-title">Struktur halaman yang aman</div>
+          <div class="s-desc">Halaman utama (index) harus terlihat normal dan tidak mencurigakan — bisa berupa halaman "download pack" umum atau blog biasa. Konten yang lebih sensitif ada di halaman dalam yang hanya bisa diakses setelah klik beberapa kali.<br><br>
+          Ini penting karena bot Kominfo biasanya hanya scan halaman utama untuk deteksi otomatis. Kalau halaman utama bersih, website tidak masuk daftar prioritas blokir.</div>
+          <div class="s-tag ty">Halaman utama bersih = tidak masuk radar filter otomatis</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn n2">7</div>
+        <div>
+          <div class="s-title">Announce ke audience — domain utama dan backup</div>
+          <div class="s-desc">Di bio Twitter, di WA Channel, di semua platform: tulis semua 3 domain kamu. "Main: domain1.xyz | Backup: domain2.store | domain3.online". Kalau domain utama suatu hari diblokir, audience sudah tahu langsung pindah ke backup tanpa harus nanya ke kamu.</div>
+          <div class="s-tag tg">Pre-announce backup domain = tidak ada downtime di mata audience</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Ringkasan: website yang tidak bisa benar-benar dimatikan</b><br><br>
+    Selama kamu pakai: hosting luar negeri + Cloudflare (sembunyikan IP) + 3 domain berbeda + audience tahu backup domain + Twitter sebagai jangkar komunikasi — website kamu tidak bisa dimatikan secara efektif. Diblokir di satu domain? Langsung aktif di domain kedua dalam detik. Server di-takedown? Pindah hosting dalam 1 jam, domain masih hidup.</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

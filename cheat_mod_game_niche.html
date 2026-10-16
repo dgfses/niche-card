@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Niche Cheat & Mod Game 2026</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#777;--sub:#aaa;
+  --blue:#6c8aff;--blue-bg:#1a1f3a;--blue-dim:#2a3560;
+  --green:#4ade80;--green-bg:#0d2a1a;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#2a1f00;
+  --red:#f87171;--red-bg:#2a0f0f;
+  --purple:#c084fc;--purple-bg:#1e1030;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;min-height:100vh;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);transition:.15s;}
+.tab:hover{color:var(--text);}
+.tab.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bp{background:var(--purple-bg);color:var(--purple);}
+
+/* tip */
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-blue{background:var(--blue-bg);border-color:var(--blue-dim);color:var(--blue);}
+.t-green{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-yellow{background:var(--yellow-bg);border-color:#4a3a00;color:var(--yellow);}
+.tip b{font-weight:600;}
+
+/* site cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:14px;}
+.sc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.sc.top{border-color:var(--green);border-width:2px;}
+.sc.hot{border-color:var(--blue);border-width:2px;}
+.sc.local{border-color:var(--purple);border-width:2px;}
+.sc-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.sc-icon{font-size:20px;}
+.sc-name{font-size:13px;font-weight:600;color:var(--text);}
+.sc-url{font-size:10px;color:var(--muted);font-family:monospace;}
+.sc-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.sc-desc{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.sc-stat{font-size:11px;font-weight:600;color:var(--green);margin-top:6px;}
+
+/* community rows */
+.comm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.cc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.cc.tele{border-color:#229ED9;background:#0d1a24;}
+.cc.reddit{border-color:#FF4500;background:#1a0e0a;}
+.cc.fb{border-color:#1877F2;background:#0a0f1a;}
+.cc.forum{border-color:var(--yellow);background:var(--yellow-bg);}
+.cc-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.cc-icon{font-size:20px;}
+.cc-name{font-size:13px;font-weight:600;color:var(--text);}
+.cc-desc{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.cc-tip{font-size:11px;font-weight:600;margin-top:6px;}
+.cc.tele .cc-tip{color:#229ED9;}
+.cc.reddit .cc-tip{color:#FF4500;}
+.cc.fb .cc-tip{color:#1877F2;}
+.cc.forum .cc-tip{color:var(--yellow);}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+.st{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.st.g{border-color:var(--green-dim);background:var(--green-bg);}
+.st.b{border-color:var(--blue-dim);background:var(--blue-bg);}
+.st-lbl{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.st-val{font-size:18px;font-weight:700;color:var(--text);}
+.st.g .st-val{color:var(--green);}
+.st.b .st-val{color:var(--blue);}
+.st-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* strategy steps */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-dot{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+.d1{background:var(--blue-bg);color:var(--blue);}
+.d2{background:var(--green-bg);color:var(--green);}
+.d3{background:var(--yellow-bg);color:var(--yellow);}
+.d4{background:var(--purple-bg);color:var(--purple);}
+.d5{background:var(--green-bg);color:var(--green);}
+.step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.step-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.step-earn{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+
+/* game niche table */
+.game-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.gl-row{display:flex;align-items:flex-start;gap:12px;background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px 13px;}
+.gl-row.fire{border-color:var(--green);}
+.gl-icon{font-size:22px;min-width:28px;}
+.gl-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.gl-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:5px;}
+.gl-desc{font-size:12px;color:var(--sub);line-height:1.6;}
+.gl-earn{font-size:11px;font-weight:600;color:var(--green);margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎮 Niche Cheat & Mod Game — Web & Komunitas 2026</h1>
+  <p class="sub">Peta lengkap ekosistem cheat/mod game Indonesia untuk bisnis shortlink</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('web',this)">Website Global</button>
+    <button class="tab" onclick="show('lokal',this)">Lokal Indo</button>
+    <button class="tab" onclick="show('komunitas',this)">Komunitas</button>
+    <button class="tab" onclick="show('game',this)">Game Niche Terbaik</button>
+    <button class="tab" onclick="show('strategi',this)">Strategi Shortlink</button>
+  </div>
+
+  <!-- WEB GLOBAL -->
+  <div class="panel on" id="p-web">
+    <p class="lbl">Website mod/cheat game global — sumber riset & traffic terbesar</p>
+    <div class="tip t-blue"><b>Gunakan ini sebagai riset:</b> Cari tahu mod apa yang lagi ramai dicari, lalu buat konten/shortlink-mu di seputar itu. Kamu tidak perlu bikin mod sendiri — cukup jadi kurator dan distributor kontennya.</div>
+    <div class="grid">
+
+      <div class="sc top">
+        <div class="sc-head"><span class="sc-icon">😊</span><div><div class="sc-name">HappyMod</div><div class="sc-url">happymod.com</div></div></div>
+        <div class="sc-badges"><span class="badge bg">Traffic terbesar</span><span class="badge bb">Community-driven</span></div>
+        <div class="sc-desc">Platform komunitas mod APK terbesar — user saling upload, test, dan beri rating mod. Ada persentase "works" dari pengguna nyata. Cocok untuk riset mod mana yang sedang populer dan benar-benar jalan.</div>
+        <div class="sc-stat">📊 Jutaan kunjungan/bulan global</div>
+      </div>
+
+      <div class="sc top">
+        <div class="sc-head"><span class="sc-icon">⚡</span><div><div class="sc-name">AN1</div><div class="sc-url">an1.com / an1.ca</div></div></div>
+        <div class="sc-badges"><span class="badge bg">4.5M traffic/bln</span><span class="badge bb">Direct download</span></div>
+        <div class="sc-desc">Salah satu situs mod APK terbesar dengan 4.5 juta kunjungan per bulan. Unggul dalam kecepatan update dan direct link tanpa pengalihan berlebihan. Koleksi game kasual dan premium sangat lengkap.</div>
+        <div class="sc-stat">📊 4.5 juta kunjungan/bulan</div>
+      </div>
+
+      <div class="sc hot">
+        <div class="sc-head"><span class="sc-icon">📱</span><div><div class="sc-name">ModYolo</div><div class="sc-url">modyolo.com</div></div></div>
+        <div class="sc-badges"><span class="badge bb">Desain modern</span><span class="badge bg">Deskripsi detail</span></div>
+        <div class="sc-desc">Website mod dengan desain paling modern dan deskripsi fitur mod paling mendetail. Setiap game dijelaskan fitur modnya secara spesifik. Bagus untuk riset "apa yang dicari orang" di niche ini.</div>
+        <div class="sc-stat">📊 Update harian, UI terbaik</div>
+      </div>
+
+      <div class="sc hot">
+        <div class="sc-head"><span class="sc-icon">💬</span><div><div class="sc-name">Mobilism Forum</div><div class="sc-url">forum.mobilism.org</div></div></div>
+        <div class="sc-badges"><span class="badge by">Forum terbesar</span><span class="badge bb">Mod langka</span></div>
+        <div class="sc-desc">Forum komunitas terbesar di dunia untuk mod APK dan game premium. Tempat para modder dunia berbagi karya langsung. Koleksi game langka yang tidak ada di situs lain tersedia di sini.</div>
+        <div class="sc-stat">📊 Sumber mod paling lengkap</div>
+      </div>
+
+      <div class="sc hot">
+        <div class="sc-head"><span class="sc-icon">🎯</span><div><div class="sc-name">GetModsAPK</div><div class="sc-url">getmodsapk.com</div></div></div>
+        <div class="sc-badges"><span class="badge bg">2.5M traffic/bln</span><span class="badge bb">Update cepat</span></div>
+        <div class="sc-desc">Kompetitor langsung AN1 dengan 2.5 juta kunjungan per bulan. Interface bersih, update game sangat cepat mengikuti versi terbaru. Cocok untuk dapat ide konten mod apa yang trending.</div>
+        <div class="sc-stat">📊 2.5 juta kunjungan/bulan</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span class="sc-icon">🛡️</span><div><div class="sc-name">GameGuardian</div><div class="sc-url">gameguardian.net</div></div></div>
+        <div class="sc-badges"><span class="badge by">Cheat engine</span><span class="badge bb">Android root</span></div>
+        <div class="sc-desc">Platform khusus untuk GameGuardian — aplikasi cheat engine Android terpopuler. Ada panduan, script, dan forum diskusi. Niche lebih spesifik (butuh root) tapi audience-nya sangat loyal dan aktif.</div>
+        <div class="sc-stat">📊 Niche spesifik, audience dedicated</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LOKAL -->
+  <div class="panel" id="p-lokal">
+    <p class="lbl">Platform & komunitas lokal Indonesia</p>
+    <div class="tip t-blue"><b>Fakta menarik:</b> Cara Pintas (carapintas.com) — forum Indonesia pertama untuk mod & cheat game sejak 2003 — baru saja mendapat funding $5.3 juta di 2026. Ini membuktikan niche ini sangat serius secara bisnis.</div>
+    <div class="grid">
+
+      <div class="sc local">
+        <div class="sc-head"><span class="sc-icon">🇮🇩</span><div><div class="sc-name">Cara Pintas</div><div class="sc-url">carapintas.com</div></div></div>
+        <div class="sc-badges"><span class="badge bp">Forum pertama Indo</span><span class="badge bg">Sejak 2003</span></div>
+        <div class="sc-desc">Forum Indonesia pertama yang didedikasikan untuk mod software dan game sejak 2003. Komunitas yang sangat berpengalaman dan loyal. Baru dapat funding $5.3 juta di 2026 — bukti besarnya potensi niche ini di Indonesia.</div>
+        <div class="sc-stat">💰 Baru dapat funding $5.3M (2026)</div>
+      </div>
+
+      <div class="sc local">
+        <div class="sc-head"><span class="sc-icon">🎮</span><div><div class="sc-name">ModCombo</div><div class="sc-url">modcombo.id</div></div></div>
+        <div class="sc-badges"><span class="badge bp">Platform lokal</span><span class="badge bg">Berbasis Bekasi</span></div>
+        <div class="sc-desc">Platform mod APK lokal Indonesia yang berbagi game dan app MOD untuk pengguna Android. Punya presence di semua platform: Instagram, YouTube, Pinterest, Reddit, TikTok. Bukti bahwa brand lokal mod bisa scale ke multi-platform.</div>
+        <div class="sc-stat">📍 Platform mod APK Indonesia asli</div>
+      </div>
+
+      <div class="sc local">
+        <div class="sc-head"><span class="sc-icon">🚗</span><div><div class="sc-name">GTAInd</div><div class="sc-url">gtaind.com</div></div></div>
+        <div class="sc-badges"><span class="badge bp">Komunitas GTA Indo</span><span class="badge bg">Sejak 2013</span></div>
+        <div class="sc-desc">Komunitas modder GTA Indonesia aktif sejak 2013. Terkenal dengan mod GTA yang diadaptasi ke budaya Indonesia (kendaraan, karakter, lingkungan lokal). Membuktikan niche mod game offline masih sangat hidup.</div>
+        <div class="sc-stat">📊 Komunitas aktif sejak 2013</div>
+      </div>
+
+      <div class="sc">
+        <div class="sc-head"><span class="sc-icon">⚔️</span><div><div class="sc-name">Komunitas Pekalongan / PKL</div><div class="sc-url">Telegram & Forum</div></div></div>
+        <div class="sc-badges"><span class="badge by">Cheat PB/PUBG</span><span class="badge by">Komunitas lama</span></div>
+        <div class="sc-desc">Komunitas cheater Indonesia legendaris yang terkenal sejak era Point Blank. Aktif di Telegram dengan update cheat harian. Niche ini masih sangat aktif dengan game online multiplayer Indo (PB, PUBG Mobile, FF).</div>
+        <div class="sc-stat">📊 Update cheat harian via Telegram</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KOMUNITAS -->
+  <div class="panel" id="p-komunitas">
+    <p class="lbl">Komunitas aktif — tempat audience kamu berkumpul</p>
+    <div class="tip t-green"><b>Strategi:</b> Jangan langsung promosi shortlink di komunitas orang lain — bangun kepercayaan dulu dengan share konten berguna, baru arahkan ke channel/blog kamu yang ada shortlink-nya.</div>
+    <div class="comm-grid">
+
+      <div class="cc tele">
+        <div class="cc-head"><span class="cc-icon">✈️</span><div class="cc-name">Telegram Groups & Channels</div></div>
+        <div class="cc-desc">Ekosistem terbesar komunitas mod/cheat Indo ada di Telegram. Cari grup dengan keyword: "mod apk", "cheat FF", "cheat ML", "mod game Indonesia". Ratusan grup aktif dengan ribuan member yang selalu cari file terbaru.</div>
+        <div class="cc-tip">✦ Buat channel sendiri = audience siap klik shortlink tiap hari</div>
+      </div>
+
+      <div class="cc reddit">
+        <div class="cc-head"><span class="cc-icon">👾</span><div class="cc-name">Reddit — r/moddedandroidapps</div></div>
+        <div class="cc-desc">Subreddit internasional terbesar untuk mod APK. Traffic dari USA/EU = Tier 1. Post yang helpful bisa dapat ribuan upvote dan traffic jangka panjang. Juga ada r/modded_game_apk dan r/AndroidGaming.</div>
+        <div class="cc-tip">✦ Traffic Tier 1! Post tutorial dalam bahasa Inggris untuk CPM lebih tinggi</div>
+      </div>
+
+      <div class="cc fb">
+        <div class="cc-head"><span class="cc-icon">👥</span><div class="cc-name">Grup Facebook</div></div>
+        <div class="cc-desc">Ribuan grup Facebook Indonesia bertemakan cheat game, mod APK, dan tips gaming. Cari "Mod APK Indonesia", "Cheat Free Fire", "Cheat Mobile Legends". Demografi 18–30 tahun, sangat aktif.</div>
+        <div class="cc-tip">✦ Facebook = satu-satunya yang bisa taruh link klik langsung di post</div>
+      </div>
+
+      <div class="cc forum">
+        <div class="cc-head"><span class="cc-icon">💬</span><div class="cc-name">Mobilism Forum</div></div>
+        <div class="cc-desc">Forum global terbesar untuk mod APK. Daftar dan bantu jawab pertanyaan member — setelah punya reputasi, bisa share link channel/blog kamu. Audience sangat engaged karena datang dengan niat spesifik.</div>
+        <div class="cc-tip">✦ Audience paling high-intent = valid click rate shortlink tertinggi</div>
+      </div>
+
+      <div class="cc tele">
+        <div class="cc-head"><span class="cc-icon">🎮</span><div class="cc-name">Discord Server Gaming</div></div>
+        <div class="cc-desc">Server Discord game-game populer sering punya channel khusus "mods" atau "cheats". ML, FF, PUBG Mobile, GTA semua punya server besar. Komunitas di Discord lebih engaged dan loyal dari grup Telegram biasa.</div>
+        <div class="cc-tip">✦ Discord = audience paling loyal, repeat klik lebih tinggi</div>
+      </div>
+
+      <div class="cc reddit">
+        <div class="cc-head"><span class="cc-icon">📺</span><div class="cc-name">YouTube Comments & Community</div></div>
+        <div class="cc-desc">Video tutorial cheat/mod di YouTube selalu ramai komentar yang minta file-nya. Reply komentar tersebut dengan link channel Telegram kamu yang ada file-nya. Ini organic traffic tanpa perlu bikin video dulu.</div>
+        <div class="cc-tip">✦ Harvest traffic dari channel lain yang sudah punya audience</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GAME NICHE -->
+  <div class="panel" id="p-game">
+    <p class="lbl">Game niche terbaik untuk shortlink — 2026</p>
+    <div class="stats">
+      <div class="st g"><div class="st-lbl">Valid click rate</div><div class="st-val">85–95%</div><div class="st-sub">tertinggi dari semua niche</div></div>
+      <div class="st b"><div class="st-lbl">Intent download</div><div class="st-val">Sangat tinggi</div><div class="st-sub">orang cari = pasti mau download</div></div>
+      <div class="st"><div class="st-lbl">Repeat visitor</div><div class="st-val">Tinggi</div><div class="st-sub">balik tiap update game</div></div>
+      <div class="st"><div class="st-lbl">Kompetisi</div><div class="st-val">Sedang</div><div class="st-sub">ada peluang masuk</div></div>
+    </div>
+    <div class="game-list">
+
+      <div class="gl-row fire">
+        <span class="gl-icon">⚡</span>
+        <div>
+          <div class="gl-name">Free Fire (FF) Mod & Cheat</div>
+          <div class="gl-badges"><span class="badge bg">Volume tertinggi Indo</span><span class="badge bb">Update rutin</span></div>
+          <div class="gl-desc">Game mobile paling banyak dicari modnya di Indonesia. Keyword "cheat FF", "mod FF diamond unlimited", "hack FF 2026" — volume pencarian masif. Update wajib tiap patch game baru = traffic terus berulang.</div>
+          <div class="gl-earn">✓ Volume klik tertinggi untuk niche game Indo</div>
+        </div>
+      </div>
+
+      <div class="gl-row fire">
+        <span class="gl-icon">🗡️</span>
+        <div>
+          <div class="gl-name">Mobile Legends (ML) Mod & Skin</div>
+          <div class="gl-badges"><span class="badge bg">Audience loyal</span><span class="badge bb">Skin mod populer</span></div>
+          <div class="gl-desc">Komunitas ML sangat besar dan aktif. Yang paling dicari: skin gratis, drone view, map hack. Niche skin mod ML sangat besar karena harga skin resmi mahal — orang selalu cari alternatif gratis.</div>
+          <div class="gl-earn">✓ Repeat download tiap season baru — traffic sustainable</div>
+        </div>
+      </div>
+
+      <div class="gl-row fire">
+        <span class="gl-icon">🔫</span>
+        <div>
+          <div class="gl-name">PUBG Mobile Mod</div>
+          <div class="gl-badges"><span class="badge bg">Audience serius</span><span class="badge bb">Cheat antiban</span></div>
+          <div class="gl-desc">Pencarian "PUBG Mobile cheat antiban 2026" selalu tinggi. Audience PUBG cenderung lebih dewasa dan lebih bersedia melewati proses download yang panjang — valid click rate lebih tinggi dari FF.</div>
+          <div class="gl-earn">✓ Audience lebih sabar melewati shortlink — konversi bagus</div>
+        </div>
+      </div>
+
+      <div class="gl-row">
+        <span class="gl-icon">🎲</span>
+        <div>
+          <div class="gl-name">Game Offline Mod APK (Casual)</div>
+          <div class="gl-badges"><span class="badge bg">Aman dari ban</span><span class="badge bg">Audience luas</span></div>
+          <div class="gl-desc">Mod game offline (unlimited money, unlock semua level) jauh lebih aman — tidak ada risiko akun ban. Audience lebih luas termasuk wanita dan anak-anak. Game seperti Stumble Guys, Among Us, Minecraft mod sangat dicari.</div>
+          <div class="gl-earn">✓ Paling aman untuk konten kreator — tidak ada kontroversi</div>
+        </div>
+      </div>
+
+      <div class="gl-row">
+        <span class="gl-icon">🚗</span>
+        <div>
+          <div class="gl-name">GTA Series Mod (PC & Mobile)</div>
+          <div class="gl-badges"><span class="badge bb">Evergreen</span><span class="badge bp">Komunitas kuat</span></div>
+          <div class="gl-desc">Komunitas mod GTA tidak pernah mati — dari GTA SA hingga GTA V. Ada komunitas GTAInd yang khusus buat mod bertema Indonesia. Konten bisa evergreen bertahun-tahun karena game tidak di-update ofisial terus.</div>
+          <div class="gl-earn">✓ Traffic evergreen — artikel/pin lama tetap dapat klik bertahun-tahun</div>
+        </div>
+      </div>
+
+      <div class="gl-row">
+        <span class="gl-icon">⛏️</span>
+        <div>
+          <div class="gl-name">Minecraft Mod & Addon</div>
+          <div class="gl-badges"><span class="badge bg">Semua umur</span><span class="badge bg">Volume tinggi</span></div>
+          <div class="gl-desc">Niche Minecraft mod sangat besar dan tidak ada habisnya. Audience mulai dari anak SD hingga dewasa. Addon Minecraft untuk mobile sangat dicari. Komunitas 2026 masih sangat aktif dengan mod-mod baru yang terus bermunculan.</div>
+          <div class="gl-earn">✓ Audience terluas — semua umur, semua gender</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STRATEGI -->
+  <div class="panel" id="p-strategi">
+    <p class="lbl">Strategi shortlink untuk niche cheat/mod game</p>
+    <div class="tip t-green"><b>Kenapa niche ini ideal untuk shortlink?</b> Orang yang cari cheat/mod game PASTI mau download — tidak ada yang cari cheat hanya untuk dibaca. Valid click rate bisa 85–95%, jauh di atas niche lain. Ini download niche terbaik untuk shortlink.</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot d1">1</div>
+        <div>
+          <div class="step-title">Riset mod apa yang lagi trending di HappyMod / AN1</div>
+          <div class="step-desc">Buka HappyMod → lihat bagian "Trending" atau "Most Downloaded". Mod game yang ada di sana = yang paling banyak dicari orang sekarang. Buat konten tentang mod tersebut. Tidak perlu bikin modnya — cukup jadi kurator yang bantu orang menemukannya.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot d2">2</div>
+        <div>
+          <div class="step-title">Buat konten short-form sebagai "teaser"</div>
+          <div class="step-desc">Video 15–30 detik yang menunjukkan gameplay dengan mod aktif — unlimited diamond, skin langka, aimbot bekerja. Jangan tunjukkan cara downloadnya di video. CTA: "link download di bio / komentar pertama". Platform terbaik: TikTok untuk viral + YouTube Shorts untuk evergreen.</div>
+          <div class="step-earn">Hook: "Akhirnya cheat FF antiban yang beneran jalan — link gratis di bio"</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot d3">3</div>
+        <div>
+          <div class="step-title">Landing page → Shortlink → File di Mediafire</div>
+          <div class="step-desc">User klik bio → masuk landing page (Carrd/Blogger) berisi instruksi singkat + tombol download → tombol menuju ShrtFly/ShrinkEarn (iklan 5–10 detik) → redirect ke Mediafire tempat file mod-nya. Proses ini normal dan expected di komunitas mod — user sudah terbiasa.</div>
+          <div class="step-earn">+ Rp 30–80 per klik valid | Valid click rate 85–95%</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot d4">4</div>
+        <div>
+          <div class="step-title">Bangun Telegram channel sebagai "home base"</div>
+          <div class="step-desc">Arahkan semua traffic ke channel Telegram kamu. Di sana update mod terbaru setiap kali ada patch game baru. Member akan terus balik karena butuh update terbaru — ini yang bikin traffic repeating dan tidak perlu selalu buat konten baru dari nol.</div>
+          <div class="step-earn">✓ Tiap update game = alasan baru untuk post = klik baru lagi</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot d5">5</div>
+        <div>
+          <div class="step-title">Scale: gabungkan dengan blog untuk double monetisasi</div>
+          <div class="step-desc">Buat artikel blog tentang "Cheat FF Terbaru 2026 — Antiban" → optimasi SEO → dapat traffic Google → di artikel ada iklan Adsterra/HilltopAds + tombol shortlink. Selain dari short-form, kamu juga dapat traffic organik Google jangka panjang dari blog.</div>
+          <div class="step-earn">Blog = AdSense/Adsterra (display) + Shortlink (download) = double income</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-blue" style="margin-top:12px"><b>⚠️ Catatan penting:</b> Untuk game online multiplayer (FF, ML, PUBG), cheat bisa kena banned oleh anti-cheat sistem game. Lebih aman fokus ke <b>mod game offline</b> atau konten yang dikemas sebagai "tips & trick" daripada cheat eksplisit untuk game online — risiko platform ban konten lebih kecil.</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

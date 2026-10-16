@@ -1,0 +1,678 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Setup FB & Twitter untuk Bicolink</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --blue:#1877F2;--blue-bg:#0a1525;--blue-dim:#1a3060;
+  --twit:#1d9bf0;--twit-bg:#0a1a28;--twit-dim:#1a3a50;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --pur:#c084fc;--pur-bg:#180e2a;--pur-dim:#3a1a5a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+
+/* Platform tabs */
+.plat-tabs{display:flex;gap:0;margin-bottom:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:16px;}
+.plat-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--s1);color:var(--muted);}
+.plat-tab.fb.on{background:var(--blue-bg);color:var(--blue);}
+.plat-tab.tw.on{background:var(--twit-bg);color:var(--twit);}
+.plat-tab:not(:last-child){border-right:1px solid var(--border);}
+
+.section{display:none;}
+.section.on{display:block;}
+
+/* Sub tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.tab{padding:5px 11px;border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.tab.on-fb{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.tab.on-tw{background:var(--twit-bg);color:var(--twit);border-color:var(--twit-dim);}
+
+.panel{display:none;}
+.panel.on{display:block;}
+
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.btw{background:var(--twit-bg);color:var(--twit);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ab0ff;}
+.t-tw{background:var(--twit-bg);border-color:var(--twit-dim);color:#7ac8ff;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.tip b{font-weight:700;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:28px;height:28px;min-width:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+.fb-n{background:var(--blue-bg);color:var(--blue);}
+.tw-n{background:var(--twit-bg);color:var(--twit);}
+.g-n{background:var(--green-bg);color:var(--green);}
+.y-n{background:var(--yellow-bg);color:var(--yellow);}
+.s-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.s-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ttw{background:var(--twit-bg);color:var(--twit);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.tr{background:var(--red-bg);color:var(--red);}
+
+/* Profile mockup */
+.mockup{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.mock-cover{height:70px;background:linear-gradient(135deg,#1a2a4a,#2a1a3a);display:flex;align-items:flex-end;padding:10px;}
+.mock-avatar{width:52px;height:52px;border-radius:50%;background:var(--s2);border:3px solid var(--s1);margin-top:-26px;flex-shrink:0;}
+.mock-body{padding:10px 14px 14px;}
+.mock-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.mock-handle{font-size:12px;color:var(--muted);margin-bottom:6px;}
+.mock-bio{font-size:12px;color:var(--sub);line-height:1.6;margin-bottom:8px;}
+.mock-link{font-size:12px;color:var(--twit);font-weight:600;}
+.mock-stats{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:8px;}
+.mock-stats b{color:var(--text);}
+
+/* Bio formula */
+.formula{background:var(--s2);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-family:monospace;font-size:12px;line-height:1.8;}
+.f-label{font-size:10px;color:var(--muted);font-family:sans-serif;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.f-part{display:inline;padding:1px 5px;border-radius:3px;margin:1px;}
+.fp1{background:var(--blue-bg);color:var(--blue);}
+.fp2{background:var(--green-bg);color:var(--green);}
+.fp3{background:var(--yellow-bg);color:var(--yellow);}
+.fp4{background:var(--pur-bg);color:var(--pur);}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.ck{display:flex;align-items:flex-start;gap:10px;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.ck.done{border-color:var(--green-dim);}
+.ck-icon{font-size:14px;min-width:18px;margin-top:1px;}
+.ck-text{font-size:12px;color:var(--sub);line-height:1.5;}
+.ck-text b{color:var(--text);font-weight:600;}
+
+/* Linktree mockup */
+.lt{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center;}
+.lt-avatar{width:60px;height:60px;border-radius:50%;background:var(--s2);margin:0 auto 8px;}
+.lt-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;}
+.lt-btn{display:block;padding:10px;border-radius:10px;margin-bottom:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;}
+.lt-tw{background:var(--twit-bg);color:var(--twit);border:1px solid var(--twit-dim);}
+.lt-bc{background:var(--green-bg);color:var(--green);border:1px solid var(--green-dim);}
+
+/* Settings path */
+.path{background:var(--s2);border-radius:8px;padding:8px 12px;font-size:12px;font-family:monospace;color:var(--green);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.path-arrow{color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚙️ Setup Akun Facebook & Twitter untuk Bicolink</h1>
+  <p class="sub">Panduan lengkap dari nol — profil, settings, bio, dan Linktree</p>
+
+  <div class="plat-tabs">
+    <button class="plat-tab fb on" onclick="showPlat('fb',this)">Facebook Page</button>
+    <button class="plat-tab tw" onclick="showPlat('tw',this)">Twitter / X</button>
+    <button class="plat-tab tw" onclick="showPlat('linktree',this)">Linktree (Penampung)</button>
+    <button class="plat-tab tw" onclick="showPlat('connect',this)">Sambungkan Semua</button>
+  </div>
+
+  <!-- ======= FACEBOOK ======= -->
+  <div class="section on" id="s-fb">
+    <div class="tabs">
+      <button class="tab on-fb" onclick="showPanel('fb','buat',this)">Buat Page</button>
+      <button class="tab" onclick="showPanel('fb','profil',this)">Setup Profil</button>
+      <button class="tab" onclick="showPanel('fb','settings',this)">Settings Penting</button>
+      <button class="tab" onclick="showPanel('fb','reels',this)">Upload Reels</button>
+      <button class="tab" onclick="showPanel('fb','checklist',this)">Checklist</button>
+    </div>
+
+    <div class="panel on" id="fb-buat">
+      <p class="sec">Cara buat Facebook Page dari nol</p>
+      <div class="tip t-b"><b>Kenapa Page, bukan profil pribadi?</b> Page tidak ada limit teman, bisa diakses publik tanpa harus "add friend", bisa analitik traffic, dan link di caption Reels bisa diklik langsung. Profil pribadi tidak bisa semua itu.</div>
+      <div class="steps">
+        <div class="step">
+          <div class="sn fb-n">1</div>
+          <div>
+            <div class="s-title">Buka Facebook → klik "Pages" di sidebar kiri</div>
+            <div class="s-desc">Login ke Facebook (atau buat akun baru dengan email/nomor baru). Di sidebar kiri pilih "Pages" → klik tombol biru "Create new Page". Kalau di HP: tap icon ≡ → Pages → Create.</div>
+            <div class="s-tag tb">Bisa di HP atau desktop — prosesnya sama</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">2</div>
+          <div>
+            <div class="s-title">Isi nama Page dan pilih kategori</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Nama Page:</b> Pilih nama yang menarik tapi netral. Contoh: "Pack Update Harian", "Koleksi Video Pack", "Download Gratis Indo", "Entertainment Pack ID". Hindari kata eksplisit di nama.<br><br>
+            <b style="color:var(--text)">Kategori:</b> Pilih "Entertainment" atau "Media/News Company" atau "Personal Blog" — jangan pilih kategori yang terlalu spesifik. Kategori hanya untuk tampilan, tidak mempengaruhi siapa yang bisa lihat kontenmu.</div>
+            <div class="s-tag tg">Nama + kategori bisa diubah kapanpun nanti</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">3</div>
+          <div>
+            <div class="s-title">Upload foto profil dan cover photo Page</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Foto profil (ukuran: 170×170px):</b> Pakai logo teks sederhana atau preview konten yang menarik. Buat di Canva — pilih template "Logo" atau "Profile Picture". Jangan pakai foto orang nyata tanpa izin.<br><br>
+            <b style="color:var(--text)">Cover photo (820×312px):</b> Ini yang paling dilihat orang pertama kali. Tampilkan preview konten terbaik kamu + text "Follow untuk update gratis tiap hari" atau "Link download ada di setiap post". Buat di Canva template "Facebook Cover".</div>
+            <div class="s-tag tg">Cover photo yang menarik = lebih banyak yang klik "Follow"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">4</div>
+          <div>
+            <div class="s-title">Isi "About" Page dengan bio dan website</div>
+            <div class="s-desc">Edit Page → About → tulis deskripsi singkat. Contoh: "Update pack & konten eksklusif setiap hari. Follow untuk dapat notifikasi langsung. Link download ada di setiap post 👇"<br><br>
+            Di bagian "Website", masukkan link Linktree kamu (dibuat setelah ini). Ini penting karena link website di About Page bisa diklik dari profil.</div>
+            <div class="s-tag ty">Website field di About = satu lagi titik masuk ke Linktree</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="fb-profil">
+      <p class="sec">Optimasi profil Facebook Page untuk maksimal follower</p>
+      <div class="steps">
+        <div class="step">
+          <div class="sn fb-n">A</div>
+          <div>
+            <div class="s-title">Aktifkan Professional Mode</div>
+            <div class="s-desc">Settings Page → Professional Dashboard → aktifkan. Ini membuka fitur tambahan: jadwal posting, analitik detail, dan eligibility monetisasi Facebook (yang akan berguna nanti).</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">B</div>
+          <div>
+            <div class="s-title">Tambahkan Call-to-Action button</div>
+            <div class="s-desc">Di bawah cover photo ada tombol "+ Add a Button" → pilih "Learn More" atau "Sign Up" → masukkan URL Linktree kamu. Tombol ini sangat mencolok di profil dan banyak diklik orang yang baru datang ke Page kamu.</div>
+            <div class="s-tag tg">CTA button = tombol besar yang langsung arahkan ke Linktree</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">C</div>
+          <div>
+            <div class="s-title">Pin post terbaik di atas feed</div>
+            <div class="s-desc">Buat post yang berisi penjelasan singkat Page ini tentang apa + semua link bicolink → pin di atas feed (klik titik tiga di post → Pin to Top). Setiap orang yang pertama kali datang ke Page langsung lihat post ini dan ada kesempatan klik semua link bicolink.</div>
+            <div class="s-tag tg">Pinned post = 100% orang baru lihat link bicolink kamu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="fb-settings">
+      <p class="sec">Settings Facebook Page yang harus dikonfigurasi</p>
+      <div class="steps">
+        <div class="step">
+          <div class="sn y-n">⚙</div>
+          <div>
+            <div class="s-title">Settings → Audience Restrictions (opsional untuk adult)</div>
+            <div class="s-desc">Settings → General → Age Restrictions → pilih "18+" kalau kontenmu untuk dewasa. Ini tidak membatasi jangkauan terlalu banyak tapi memberi perlindungan dari takedown karena "konten dilihat anak-anak".<br><br>
+            Country Restrictions: biarkan kosong (all countries) kecuali ada alasan spesifik untuk batasi negara tertentu.</div>
+            <div class="s-tag ty">Age 18+ = proteksi dari laporan "konten tidak pantas untuk anak"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn y-n">⚙</div>
+          <div>
+            <div class="s-title">Settings → Notifications → aktifkan semua</div>
+            <div class="s-desc">Aktifkan semua notifikasi komentar dan pesan. Balas komentar dalam 1 jam pertama setelah posting sangat penting karena Facebook algoritma melihat engagement rate awal untuk menentukan seberapa luas mendistribusikan post kamu.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn y-n">⚙</div>
+          <div>
+            <div class="s-title">Settings → Messaging → aktifkan Messenger</div>
+            <div class="s-desc">Aktifkan Messenger untuk Page. Orang yang mau tanya atau minta konten bisa DM langsung. Ini juga channel untuk follow-up dengan orang yang engaged tapi belum klik bicolink.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn g-n">✓</div>
+          <div>
+            <div class="s-title">Buat username / vanity URL Page</div>
+            <div class="s-desc">Settings → General → Username → buat username yang mudah diingat: @packupdateid, @koleksipackindo, dll. Setelah ini URL Page jadi facebook.com/packupdateid — mudah disebut di Twitter dan platform lain saat promosi.</div>
+            <div class="s-tag tg">Username = URL pendek yang mudah disebut di platform lain</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="fb-reels">
+      <p class="sec">Cara upload Reels di Facebook Page dengan link bicolink di caption</p>
+      <div class="steps">
+        <div class="step">
+          <div class="sn fb-n">1</div>
+          <div>
+            <div class="s-title">Buka Page → klik "Reels" → "Create Reel"</div>
+            <div class="s-desc">Di Page kamu, di bagian atas feed ada pilihan posting: Photo, Video, Reel. Pilih "Reel". Atau di HP: buka halaman Page → tap ikon "+" → Reel. Upload video 9:16 (vertical) dengan durasi 3 detik – 90 detik.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">2</div>
+          <div>
+            <div class="s-title">Tulis caption dengan link bicolink LANGSUNG</div>
+            <div class="s-desc">Ini keunggulan utama Facebook vs platform lain. Di kolom caption, kamu bisa tulis link bicolink langsung dan itu bisa diklik oleh semua yang lihat post.<br><br>
+            <span style="display:block;background:var(--s2);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--green);font-family:monospace;margin-top:6px;">
+            🔥 Pack terbaru hari ini — download GRATIS<br>
+            <br>
+            ✅ [deskripsi isi konten]<br>
+            ✅ Update setiap hari<br>
+            <br>
+            📥 Download langsung: [link bicolink 1]<br>
+            📦 Bonus pack: [link bicolink 2]<br>
+            <br>
+            🐦 Full koleksi di Twitter: twitter.com/usernamekamu<br>
+            <br>
+            #packindo #download #gratis
+            </span></div>
+            <div class="s-tag tg">2 bicolink di 1 caption = 2 klik dari 1 orang yang lihat</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn fb-n">3</div>
+          <div>
+            <div class="s-title">Setting audience Reels → Everyone (Public)</div>
+            <div class="s-desc">Sebelum publish, pastikan audience setting di "Public" atau "Everyone" — bukan "Friends" atau "Followers only". Reels public bisa muncul di Reels feed orang yang belum follow Page kamu → jangkauan organik lebih luas.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn g-n">💡</div>
+          <div>
+            <div class="s-title">Jadwalkan posting di jam optimal</div>
+            <div class="s-desc">Saat upload, ada opsi "Schedule" → pilih tanggal dan jam. Jam terbaik untuk audience Indo di Facebook: <b style="color:var(--text)">12:00 dan 20:00 WIB</b>. Siapkan konten seminggu sekali, jadwalkan semuanya, kamu tidak perlu online tiap hari.</div>
+            <div class="s-tag tg">Schedule posting = kelola 1 minggu konten dalam 1 jam kerja</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="fb-checklist">
+      <p class="sec">Checklist Facebook Page — pastikan semua sudah dilakukan</p>
+      <div class="checklist">
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Page dibuat</b> dengan nama dan kategori yang tepat</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Foto profil</b> menarik (170×170px, dibuat di Canva)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Cover photo</b> dengan preview konten + teks CTA (820×312px)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Bio/About</b> terisi — deskripsi singkat + link Linktree di "Website"</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>CTA button</b> diaktifkan → arahkan ke Linktree</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Username</b> dibuat (facebook.com/usernamekamu)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Professional Mode</b> diaktifkan</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Age restriction 18+</b> diset (untuk konten adult)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Pinned post</b> berisi semua link bicolink di atas feed</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>3–5 Reels pertama</b> sudah diupload sebelum promosi</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= TWITTER ======= -->
+  <div class="section" id="s-tw">
+    <div class="tabs">
+      <button class="tab on-tw" onclick="showPanel('tw','buat',this)">Buat Akun</button>
+      <button class="tab" onclick="showPanel('tw','profil',this)">Setup Profil</button>
+      <button class="tab" onclick="showPanel('tw','settings',this)">Settings Adult</button>
+      <button class="tab" onclick="showPanel('tw','bio',this)">Formula Bio</button>
+      <button class="tab" onclick="showPanel('tw','checklist',this)">Checklist</button>
+    </div>
+
+    <div class="panel on" id="tw-buat">
+      <p class="sec">Cara buat akun Twitter/X dari nol</p>
+      <div class="tip t-tw"><b>Penting sebelum mulai:</b> Pakai email baru atau nomor baru yang belum pernah dipakai untuk Twitter. Jangan pakai email pribadi utama — kalau akun kena suspend, kamu mau bisa buat akun baru dengan identitas berbeda tanpa ribet.</div>
+      <div class="steps">
+        <div class="step">
+          <div class="sn tw-n">1</div>
+          <div>
+            <div class="s-title">Daftar di twitter.com atau app X</div>
+            <div class="s-desc">Buka twitter.com → "Create account" atau di app tap "Create account". Pilih daftar dengan email (lebih aman dan bisa buat banyak akun) atau nomor HP.<br><br>
+            <b style="color:var(--text)">Pakai email baru dari Gmail/Proton:</b> Buat email khusus untuk akun Twitter ini, misal: packindoofficial@gmail.com. Satu Gmail bisa dipakai untuk 1 Twitter, jadi buat email baru untuk tiap akun Twitter yang berbeda.</div>
+            <div class="s-tag ttw">1 email = 1 akun Twitter — buat email baru untuk setiap akun</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">2</div>
+          <div>
+            <div class="s-title">Isi nama dan username saat daftar</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Display name</b> (nama yang muncul di profil): bisa diubah kapanpun. Contoh: "Pack Update Harian 🔥", "Koleksi Eksklusif Indo"<br><br>
+            <b style="color:var(--text)">Username @</b> (handle permanen): pilih yang pendek, mudah diingat, dan relate dengan niche. Contoh: @packindo18, @koleksipack, @exclusivepackid. Cek dulu apakah tersedia — kalau sudah dipakai, variasikan dengan angka di belakang.</div>
+            <div class="s-tag tg">Username pendek = mudah disebut di Facebook caption dan platform lain</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">3</div>
+          <div>
+            <div class="s-title">Verifikasi email dan setup dasar</div>
+            <div class="s-desc">Setelah daftar, Twitter minta verifikasi email. Buka email yang didaftarkan → klik link verifikasi. Setelah terverifikasi, akun aktif dan bisa langsung posting.<br><br>
+            Twitter mungkin minta nomor HP untuk keamanan tambahan — bisa diisi atau dilewati. Kalau dilewati, akun masih bisa dipakai tapi beberapa fitur mungkin terbatas.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">4</div>
+          <div>
+            <div class="s-title">Follow 20–30 akun untuk "warm up" akun baru</div>
+            <div class="s-desc">Akun yang baru dibuat dan langsung posting tanpa riwayat apapun sering dikira bot oleh algoritma Twitter → distribusi rendah. Warm up dulu: follow 20–30 akun yang relevan dengan nichemu (akun adult Indo, akun gaming, akun entertainment). Ini memberi sinyal ke Twitter bahwa akun ini genuine.</div>
+            <div class="s-tag tg">Warm up 1–2 hari = distribusi tweet pertama jauh lebih baik</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="tw-profil">
+      <p class="sec">Setup profil Twitter yang menarik dan convert</p>
+
+      <div class="mockup">
+        <div class="mock-cover">
+          <span style="font-size:11px;color:rgba(255,255,255,0.5)">← Cover photo 1500×500px</span>
+        </div>
+        <div style="padding:0 14px">
+          <div class="mock-avatar"></div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-name">Pack Update Harian 🔥</div>
+          <div class="mock-handle">@packindoofficial</div>
+          <div class="mock-bio">Update pack eksklusif tiap hari 📦 | 18+ only 🔞 | Semua link download ada di 👇 | DM untuk request pack</div>
+          <div class="mock-link">🔗 linktr.ee/packindoofficial</div>
+          <div class="mock-stats">
+            <span><b>247</b> Following</span>
+            <span><b>5.2K</b> Followers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn tw-n">A</div>
+          <div>
+            <div class="s-title">Foto profil — menarik dan konsisten</div>
+            <div class="s-desc">Ukuran: 400×400px. Buat di Canva. Opsi: logo teks sederhana (nama akun di background gelap), atau preview konten yang menarik tapi tidak eksplisit. Foto profil yang bagus = first impression yang baik dan orang lebih mau follow.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">B</div>
+          <div>
+            <div class="s-title">Header/Banner — showcase konten terbaik</div>
+            <div class="s-desc">Ukuran: 1500×500px. Tampilkan preview konten terbaik kamu + teks "Follow untuk update pack gratis tiap hari" atau "@username di Twitter". Ini yang pertama dilihat orang saat kunjungi profil dari Facebook/IG.</div>
+            <div class="s-tag ttw">Header yang menarik = orang yang datang dari FB/IG langsung mau follow</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">C</div>
+          <div>
+            <div class="s-title">Tambahkan link Linktree di profil</div>
+            <div class="s-desc">Edit profile → Website → masukkan link Linktree kamu. Link ini muncul langsung di bawah bio dan bisa diklik. Ini adalah satu-satunya link yang bisa diklik di profil Twitter — jadi pastikan mengarah ke Linktree yang sudah berisi semua 4 link bicolink.</div>
+            <div class="s-tag tg">Link profil = pintu utama ke semua 4 bicolink kamu</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn g-n">📌</div>
+          <div>
+            <div class="s-title">Pin tweet dengan semua 4 link bicolink</div>
+            <div class="s-desc">Buat tweet berisi semua 4 link bicolink dengan deskripsi masing-masing → pin di atas profil (klik titik tiga di tweet → Pin to your profile). Setiap orang yang datang ke profil kamu — dari Facebook, IG, atau mana saja — langsung lihat 4 link bicolink di posisi paling atas.</div>
+            <div class="s-tag tg">Pinned tweet = 100% orang yang datang ke profil lihat semua link bicolink</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="tw-settings">
+      <p class="sec">Settings Twitter yang wajib dikonfigurasi untuk adult content</p>
+      <div class="tip t-tw"><b>Ini yang paling krusial untuk adult content.</b> Tanpa setting ini, media yang kamu upload disembunyikan secara default dan jangkauanmu sangat terbatas.</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn tw-n">1</div>
+          <div>
+            <div class="s-title">Aktifkan "Mark media as sensitive"</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Path di web:</b>
+            </div>
+            <div class="path">Settings <span class="path-arrow">→</span> Privacy and Safety <span class="path-arrow">→</span> Your Tweets <span class="path-arrow">→</span> ✓ Mark media you tweet as containing sensitive material</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Path di HP:</b>
+            </div>
+            <div class="path">Profil icon <span class="path-arrow">→</span> Settings & Support <span class="path-arrow">→</span> Settings and privacy <span class="path-arrow">→</span> Privacy and safety <span class="path-arrow">→</span> Content you see + Your Tweets</div>
+            <div class="s-tag ttw">Wajib aktif — tanpa ini konten diblur untuk semua orang</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">2</div>
+          <div>
+            <div class="s-title">Aktifkan "Display media that may contain sensitive content"</div>
+            <div class="s-desc">Ini agar kamu sendiri bisa lihat konten sensitif dari akun lain — penting untuk riset konten kompetitor dan engagement di komunitas adult.
+            </div>
+            <div class="path">Settings <span class="path-arrow">→</span> Privacy and Safety <span class="path-arrow">→</span> Content you see <span class="path-arrow">→</span> ✓ Display media that may contain sensitive content</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">3</div>
+          <div>
+            <div class="s-title">Set tanggal lahir ke 18+ (kalau belum)</div>
+            <div class="s-desc">Twitter menggunakan tanggal lahir untuk verifikasi umur. Akun yang tanggal lahirnya menunjukkan usia di bawah 18 tidak bisa akses atau posting konten sensitif.
+            </div>
+            <div class="path">Settings <span class="path-arrow">→</span> Your account <span class="path-arrow">→</span> Account information <span class="path-arrow">→</span> Date of birth</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn tw-n">4</div>
+          <div>
+            <div class="s-title">Aktifkan Two-Factor Authentication (2FA)</div>
+            <div class="s-desc">Akun yang tumbuh cepat sering jadi target hacking. Aktifkan 2FA untuk proteksi.
+            </div>
+            <div class="path">Settings <span class="path-arrow">→</span> Security and account access <span class="path-arrow">→</span> Security <span class="path-arrow">→</span> Two-factor authentication</div>
+            <div class="s-tag tg">2FA = akun tidak bisa di-hack meski password bocor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="tw-bio">
+      <p class="sec">Formula bio Twitter yang convert — maksimal 160 karakter</p>
+
+      <div class="formula">
+        <div class="f-label">Formula bio Twitter</div>
+        <span class="f-part fp1">Deskripsi niche</span> + 
+        <span class="f-part fp2">Update frequency</span> + 
+        <span class="f-part fp3">Age gate</span> + 
+        <span class="f-part fp4">CTA ke link</span>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn g-n">✦</div>
+          <div>
+            <div class="s-title">Contoh bio untuk niche pack/download (Indo)</div>
+            <div class="s-desc">
+            <span style="display:block;background:var(--s2);border-radius:8px;padding:8px 10px;font-family:monospace;font-size:12px;color:var(--green);margin-top:4px;">
+            🔥 Pack eksklusif update tiap hari | 📦 Link download semua ada di 👇 | 18+ only | DM untuk request
+            </span>
+            <span style="font-size:11px;color:var(--muted);">105 karakter — masih ada ruang</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn g-n">✦</div>
+          <div>
+            <div class="s-title">Contoh bio untuk niche entertainment/adult</div>
+            <div class="s-desc">
+            <span style="display:block;background:var(--s2);border-radius:8px;padding:8px 10px;font-family:monospace;font-size:12px;color:var(--green);margin-top:4px;">
+            Konten eksklusif yang gak ada di tempat lain 🔞 | Update: tiap hari | Semua link di bawah 👇 | 18+ only
+            </span>
+            <span style="font-size:11px;color:var(--muted);">112 karakter</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn g-n">✦</div>
+          <div>
+            <div class="s-title">Yang harus ada di bio</div>
+            <div class="s-desc">
+            ✓ <b style="color:var(--text)">Apa kontennya</b> — orang harus tahu dalam 2 detik<br>
+            ✓ <b style="color:var(--text)">Seberapa sering update</b> — "tiap hari" menunjukkan akun aktif<br>
+            ✓ <b style="color:var(--text)">18+ atau age gate</b> — penting untuk adult content<br>
+            ✓ <b style="color:var(--text)">CTA ke link</b> — "link di bawah 👇" atau "link di bio"<br>
+            ✓ <b style="color:var(--text)">Emoji</b> — membuat bio lebih eye-catching di antara akun lain
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="tw-checklist">
+      <p class="sec">Checklist Twitter — pastikan semua sudah dilakukan</p>
+      <div class="checklist">
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Akun dibuat</b> dengan email baru yang belum pernah dipakai Twitter</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Username @</b> pendek dan mudah diingat</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Foto profil</b> menarik (400×400px, dibuat di Canva)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Header/banner</b> dengan preview konten (1500×500px)</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Bio</b> diisi dengan formula: niche + frekuensi + 18+ + CTA link</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Link Linktree</b> dimasukkan di field "Website" profil</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>"Mark media sensitive"</b> diaktifkan di Settings</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Tanggal lahir 18+</b> diset di account info</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>2FA</b> diaktifkan untuk keamanan akun</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Follow 20–30 akun</b> relevan untuk warm up algoritma</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>Pinned tweet</b> berisi semua 4 link bicolink di atas profil</div></div>
+        <div class="ck done"><span class="ck-icon">✅</span><div class="ck-text"><b>5–10 tweet pertama</b> sudah diposting sebelum promosi dari FB/IG</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= LINKTREE ======= -->
+  <div class="section" id="s-linktree">
+    <p class="sec">Setup Linktree — penampung semua link bicolink</p>
+    <div class="tip t-g"><b>Kenapa perlu Linktree?</b> Instagram bio hanya boleh 1 link. Linktree memungkinkan 1 link bio yang berisi banyak tombol — Twitter, 4 bicolink, website, dll. Gratis dan setup 5 menit.</div>
+
+    <div class="lt">
+      <div class="lt-avatar"></div>
+      <div class="lt-name">@packindoofficial</div>
+      <div class="lt-btn lt-tw">🐦 Follow Twitter untuk update harian</div>
+      <div class="lt-btn lt-bc">📥 Download Pack Terbaru — Bicolink 1</div>
+      <div class="lt-btn lt-bc">📦 Koleksi Pack Vol.2 — Bicolink 2</div>
+      <div class="lt-btn lt-bc">🎬 Video Eksklusif — Bicolink 3</div>
+      <div class="lt-btn lt-bc">🎁 Bonus Pack Gratis — Bicolink 4</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;">linktr.ee/packindoofficial</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="sn g-n">1</div>
+        <div>
+          <div class="s-title">Daftar di linktr.ee</div>
+          <div class="s-desc">Buka linktr.ee → "Sign up for free" → daftar dengan email. Pilih username yang sama dengan Twitter kamu supaya konsisten: linktr.ee/packindoofficial. Ini URL yang akan kamu taruh di bio Instagram dan Facebook About.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn g-n">2</div>
+        <div>
+          <div class="s-title">Tambahkan tombol-tombol link</div>
+          <div class="s-desc">Di dashboard Linktree, klik "Add Link" untuk setiap tombol:<br><br>
+          Tombol 1: "Follow Twitter @akunmu" → URL: twitter.com/akunmu<br>
+          Tombol 2: "Download Pack Terbaru" → URL: [bicolink link 1]<br>
+          Tombol 3: "Koleksi Pack Vol.2" → URL: [bicolink link 2]<br>
+          Tombol 4: "Video Eksklusif" → URL: [bicolink link 3]<br>
+          Tombol 5: "Bonus Pack Gratis" → URL: [bicolink link 4]<br><br>
+          Susun Twitter di paling atas agar orang follow Twitter dulu sebelum langsung klik bicolink.</div>
+          <div class="s-tag tg">4 bicolink di Linktree = 4x penghasilan dari 1 visitor yang klik semua</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn g-n">3</div>
+        <div>
+          <div class="s-title">Customisasi tampilan (opsional tapi worth it)</div>
+          <div class="s-desc">Di free plan Linktree bisa ganti warna background dan tombol. Pilih warna gelap (hitam/navy) dengan tombol warna cerah — terlihat lebih premium dari template default yang biasa. Tambahkan foto profil yang sama dengan Twitter kamu untuk konsistensi branding.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= CONNECT ALL ======= -->
+  <div class="section" id="s-connect">
+    <p class="sec">Sambungkan semua platform — alur final</p>
+    <div class="tip t-g"><b>Setelah semua platform setup, ini yang harus dilakukan untuk menyambungkan semuanya:</b></div>
+    <div class="steps">
+      <div class="step">
+        <div class="sn g-n">1</div>
+        <div>
+          <div class="s-title">Facebook Page → mention Twitter di setiap caption Reels</div>
+          <div class="s-desc">Di setiap caption Reels Facebook, selalu tulis: "🐦 Full koleksi + update harian di Twitter: twitter.com/usernamekamu" di bagian bawah caption. Orang yang mau lebih banyak konten akan klik dan follow Twitter.</div>
+          <div class="s-tag tb">Link Twitter di caption FB = klik langsung tanpa perlu bio</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn g-n">2</div>
+        <div>
+          <div class="s-title">Instagram bio → link Linktree</div>
+          <div class="s-desc">Edit profil Instagram → Website → masukkan link Linktree (linktr.ee/usernamekamu). Di setiap caption Reels IG tulis "Link di bio 👆" untuk arahkan orang ke Linktree.</div>
+          <div class="s-tag tg">1 link Linktree = akses ke Twitter + 4 bicolink sekaligus</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn g-n">3</div>
+        <div>
+          <div class="s-title">Twitter → bicolink langsung di setiap tweet</div>
+          <div class="s-desc">Di Twitter tidak perlu redirect apapun — taruh link bicolink langsung di body tweet. Orang yang follow Twitter dari FB/IG langsung bisa klik link tanpa langkah tambahan.</div>
+          <div class="s-tag ttw">Tweet = link bicolink langsung tanpa redirect</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="sn g-n">4</div>
+        <div>
+          <div class="s-title">Update Linktree setiap kali ada link bicolink baru</div>
+          <div class="s-desc">Bicolink punya link yang perlu di-refresh atau diganti secara berkala. Setiap kali ada pack konten baru, update tombol di Linktree dengan link bicolink terbaru. Linktree bisa diedit kapanpun dari dashboard — tidak perlu ganti link yang ada di bio IG karena URL Linktree tidak berubah.</div>
+          <div class="s-tag tg">Update Linktree = semua platform otomatis dapat link terbaru</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-g"><b>Ringkasan alur yang sudah tersambung:</b><br>
+    FB Reels caption → twitter.com/akun → Twitter profil → link Linktree di bio → 4 bicolink<br>
+    IG Reels caption "link di bio" → bio IG → Linktree → Twitter follow + 4 bicolink<br>
+    Twitter tweet → bicolink langsung (tanpa redirect)<br><br>
+    Setiap konten yang dipost di FB dan IG otomatis mengarah ke ekosistem yang sama. Satu pengunjung yang datang dari manapun bisa berakhir di 4 link bicolink kamu.</div>
+  </div>
+
+</div>
+
+<script>
+function showPlat(id, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.plat-tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('s-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+let fbActive = 'buat';
+let twActive = 'buat';
+
+function showPanel(plat, id, btn){
+  document.querySelectorAll('#s-'+plat+' .panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#s-'+plat+' .tab').forEach(b=>b.classList.remove('on-fb','on-tw'));
+  document.getElementById(plat+'-'+id).classList.add('on');
+  const cls = plat==='fb'?'on-fb':'on-tw';
+  btn.classList.add(cls);
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+

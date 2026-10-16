@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>US Facebook Groups — Dating CPA Strategy</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#777;--sub:#aaa;
+  --blue:#1877F2;--blue-bg:#0a1020;--blue-dim:#1a2a50;
+  --green:#4ade80;--green-bg:#0d2a1a;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#2a1f00;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#2a0f0f;--red-dim:#5a1a1a;
+  --pink:#f472b6;--pink-bg:#2a0f1a;--pink-dim:#5a1f3a;
+  --purple:#c084fc;--purple-bg:#1e1030;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);transition:.15s;}
+.tab:hover{color:var(--text);}
+.tab.on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.panel{display:none;}
+.panel.on{display:block;}
+.lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;}
+.bg{background:var(--green-bg);color:var(--green);}
+.bb{background:var(--blue-bg);color:var(--blue);}
+.bp{background:var(--pink-bg);color:var(--pink);}
+.by{background:var(--yellow-bg);color:var(--yellow);}
+.br{background:var(--red-bg);color:var(--red);}
+.bpu{background:var(--purple-bg);color:var(--purple);}
+
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:12px;border:1px solid;}
+.t-blue{background:var(--blue-bg);border-color:var(--blue-dim);color:#6aabff;}
+.t-green{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-yellow{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-red{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.tip b{font-weight:600;}
+
+/* Group cards */
+.grp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+.gc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.gc.mega{border-color:var(--green);border-width:2px;}
+.gc.big{border-color:var(--blue-dim);}
+.gc-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;}
+.gc-icon{font-size:20px;min-width:24px;}
+.gc-name{font-size:12.5px;font-weight:600;color:var(--text);line-height:1.4;}
+.gc-badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px;}
+.gc-member{font-size:12px;font-weight:600;color:var(--green);}
+.gc-desc{font-size:11.5px;color:var(--sub);line-height:1.6;}
+.gc-strat{font-size:11px;font-weight:600;color:var(--blue);margin-top:5px;}
+
+/* Step rows */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.step{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.d1{background:var(--blue-bg);color:var(--blue);}
+.d2{background:var(--green-bg);color:var(--green);}
+.d3{background:var(--yellow-bg);color:var(--yellow);}
+.d4{background:var(--pink-bg);color:var(--pink);}
+.d5{background:var(--purple-bg);color:var(--purple);}
+.d6{background:var(--green-bg);color:var(--green);}
+.step-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.step-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.step-tag{font-size:11px;font-weight:600;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:5px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.tr{background:var(--red-bg);color:var(--red);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+
+/* Template post */
+.tmpl{background:var(--s1);border:1px solid var(--blue-dim);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+.tmpl-lbl{font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.tmpl-body{font-size:13px;color:var(--text);line-height:1.8;border-left:2px solid var(--blue);padding-left:10px;}
+.tmpl-note{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.6;}
+.tmpl-why{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);padding:2px 8px;border-radius:4px;display:inline-block;margin-top:5px;}
+
+/* Rules */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.rule-ok{background:var(--green-bg);border:1px solid var(--green-dim);border-radius:12px;padding:12px 14px;}
+.rule-no{background:var(--red-bg);border:1px solid var(--red-dim);border-radius:12px;padding:12px 14px;}
+.rule-title{font-size:12px;font-weight:600;margin-bottom:8px;}
+.rule-ok .rule-title{color:var(--green);}
+.rule-no .rule-title{color:var(--red);}
+.rule-item{font-size:12px;line-height:1.8;}
+.rule-ok .rule-item{color:var(--green);}
+.rule-no .rule-item{color:var(--red);}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px;}
+.st{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.st.g{border-color:var(--green-dim);background:var(--green-bg);}
+.st.b{border-color:var(--blue-dim);background:var(--blue-bg);}
+.st.y{border-color:var(--yellow-dim);background:var(--yellow-bg);}
+.st-lbl{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.st-val{font-size:17px;font-weight:700;color:var(--text);}
+.st.g .st-val{color:var(--green);}
+.st.b .st-val{color:var(--blue);}
+.st.y .st-val{color:var(--yellow);}
+.st-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* Profile setup */
+.prof{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.prof.imp{border-color:var(--yellow);}
+.prof-head{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.prof-icon{font-size:20px;}
+.prof-name{font-size:13px;font-weight:600;color:var(--text);}
+.prof-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.prof-tip{font-size:11px;font-weight:600;color:var(--yellow);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🇺🇸 US Facebook Groups — Dating CPA Strategy</h1>
+  <p class="sub">Cara gain audience US dan share link CPA dating di Facebook groups</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="show('why',this)">Kenapa US?</button>
+    <button class="tab" onclick="show('groups',this)">Target Groups</button>
+    <button class="tab" onclick="show('profil',this)">Setup Profil US</button>
+    <button class="tab" onclick="show('strategi',this)">Cara Share Link</button>
+    <button class="tab" onclick="show('template',this)">Template Post</button>
+    <button class="tab" onclick="show('rules',this)">Do & Don't</button>
+  </div>
+
+  <!-- WHY US -->
+  <div class="panel on" id="p-why">
+    <p class="lbl">Kenapa target US audience di Facebook groups?</p>
+    <div class="stats">
+      <div class="st g"><div class="st-lbl">CPA payout US</div><div class="st-val">$2–8</div><div class="st-sub">per SOI/DOI lead</div></div>
+      <div class="st b"><div class="st-lbl">CPA payout Indo</div><div class="st-val">$0.50–2</div><div class="st-sub">per SOI/DOI lead</div></div>
+      <div class="st y"><div class="st-lbl">Selisih per lead</div><div class="st-val">4–6x</div><div class="st-sub">lebih tinggi dari Indo</div></div>
+      <div class="st"><div class="st-lbl">Facebook user US</div><div class="st-val">175 juta</div><div class="st-sub">masih platform terbesar</div></div>
+    </div>
+
+    <div class="tip t-blue"><b>Peluang besar yang sering dilewatkan:</b> Grup Facebook dating di US sangat aktif dan BESAR. Grup terbesar di Facebook dunia adalah "MARRIAGE & RELATIONSHIP COUNSELING" dengan <b>7.6 juta member</b> — mayoritas US. Dan ada ratusan grup dating kota-spesifik di US yang masing-masing punya ribuan hingga puluhan ribu member aktif setiap hari.</div>
+
+    <div class="tip t-green"><b>Kenapa Facebook groups lebih bagus dari TikTok untuk CPA?</b><br>
+    Facebook groups = audience yang secara aktif mencari solusi dating (high-intent). Berbeda dengan TikTok di mana orang scroll random, member grup dating Facebook bergabung <b>dengan tujuan spesifik</b> — cari pasangan, minta advice, atau bantu teman. High-intent = konversi CPA jauh lebih tinggi per klik.</div>
+
+    <div class="tip t-yellow"><b>Facebook adalah satu-satunya platform yang bisa taruh link langsung di post/comment</b> tanpa redirect bio. Artinya: user langsung bisa klik CPA link kamu dari dalam grup, tanpa perlu keluar ke platform lain dulu. Ini sangat mempercepat konversi.</div>
+  </div>
+
+  <!-- GROUPS -->
+  <div class="panel" id="p-groups">
+    <p class="lbl">Tipe dan contoh grup Facebook US yang harus kamu masuki</p>
+    <div class="tip t-blue"><b>Cara cari grup:</b> Di Facebook search bar, ketik keyword di bawah → pilih tab "Groups" → filter by "Most members" atau "Most active". Join 20–30 grup dulu sebelum mulai posting apapun — familiarisasi diri dengan aturan tiap grup.</div>
+
+    <div class="grp-grid">
+
+      <div class="gc mega">
+        <div class="gc-head"><span class="gc-icon">💍</span><div class="gc-name">Marriage & Relationship Counseling Groups</div></div>
+        <div class="gc-badges"><span class="badge bg">7.6M+ member</span><span class="badge bg">Grup terbesar</span></div>
+        <div class="gc-member">Search: "relationship counseling" "marriage advice"</div>
+        <div class="gc-desc">Grup terbesar di Facebook. Member aktif minta advice hubungan setiap hari. Sangat high-intent — orang yang masuk sini sedang butuh solusi nyata untuk masalah asmara mereka.</div>
+        <div class="gc-strat">→ CPA dating / relationship app sangat relevan di sini</div>
+      </div>
+
+      <div class="gc mega">
+        <div class="gc-head"><span class="gc-icon">👫</span><div class="gc-name">Singles & Dating Groups (Kota Spesifik)</div></div>
+        <div class="gc-badges"><span class="badge bg">10k–100k member</span><span class="badge bb">High intent</span></div>
+        <div class="gc-member">Search: "singles [city]" "dating NYC" "dating LA"</div>
+        <div class="gc-desc">Ada ratusan grup dating per kota di US — NYC, LA, Chicago, Houston, Miami, Dallas. Member bergabung dengan niat jelas: cari pasangan. Konversi CPA tertinggi dari semua tipe grup.</div>
+        <div class="gc-strat">→ Target: "Singles New York", "Dating Chicago", "Singles Miami"</div>
+      </div>
+
+      <div class="gc big">
+        <div class="gc-head"><span class="gc-icon">🤔</span><div class="gc-name">"Are We Dating The Same Guy?" Groups</div></div>
+        <div class="gc-badges"><span class="badge bg">50k+ member</span><span class="badge bp">Mayoritas wanita</span></div>
+        <div class="gc-member">Search: "Are we dating the same guy"</div>
+        <div class="gc-desc">Grup viral kota-spesifik di US dengan puluhan ribu member perempuan aktif. Mereka secara aktif membahas pengalaman dating dan mencari teman yang bisa dipercaya. Ada di setiap kota besar US.</div>
+        <div class="gc-strat">→ Konten advice untuk wanita sangat relevan di sini</div>
+      </div>
+
+      <div class="gc big">
+        <div class="gc-head"><span class="gc-icon">💔</span><div class="gc-name">Relationship Advice & Support Groups</div></div>
+        <div class="gc-badges"><span class="badge bb">Semua umur</span><span class="badge bg">Very active</span></div>
+        <div class="gc-member">Search: "relationship advice" "dating advice" "love advice"</div>
+        <div class="gc-desc">Grup advice umum dengan member dari seluruh US. Orang posting masalah hubungan dan minta pendapat. Kesempatan untuk jadi "helpful member" yang ahli → membangun kepercayaan sebelum share link.</div>
+        <div class="gc-strat">→ Bangun reputasi helpful, baru share link</div>
+      </div>
+
+      <div class="gc big">
+        <div class="gc-head"><span class="gc-icon">🔞</span><div class="gc-name">30s/40s Singles Groups</div></div>
+        <div class="gc-badges"><span class="badge by">Purchasing power tinggi</span><span class="badge bg">Serius cari pasangan</span></div>
+        <div class="gc-member">Search: "singles over 30" "40s dating" "mature singles"</div>
+        <div class="gc-desc">Demografis usia 30–45 di US punya daya beli lebih tinggi dan lebih serius mencari pasangan. Konversi ke CPA dating premium sangat tinggi. CPA offer untuk demografis ini bayarannya lebih besar.</div>
+        <div class="gc-strat">→ CPA rate lebih tinggi untuk offer dewasa/mature</div>
+      </div>
+
+      <div class="gc big">
+        <div class="gc-head"><span class="gc-icon">😊</span><div class="gc-name">Online Dating Tips & Apps Groups</div></div>
+        <div class="gc-badges"><span class="badge bb">Tech-savvy</span><span class="badge bg">Langsung ke poin</span></div>
+        <div class="gc-member">Search: "online dating tips" "dating apps advice" "Tinder tips"</div>
+        <div class="gc-desc">Member grup ini sudah familiar dengan konsep online dating — konversi ke CPA platform baru sangat mudah karena tidak perlu edukasi panjang. Tinggal rekomendasikan platform CPA kamu sebagai "alternatif lebih baik".</div>
+        <div class="gc-strat">→ Paling mudah konversi karena sudah siap mental</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROFIL US -->
+  <div class="panel" id="p-profil">
+    <p class="lbl">Setup profil Facebook yang terlihat seperti orang US — wajib sebelum posting</p>
+    <div class="tip t-red"><b>⚠️ Ini yang paling krusial:</b> Kalau profil Facebook kamu terlihat jelas dari Indonesia (nama Indo, foto Indonesia, bahasa Indonesia), postinganmu akan langsung diabaikan atau bahkan dilaporkan sebagai spam oleh member grup US. Profil harus terlihat seperti orang Amerika sebelum mulai apapun.</div>
+
+    <div class="prof imp">
+      <div class="prof-head"><span class="prof-icon">👤</span><div class="prof-name">Nama — gunakan nama Amerika yang natural</div></div>
+      <div class="prof-body">Ganti nama ke nama Amerika yang umum: "Sarah Mitchell", "James Carter", "Emma Rodriguez", "Michael Chen". Hindari nama yang terlalu generic seperti "John Smith" — terlihat fake. Gunakan kombinasi nama depan + nama belakang yang terdengar nyata. Nama Asian-American juga oke (Michael Chen, Jennifer Park) karena ada banyak di US.</div>
+      <div class="prof-tip">⚠️ Nama Indonesia di grup US = langsung dicurigai sebagai scammer/spam</div>
+    </div>
+
+    <div class="prof imp">
+      <div class="prof-head"><span class="prof-icon">📸</span><div class="prof-name">Foto profil — gunakan AI-generated atau foto stock natural</div></div>
+      <div class="prof-body">Gunakan foto wajah yang natural dan believable — bukan foto artis. Pilihan terbaik: generate foto menggunakan AI (ThisPersonDoesNotExist.com untuk foto realistis, atau tools AI lain). Foto harus terlihat seperti orang biasa — bukan terlalu sempurna, bukan terlalu jelek. Foto outdoor atau casual jauh lebih dipercaya dari foto formal.</div>
+      <div class="prof-tip">✓ thispersondoesnotexist.com = foto orang nyata yang tidak ada di dunia</div>
+    </div>
+
+    <div class="prof imp">
+      <div class="prof-head"><span class="prof-icon">📍</span><div class="prof-name">Location — set ke kota US yang relevan</div></div>
+      <div class="prof-body">Set "Current City" ke kota US yang relevan dengan grup yang kamu target. Kalau target grup "Singles NYC" → set ke New York, NY. Kalau target grup umum nasional → set ke kota besar seperti Los Angeles atau Chicago. Location di profil sangat diperhatikan admin grup kota-spesifik.</div>
+      <div class="prof-tip">✓ City di profil harus match dengan grup yang kamu masuki</div>
+    </div>
+
+    <div class="prof">
+      <div class="prof-head"><span class="prof-icon">📝</span><div class="prof-name">Bio / About — singkat, relatable, dalam bahasa Inggris</div></div>
+      <div class="prof-body">Contoh bio yang believable: "Single and figuring it out 😅 | Coffee addict | Dog mom | NYC transplant from Ohio | Here for the vibes and maybe the love 💛". Atau: "Just a regular guy navigating the dating scene in LA. Relationship enthusiast, hopeless romantic." Natural, tidak terlalu formal, ada sedikit humor.</div>
+      <div class="prof-tip">✓ Bio yang relate dengan experience single orang US = langsung dapat kepercayaan</div>
+    </div>
+
+    <div class="prof">
+      <div class="prof-head"><span class="prof-icon">📅</span><div class="prof-name">Post history — isi profil dengan post biasa dulu</div></div>
+      <div class="prof-body">Profil kosong = langsung dicurigai bot/scammer. Sebelum join grup, buat 5–10 post normal di timeline kamu: share artikel menarik tentang relationships, komen tentang hal sehari-hari, repost meme lucu. Ini membuat profil terlihat aktif dan genuine, bukan akun yang baru dibuat untuk spam.</div>
+      <div class="prof-tip">✓ Minimal 10 post di timeline sebelum mulai aktif di grup</div>
+    </div>
+
+  </div>
+
+  <!-- STRATEGI SHARE LINK -->
+  <div class="panel" id="p-strategi">
+    <p class="lbl">Cara share link CPA tanpa kena ban dari grup</p>
+    <div class="tip t-red"><b>Masalah utama:</b> Hampir semua Facebook group US punya aturan "no spam" dan "no self-promotion". Kalau kamu langsung post link CPA, admin akan hapus post dan ban akunmu. Harus pakai pendekatan tidak langsung yang tetap efektif.</div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="sn d1">1</div>
+        <div>
+          <div class="step-title">Fase warming up (Minggu 1–2) — jangan post link sama sekali</div>
+          <div class="step-desc">Join 20–30 grup. Selama 1–2 minggu pertama, HANYA beri komentar helpful di post orang lain. Jawab pertanyaan dengan advice yang genuinely berguna. Like dan reply komentar orang lain. Tujuannya: build reputasi sebagai member yang helpful, bukan spammer. Admin grup notice member yang aktif positif.</div>
+          <div class="step-tag tg">✓ Tahap ini wajib — skip = ban instan saat pertama post link</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d2">2</div>
+        <div>
+          <div class="step-title">Metode #1 — "Provide value, link in comment"</div>
+          <div class="step-desc">Post konten helpful yang panjang dan genuine tanpa link. Contoh: "I've been single for 3 years and here's what I learned about why dating apps aren't working for most of us... [panjang, genuine, informatif]". Di akhir post tulis: "Happy to share some resources that helped me — drop a comment if you want!"<br><br>Ketika orang comment "yes please" → balas dengan link CPA di komentar. Karena orang yang minta sendiri, ini tidak terlihat spam dan algoritma Facebook lebih toleran.</div>
+          <div class="step-tag tg">✓ Paling aman — link di comment yang diminta orang</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d3">3</div>
+        <div>
+          <div class="step-title">Metode #2 — "Personal recommendation" di reply orang lain</div>
+          <div class="step-desc">Cari post yang orang lain sedang minta rekomendasi platform dating atau advice. Contoh: ada yang post "I'm tired of Tinder, any alternatives?" → kamu reply dengan genuine recommendation yang menyebut platform CPA kamu secara natural: "I tried [platform CPA kamu] last year and it was much better than Tinder for serious connections — here's the link if you want to check it out: [link]".<br><br>Ini terlihat seperti genuine recommendation, bukan iklan.</div>
+          <div class="step-tag tg">✓ Organic recommendation — jarang kena hapus</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d4">4</div>
+        <div>
+          <div class="step-title">Metode #3 — Buat grup Facebook sendiri sebagai "home base"</div>
+          <div class="step-desc">Buat grup Facebook sendiri: "Dating Tips & Resources for Singles" atau "Relationship Advice Community". Di grup sendiri, kamu bisa post CPA link sesuka hati tanpa takut ban. Promosikan grup kamu di grup orang lain dengan cara subtle: saat balas komentar, mention "I share more tips in my group [nama grup] if you're interested!"<br><br>Member yang pindah ke grupmu = audience yang sudah warm dan lebih mudah dikonversi.</div>
+          <div class="step-tag tg">✓ Di grup sendiri = bebas post link kapanpun</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d5">5</div>
+        <div>
+          <div class="step-title">Metode #4 — Facebook Reels + link di caption (bukan di grup)</div>
+          <div class="step-desc">Buat Facebook Reels (video dating tips 15–30 detik) dari akun kamu. Di caption Reels, taruh link CPA langsung. Boost post ke target audience: US, usia 22–35, interest "dating", "relationships", "single". Facebook Reels muncul di feed orang secara organik — tidak perlu masuk grup manapun, tidak ada risiko ban.</div>
+          <div class="step-tag tb">→ Cara paling scalable dan tidak ada risiko ban</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="sn d6">6</div>
+        <div>
+          <div class="step-title">Metode #5 — DM (Direct Message) ke member yang aktif bertanya</div>
+          <div class="step-desc">Identify member grup yang aktif post pertanyaan tentang dating → DM mereka secara personal dengan pesan yang genuine dan helpful. "Hey I saw your post about [masalah mereka], I've been through the same thing. There's a platform that actually helped me a lot — [link]. Hope it helps!" Personal DM jauh lebih tinggi konversinya dari post publik, dan tidak kena moderasi grup.</div>
+          <div class="step-tag ty">⚠ Lakukan maksimal 10–15 DM per hari — lebih dari itu kena restriction</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TEMPLATE -->
+  <div class="panel" id="p-template">
+    <p class="lbl">Template post bahasa Inggris — siap pakai di grup US</p>
+
+    <div class="tmpl">
+      <div class="tmpl-lbl">📌 Template #1 — Value post dengan "request link" (Paling Aman)</div>
+      <div class="tmpl-body">"I've been navigating the dating scene for a while now, and honestly? The biggest mistake I made was expecting dating apps to do all the work.
+
+Here are 3 things I wish I knew earlier:
+1. Your profile bio matters more than your photos (most people get this backwards)
+2. Opening with a question always outperforms "hey" or compliments
+3. The platform you use matters more than how often you use it
+
+Learned all of this the hard way 😅
+
+If anyone wants the full list + the platform that actually changed my results, drop a ❤️ below and I'll share it!"</div>
+      <div class="tmpl-note">Tunggu komentar masuk → balas SETIAP komentar dengan link CPA kamu secara personal.</div>
+      <div class="tmpl-why">✓ Orang yang comment sendiri = high intent = konversi tinggi</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-lbl">💬 Template #2 — Personal story + subtle CTA</div>
+      <div class="tmpl-body">"Real talk: I went on 3 dates in 2 years from mainstream apps. Then a friend told me about this smaller platform where people are actually serious about meeting someone.
+
+First month: 5 real conversations. Second month: 2 actual dates. Third month: still talking to someone who might actually be worth it 🤞
+
+Not sponsoring anything, just genuinely want to share something that worked. Link in comments for anyone who wants to try it — it's free to sign up."</div>
+      <div class="tmpl-note">Tone: personal dan tidak terlihat seperti iklan. "Not sponsoring anything" adalah key phrase yang menurunkan kecurigaan.</div>
+      <div class="tmpl-why">✓ Personal story format = 3x lebih dipercaya dari promotional post</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-lbl">🤝 Template #3 — Reply ke post orang lain yang minta rekomendasi</div>
+      <div class="tmpl-body">"Totally been there! Honestly I had the same frustration with [Tinder/Bumble/Hinge] until I tried [platform CPA kamu]. The difference is the matching algorithm actually considers what you're looking for long-term, not just who's nearby.
+
+It's free to sign up and the quality of people on there is genuinely different. Here: [link CPA] — hope it works for you like it did for me!"</div>
+      <div class="tmpl-note">Gunakan ini saat ada yang post "Tired of dating apps" atau "Any alternatives to Tinder?" — response yang genuine dan tepat waktu.</div>
+      <div class="tmpl-why">✓ Reply ke pertanyaan orang = paling natural, paling jarang kena hapus</div>
+    </div>
+
+    <div class="tmpl">
+      <div class="tmpl-lbl">💌 Template #4 — DM personal setelah mereka post di grup</div>
+      <div class="tmpl-body">"Hey [name]! Saw your post in [grup] about [masalah mereka]. Sounds really frustrating, been through similar.
+
+One thing that genuinely helped me was switching to a different platform — the people on there are way more upfront about what they want which saves so much time and emotional energy.
+
+Here's the link if you're curious: [link CPA] — totally free to make a profile and see if it's a fit for you. Hope things get better! 🙂"</div>
+      <div class="tmpl-note">Personalisasi dengan menyebut nama dan masalah spesifik mereka. Generic DM = langsung diabaikan.</div>
+      <div class="tmpl-why">✓ Personalized DM = konversi tertinggi dari semua metode</div>
+    </div>
+
+  </div>
+
+  <!-- DO DON'T -->
+  <div class="panel" id="p-rules">
+    <p class="lbl">Do & Don't — aturan yang menentukan sukses atau ban</p>
+    <div class="tip t-yellow"><b>Ingat:</b> Facebook group di US punya admin yang sangat aktif dan member yang tidak ragu melaporkan spam. Satu kesalahan bisa bikin akun kamu banned dari semua grup sekaligus. Ikuti aturan ini dengan ketat terutama di minggu-minggu pertama.</div>
+
+    <div class="rules">
+      <div class="rule-ok">
+        <div class="rule-title">✅ DO — Lakukan ini</div>
+        <div class="rule-item">
+          ✓ Warming up 1–2 minggu sebelum share link<br>
+          ✓ Post dalam bahasa Inggris yang natural<br>
+          ✓ Berikan nilai nyata sebelum CTA<br>
+          ✓ Reply setiap komentar secara personal<br>
+          ✓ Gunakan personal story format<br>
+          ✓ Baca rules grup sebelum posting<br>
+          ✓ Taruh link di komentar, bukan post utama<br>
+          ✓ DM personal yang tidak generic<br>
+          ✓ Buat grup sendiri untuk posting bebas<br>
+          ✓ Engage di luar post promosi kamu<br>
+          ✓ Batasi posting di 1 grup max 2–3x/minggu
+        </div>
+      </div>
+      <div class="rule-no">
+        <div class="rule-title">🚫 DON'T — Jangan lakukan</div>
+        <div class="rule-item">
+          ✗ Langsung post link di hari pertama join<br>
+          ✗ Cross-post pesan sama di banyak grup<br>
+          ✗ Pakai template yang terlalu "sales-y"<br>
+          ✗ Kirim DM yang copy-paste 100%<br>
+          ✗ Ignore aturan grup yang tertulis<br>
+          ✗ Post terlalu sering di grup yang sama<br>
+          ✗ Gunakan nama/foto yang jelas fake/stock<br>
+          ✗ Posting dalam bahasa campuran Indo-Inggris<br>
+          ✗ Balas komentar dengan template yang sama<br>
+          ✗ Post link yang sama berulang kali<br>
+          ✗ Abaikan member yang comment di post kamu
+        </div>
+      </div>
+    </div>
+
+    <div class="tip t-green"><b>Strategi jangka panjang yang paling aman:</b> Bangun satu Facebook Page + satu Facebook Group sendiri bertema "Dating Tips for [kota US]". Dari grup/page milik sendiri, kamu bisa posting konten + link CPA sesuka hati tanpa risiko ban. Gunakan aktivitas di grup orang lain hanya untuk drive traffic ke grup/page kamu sendiri — bukan langsung ke CPA link.</div>
+  </div>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+</script>
+
+<script>
+if (window.self === window.top) {
+  const hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '← Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = () => hubBtn.style.background = '#1e2433';
+  hubBtn.onmouseout = () => hubBtn.style.background = '#14171f';
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
+
