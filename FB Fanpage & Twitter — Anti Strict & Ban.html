@@ -1,0 +1,771 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FB Fanpage & Twitter — Anti Strict & Ban</title>
+<style>
+:root{
+  --bg:#0f0f0f;--s1:#1a1a1a;--s2:#222;--border:#2a2a2a;
+  --text:#e8e8e8;--muted:#666;--sub:#999;
+  --blue:#1877F2;--blue-bg:#0a1525;--blue-dim:#1a3060;
+  --twit:#1d9bf0;--twit-bg:#0a1a28;--twit-dim:#1a3a50;
+  --green:#4ade80;--green-bg:#0a2018;--green-dim:#1a4a2a;
+  --yellow:#fbbf24;--yellow-bg:#221800;--yellow-dim:#4a3a00;
+  --red:#f87171;--red-bg:#220a0a;--red-dim:#5a1a1a;
+  --pur:#c084fc;--pur-bg:#180e2a;--pur-dim:#3a1a5a;
+  --orange:#fb923c;--orange-bg:#1a1008;--orange-dim:#4a2a00;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:16px;}
+.wrap{max-width:740px;margin:0 auto;}
+h1{font-size:15px;font-weight:600;margin-bottom:3px;}
+.sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+
+/* Platform selector */
+.plat-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:16px;}
+.plat-btn{padding:11px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;background:var(--s1);color:var(--muted);border:none;}
+.plat-btn:first-child{border-right:1px solid var(--border);}
+.plat-btn.fb-on{background:var(--blue-bg);color:var(--blue);}
+.plat-btn.tw-on{background:var(--twit-bg);color:var(--twit);}
+
+.plat-section{display:none;}
+.plat-section.on{display:block;}
+
+/* Chapter tabs */
+.ch-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.ch-tab{padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--muted);}
+.ch-tab.fb-on{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-dim);}
+.ch-tab.tw-on{background:var(--twit-bg);color:var(--twit);border-color:var(--twit-dim);}
+.ch-panel{display:none;}
+.ch-panel.on{display:block;}
+
+.sec{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;}
+.chapter-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.chapter-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+
+/* Tip boxes */
+.tip{border-radius:10px;padding:10px 14px;font-size:12px;line-height:1.7;margin-bottom:10px;border:1px solid;}
+.t-b{background:var(--blue-bg);border-color:var(--blue-dim);color:#7ab0ff;}
+.t-tw{background:var(--twit-bg);border-color:var(--twit-dim);color:#7ac8ff;}
+.t-g{background:var(--green-bg);border-color:var(--green-dim);color:var(--green);}
+.t-y{background:var(--yellow-bg);border-color:var(--yellow-dim);color:var(--yellow);}
+.t-r{background:var(--red-bg);border-color:var(--red-dim);color:var(--red);}
+.t-o{background:var(--orange-bg);border-color:var(--orange-dim);color:var(--orange);}
+.tip b{font-weight:700;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.sn{width:30px;height:30px;min-width:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.nb{background:var(--blue-bg);color:var(--blue);}
+.nt{background:var(--twit-bg);color:var(--twit);}
+.ng{background:var(--green-bg);color:var(--green);}
+.ny{background:var(--yellow-bg);color:var(--yellow);}
+.nr{background:var(--red-bg);color:var(--red);}
+.np{background:var(--pur-bg);color:var(--pur);}
+.s-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s-desc{font-size:12px;color:var(--sub);line-height:1.65;}
+.s-tag{font-size:11px;font-weight:700;display:inline-block;padding:2px 8px;border-radius:4px;margin-top:4px;}
+.tg{background:var(--green-bg);color:var(--green);}
+.tb{background:var(--blue-bg);color:var(--blue);}
+.ttw{background:var(--twit-bg);color:var(--twit);}
+.ty{background:var(--yellow-bg);color:var(--yellow);}
+.tr{background:var(--red-bg);color:var(--red);}
+.to{background:var(--orange-bg);color:var(--orange);}
+
+/* Do / Don't */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.d-ok{background:var(--green-bg);border:1px solid var(--green-dim);border-radius:12px;padding:12px 14px;}
+.d-no{background:var(--red-bg);border:1px solid var(--red-dim);border-radius:12px;padding:12px 14px;}
+.dd-title{font-size:12px;font-weight:700;margin-bottom:8px;}
+.d-ok .dd-title{color:var(--green);}
+.d-no .dd-title{color:var(--red);}
+.dd-item{font-size:12px;line-height:1.9;}
+.d-ok .dd-item{color:var(--green);}
+.d-no .dd-item{color:var(--red);}
+
+/* Content schedule */
+.sched{background:var(--s1);border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;}
+.sched-head{display:grid;background:var(--s2);padding:8px 12px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+.sched-row{padding:8px 12px;border-top:1px solid var(--border);font-size:12px;display:grid;gap:8px;}
+.sched-row.hl{background:var(--green-bg);}
+.sched-period{font-weight:700;color:var(--text);font-size:12px;margin-bottom:3px;}
+.sched-row.hl .sched-period{color:var(--green);}
+.sched-action{color:var(--sub);font-size:12px;line-height:1.6;}
+.sched-row.hl .sched-action{color:var(--green);}
+.sched-result{font-size:11px;font-weight:700;color:var(--yellow);margin-top:3px;}
+
+/* Signal cards */
+.signals{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:14px;}
+.sig{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px 13px;}
+.sig.pos{border-color:var(--green-dim);}
+.sig.neg{border-color:var(--red-dim);}
+.sig-icon{font-size:20px;margin-bottom:5px;}
+.sig-label{font-size:11px;font-weight:700;margin-bottom:3px;}
+.sig.pos .sig-label{color:var(--green);}
+.sig.neg .sig-label{color:var(--red);}
+.sig-desc{font-size:11px;color:var(--sub);line-height:1.5;}
+
+/* Phase cards */
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.phase{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;}
+.phase.active{border-color:var(--green);border-width:2px;}
+.phase-period{font-size:11px;font-weight:700;margin-bottom:5px;}
+.phase.p1 .phase-period{color:var(--yellow);}
+.phase.p2 .phase-period{color:var(--blue);}
+.phase.p3 .phase-period{color:var(--twit);}
+.phase.p4 .phase-period{color:var(--green);}
+.phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.phase-items{font-size:12px;color:var(--sub);line-height:1.8;}
+
+/* Recovery */
+.rec-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
+.rec-card.urgent{border-color:var(--red-dim);background:var(--red-bg);}
+.rec-card.ok{border-color:var(--green-dim);}
+.rec-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.rec-icon{font-size:18px;}
+.rec-title{font-size:13px;font-weight:700;}
+.rec-card.urgent .rec-title{color:var(--red);}
+.rec-card.ok .rec-title{color:var(--green);}
+.rec-body{font-size:12px;color:var(--sub);line-height:1.65;}
+.rec-card.urgent .rec-body{color:var(--red);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛡️ Panduan Terlengkap — FB Fanpage & Twitter Anti Strict & Ban</h1>
+  <p class="sub">Dari pembuatan, warming up, growth, hingga recovery — semua ada di sini</p>
+
+  <div class="plat-row">
+    <button class="plat-btn fb-on" onclick="showPlat('fb',this,'fb-on')">📘 Facebook Fanpage</button>
+    <button class="plat-btn" onclick="showPlat('tw',this,'tw-on')">🐦 Twitter / X</button>
+  </div>
+
+  <!-- =================== FACEBOOK =================== -->
+  <div class="plat-section on" id="s-fb">
+    <div class="ch-tabs">
+      <button class="ch-tab fb-on" onclick="showCh('fb','1',this)">1. Buat Akun</button>
+      <button class="ch-tab" onclick="showCh('fb','2',this)">2. Warming Up</button>
+      <button class="ch-tab" onclick="showCh('fb','3',this)">3. Konten Aman</button>
+      <button class="ch-tab" onclick="showCh('fb','4',this)">4. Algoritma FB</button>
+      <button class="ch-tab" onclick="showCh('fb','5',this)">5. Growth</button>
+      <button class="ch-tab" onclick="showCh('fb','6',this)">6. Recovery</button>
+    </div>
+
+    <!-- FB BAB 1 -->
+    <div class="ch-panel on" id="fb-1">
+      <div class="chapter-title">Bab 1 — Membuat Facebook & Fanpage yang Benar</div>
+      <div class="chapter-sub">Fondasi akun yang salah = ban lebih cepat. Bangun dari awal dengan cara yang tepat.</div>
+
+      <div class="tip t-b"><b>Fakta penting:</b> Facebook mendeteksi akun baru lewat puluhan sinyal — nomor HP, IP address, device fingerprint, email, pola perilaku. Akun yang dibuat "terlalu sempurna" justru lebih dicurigai. Yang aman adalah akun yang terlihat natural dan organik.</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn nb">1</div>
+          <div>
+            <div class="s-title">Buat akun Facebook pribadi dulu — bukan langsung Page</div>
+            <div class="s-desc">Facebook Page harus punya akun pribadi di belakangnya. Akun pribadi yang kuat = Page yang lebih terpercaya di mata algoritma. Buat akun pribadi dengan data yang masuk akal: nama normal (bukan "@Pack_Indo"), foto profil yang terlihat asli, dan informasi dasar yang lengkap (kota, tanggal lahir, dll).<br><br>
+            Gunakan nomor HP baru (bukan yang sudah pernah dipakai akun FB lain) dan email yang belum pernah dipakai Facebook sebelumnya.</div>
+            <div class="s-tag tg">Akun pribadi kuat = Page lebih terpercaya dan jarang kena restrict</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nb">2</div>
+          <div>
+            <div class="s-title">Jangan buat Page di hari pertama akun dibuat</div>
+            <div class="s-desc">Akun baru yang langsung buat Page dan mulai posting aktif adalah pola yang dikenal sistem Facebook sebagai perilaku spam. Tunggu minimal 7–14 hari dulu, isi waktu itu dengan aktivitas normal: like beberapa post, tambah 5–10 teman, isi info profil secara bertahap, bergabung 2–3 grup relevan.</div>
+            <div class="s-tag ty">Tunggu 7–14 hari sebelum buat Page = akun tidak terdeteksi sebagai spam bot</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nb">3</div>
+          <div>
+            <div class="s-title">Setup Page dengan informasi lengkap sebelum posting pertama</div>
+            <div class="s-desc">
+            ✓ Nama Page yang jelas dan konsisten dengan niche<br>
+            ✓ Foto profil dan cover photo yang sudah jadi (bukan placeholder)<br>
+            ✓ Bio/About yang terisi penuh — deskripsi, website (Linktree), kategori<br>
+            ✓ Username/vanity URL (facebook.com/namapage)<br>
+            ✓ CTA button yang mengarah ke Linktree<br><br>
+            Page yang profilnya lengkap sebelum posting pertama = sinyal positif ke Facebook bahwa ini akun serius, bukan akun spam yang dibuat terburu-buru.</div>
+            <div class="s-tag tg">Profil 100% lengkap = kepercayaan algoritma lebih tinggi sejak awal</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nb">4</div>
+          <div>
+            <div class="s-title">Pakai perangkat dan IP yang konsisten</div>
+            <div class="s-desc">Facebook melacak device dan IP yang dipakai login. Kalau kamu login dari banyak perangkat berbeda dan IP berbeda dalam waktu singkat, sistem mendeteksinya sebagai aktivitas mencurigakan.<br><br>
+            Idealnya: pakai 1 HP utama + 1 laptop untuk kelola Page. Kalau harus pakai banyak perangkat, aktifkan login alert dan verifikasi setiap login baru agar tidak dianggap akun yang di-hack.</div>
+            <div class="s-tag ty">Konsistensi perangkat = tidak ada flag "suspicious login"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FB BAB 2 -->
+    <div class="ch-panel" id="fb-2">
+      <div class="chapter-title">Bab 2 — Warming Up Fanpage (Wajib dilakukan)</div>
+      <div class="chapter-sub">Fase paling krusial yang menentukan apakah Page kamu akan bertahan atau cepat di-restrict.</div>
+
+      <div class="tip t-y"><b>Kenapa warming up penting?</b> Algoritma Facebook menilai Page baru berdasarkan pola aktivitas di hari-hari awal. Page yang langsung agresif posting banyak link = langsung masuk daftar suspect spam. Page yang tumbuh organik dan bertahap = dipercaya dan diberi distribusi lebih luas.</div>
+
+      <div class="sched">
+        <div class="sched-head">Phase timeline warming up</div>
+        <div class="sched-row">
+          <div class="sched-period">📅 Minggu 1 — Bangun kebiasaan</div>
+          <div class="sched-action">Post 1–2 konten per hari TANPA link apapun. Cukup foto, video pendek, atau teks yang relate dengan niche. Tujuan: kasih sinyal ke Facebook bahwa Page ini aktif dan kontennya mendapat engagement.</div>
+          <div class="sched-result">Target: 100–500 like organik, engagement rate tinggi</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-period">📅 Minggu 2 — Mulai engagement</div>
+          <div class="sched-action">Tambah 1–2 post per hari. Mulai balas semua komentar dalam 1 jam pertama. Buat 1 post yang mengajak interaksi (poll, pertanyaan, "tag teman yang perlu lihat ini"). Masih belum ada link eksternal.</div>
+          <div class="sched-result">Target: tingkat respons admin 90%+, engagement meningkat</div>
+        </div>
+        <div class="sched-row hl">
+          <div class="sched-period">📅 Minggu 3 — Mulai link internal dulu</div>
+          <div class="sched-action">Baru boleh mulai masukkan link — tapi link ke Facebook sendiri dulu (link ke post lain di Page, atau link ke video YouTube publik yang relate). Belum saatnya link eksternal/bicolink. Rasio 80% konten tanpa link, 20% dengan link internal.</div>
+          <div class="sched-result">Target: Page sudah punya riwayat posting yang bagus</div>
+        </div>
+        <div class="sched-row hl">
+          <div class="sched-period">📅 Minggu 4+ — Mulai link eksternal bertahap</div>
+          <div class="sched-action">Baru masukkan link eksternal (Linktree, website, atau bicolink) secara bertahap. Mulai 1 link per hari, di caption yang kontennya memang worth diklik. Pantau apakah ada notifikasi restricted atau reach yang tiba-tiba turun drastis.</div>
+          <div class="sched-result">Target: link tidak dianggap spam, reach stabil atau naik</div>
+        </div>
+      </div>
+
+      <div class="tip t-g"><b>Tanda warming up berhasil:</b> Reach post konsisten naik dari hari ke hari. Setiap post mendapat engagement dalam 10 menit pertama. Tidak ada notifikasi "your post is reaching fewer people" yang mengindikasikan distribusi dibatasi algoritma.</div>
+    </div>
+
+    <!-- FB BAB 3 -->
+    <div class="ch-panel" id="fb-3">
+      <div class="chapter-title">Bab 3 — Jenis Konten yang Aman vs yang Memicu Ban</div>
+      <div class="chapter-sub">Memahami batas Facebook adalah kunci untuk tetap aktif jangka panjang.</div>
+
+      <div class="dd">
+        <div class="d-ok">
+          <div class="dd-title">✅ AMAN — Tidak akan di-restrict</div>
+          <div class="dd-item">
+            ✓ Konten lifestyle dan entertainment<br>
+            ✓ Tips dan tutorial<br>
+            ✓ Meme dan humor yang tidak vulgar<br>
+            ✓ Foto atau video yang teaser (tidak eksplisit)<br>
+            ✓ Poll dan konten interaktif<br>
+            ✓ Link ke website atau Linktree sendiri<br>
+            ✓ Link ke YouTube atau konten resmi<br>
+            ✓ Caption yang informatif dan natural<br>
+            ✓ Hashtag yang relevan (5–10 maks)<br>
+            ✓ Konten original (tidak repost mentah)
+          </div>
+        </div>
+        <div class="d-no">
+          <div class="dd-title">🚫 BAHAYA — Bisa langsung restrict/ban</div>
+          <div class="dd-item">
+            ✗ Konten nudity atau setengah telanjang<br>
+            ✗ Link shortlink yang terkenal spam<br>
+            ✗ Caption yang terlalu "sales-y" / iklan<br>
+            ✗ Posting link yang sama di banyak tempat<br>
+            ✗ Terlalu banyak link per post (3+ link)<br>
+            ✗ Konten yang sudah pernah di-report<br>
+            ✗ Kata-kata trigger: "klik di sini", "download gratis sekarang"<br>
+            ✗ Repost video dengan watermark platform lain<br>
+            ✗ Engagement bait: "like kalau setuju"<br>
+            ✗ Membeli like/followers fake
+          </div>
+        </div>
+      </div>
+
+      <div class="tip t-r"><b>Tentang link bicolink di Facebook:</b> Link bicolink yang baru (domain yang belum dikenal Facebook) sering otomatis di-flag sebagai spam. Solusinya: gunakan bit.ly atau tinyurl sebagai perantara ATAU arahkan orang ke website/Linktree kamu dulu, baru dari sana ke bicolink. Facebook mengenal domain Linktree sebagai aman karena dipakai jutaan kreator.</div>
+    </div>
+
+    <!-- FB BAB 4 -->
+    <div class="ch-panel" id="fb-4">
+      <div class="chapter-title">Bab 4 — Memahami Algoritma Facebook untuk Fanpage</div>
+      <div class="chapter-sub">Algoritma menentukan siapa yang lihat kontenmu. Pahami ini = reach organik lebih tinggi tanpa bayar iklan.</div>
+
+      <div class="sec">Sinyal positif yang meningkatkan distribusi konten</div>
+      <div class="signals">
+        <div class="sig pos">
+          <div class="sig-icon">⏱️</div>
+          <div class="sig-label">Watch time tinggi</div>
+          <div class="sig-desc">Video yang ditonton >60% durasinya mendapat distribusi 2x lebih luas. Buat video yang engaging dari detik pertama.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">💬</div>
+          <div class="sig-label">Komentar dalam 10 menit</div>
+          <div class="sig-desc">Algoritma mengukur engagement di 10 menit pertama. Balas komentar pertama yang masuk untuk picu lebih banyak komentar.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">🔄</div>
+          <div class="sig-label">Share ke Stories/Feed</div>
+          <div class="sig-desc">Share adalah sinyal terkuat. 1 share = kontenmu dilihat oleh semua teman orang itu. Minta share secara eksplisit di caption.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">💾</div>
+          <div class="sig-label">Post di-save</div>
+          <div class="sig-desc">Save menandakan konten sangat berharga. "Save post ini biar tidak lupa" di caption meningkatkan save rate.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">📉</div>
+          <div class="sig-label">Scroll tanpa interaksi</div>
+          <div class="sig-desc">Orang yang lihat post tapi langsung scroll = sinyal negatif. Konten harus bikin orang berhenti di detik pertama.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">🙈</div>
+          <div class="sig-label">Hide post / unfollow</div>
+          <div class="sig-desc">Jika banyak yang hide atau unfollow setelah lihat post kamu, reach langsung dipotong drastis oleh algoritma.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">🚩</div>
+          <div class="sig-label">Report konten</div>
+          <div class="sig-desc">Laporan dari user langsung menarik perhatian review manual dari tim Facebook. Satu laporan cukup untuk trigger review.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">🔗</div>
+          <div class="sig-label">Link eksternal banyak</div>
+          <div class="sig-desc">Facebook tidak suka post yang "membawa orang keluar". Post dengan banyak link eksternal dapat distribusi lebih rendah.</div>
+        </div>
+      </div>
+
+      <div class="tip t-b"><b>Formula konten yang disukai algoritma Facebook 2026:</b><br>
+      Hook kuat di 3 detik pertama + konten yang bikin orang selesai nonton + satu CTA natural di akhir. Reels yang selesai ditonton dan di-share mendapat boost distribusi otomatis oleh Facebook ke audience yang mirip (lookalike) dengan yang sudah engage.</div>
+    </div>
+
+    <!-- FB BAB 5 -->
+    <div class="ch-panel" id="fb-5">
+      <div class="chapter-title">Bab 5 — Strategi Growth Fanpage Organik</div>
+      <div class="chapter-sub">Tumbuh tanpa iklan berbayar, tanpa fake followers, tanpa risiko ban.</div>
+
+      <div class="phase-grid">
+        <div class="phase p1">
+          <div class="phase-period">Bulan 1 — Fondasi</div>
+          <div class="phase-title">0 → 1.000 followers</div>
+          <div class="phase-items">
+            • Post 2x/hari konsisten<br>
+            • Share ke grup yang relevan<br>
+            • Minta teman/keluarga follow<br>
+            • Balas semua komentar<br>
+            • 0 paid promotion
+          </div>
+        </div>
+        <div class="phase p2">
+          <div class="phase-period">Bulan 2–3 — Momentum</div>
+          <div class="phase-title">1.000 → 5.000 followers</div>
+          <div class="phase-items">
+            • Upload Reels 3x/hari<br>
+            • Kolaborasi Page lain (saling share)<br>
+            • Mulai masukkan link di caption<br>
+            • Buat konten yang shareable<br>
+            • Analitik: double down yang viral
+          </div>
+        </div>
+        <div class="phase p3">
+          <div class="phase-period">Bulan 4–6 — Scale</div>
+          <div class="phase-title">5.000 → 20.000 followers</div>
+          <div class="phase-items">
+            • Jadwalkan posting seminggu sekali<br>
+            • Series konten yang bikin orang balik<br>
+            • Engage aktif di Page lain sebagai Page<br>
+            • Cross-promote ke Instagram<br>
+            • Mulai bisa apply monetisasi FB
+          </div>
+        </div>
+        <div class="phase active p4">
+          <div class="phase-period">Bulan 6+ — Monetisasi</div>
+          <div class="phase-title">20.000+ followers</div>
+          <div class="phase-items">
+            • FB Content Monetization aktif<br>
+            • Triple income: FB ads + bicolink + CPA<br>
+            • Bisa boost post murah ($1–5)<br>
+            • Bangun email list dari audience<br>
+            • Duplikasi Page ke niche baru
+          </div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn ng">💡</div>
+          <div>
+            <div class="s-title">Cara paling cepat dapat followers organik — "Viral Share Strategy"</div>
+            <div class="s-desc">Buat 1 konten per minggu yang dirancang khusus untuk di-share: konten yang sangat relatable, mengejutkan, atau berguna sampai orang tidak bisa tidak share ke teman. Di akhir konten ini tulis "Share ke teman yang perlu lihat ini."<br><br>
+            1 post yang di-share 1.000 kali = 1.000 orang baru yang lihat Page kamu tanpa kamu keluar uang sepeserpun. Track post mana yang paling banyak di-share lewat Facebook Insights → buat lebih banyak yang serupa.</div>
+            <div class="s-tag tg">1 viral share post per minggu = engine pertumbuhan gratis</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn ng">💡</div>
+          <div>
+            <div class="s-title">Post sebagai Page di kolom komentar Page besar</div>
+            <div class="s-desc">Di Facebook, kamu bisa switch persona dari akun pribadi ke Page kamu saat berkomentar. Pergi ke Page besar yang se-niche (100k+ followers), komentar sebagai Page kamu dengan pendapat yang menarik dan bernilai — bukan spam.<br><br>
+            Orang yang tertarik dengan komentar kamu akan klik nama Page kamu dan follow. Lakukan di 10–20 post besar per hari. Tidak ada batasnya dan tidak melanggar TOS selama komentarnya genuine.</div>
+            <div class="s-tag tg">Komentar bagus di Page besar = ratusan orang klik ke Page kamu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FB BAB 6 -->
+    <div class="ch-panel" id="fb-6">
+      <div class="chapter-title">Bab 6 — Recovery ketika Kena Restrict atau Ban</div>
+      <div class="chapter-sub">Jangan panik. Ada langkah-langkah yang bisa dilakukan untuk recover akun.</div>
+
+      <div class="rec-card urgent">
+        <div class="rec-head"><span class="rec-icon">🚨</span><div class="rec-title">Post dihapus / konten di-restrict</div></div>
+        <div class="rec-body">Ini level paling ringan. Artinya hanya konten tertentu yang melanggar. Jangan langsung upload konten yang mirip — Facebook akan lebih ketat untuk post berikutnya. Tunggu 24–48 jam, lalu mulai posting konten yang lebih "aman" dulu untuk rebuild trust score Page. Bisa ajukan banding di Support Inbox kalau merasa tidak melanggar.</div>
+      </div>
+
+      <div class="rec-card urgent">
+        <div class="rec-head"><span class="rec-icon">⚠️</span><div class="rec-title">Page kena "reduced distribution" (reach turun drastis)</div></div>
+        <div class="rec-body">Ini artinya Facebook membatasi jangkauan kontenmu tapi tidak menghapus Page. Biasanya terjadi setelah banyak hide post atau beberapa konten di-flag. Solusi: stop posting link eksternal selama 1–2 minggu, fokus posting konten value murni dengan engagement tinggi. Algoritma akan "reset" score kamu setelah melihat pola konten yang lebih baik.</div>
+      </div>
+
+      <div class="rec-card ok">
+        <div class="rec-head"><span class="rec-icon">🔒</span><div class="rec-title">Akun pribadi di-lock / diminta verifikasi ID</div></div>
+        <div class="rec-body">Ini sering terjadi pada akun baru yang tumbuh terlalu cepat. Facebook minta konfirmasi identitas. Upload KTP atau foto selfie sesuai instruksi. Kalau tidak mau upload ID asli (karena akun dengan nama palsu), bisa coba appeal bahwa kamu memang kreator konten. Kalau tidak berhasil, siapkan akun cadangan dari awal sebagai antisipasi.</div>
+      </div>
+
+      <div class="rec-card ok">
+        <div class="rec-head"><span class="rec-icon">💀</span><div class="rec-title">Page di-unpublish / banned permanen</div></div>
+        <div class="rec-body">Ajukan banding maksimal 1x di facebook.com/help/contact/1753628348077622. Kalau tidak berhasil dalam 30 hari, kemungkinan besar permanen. Langkah selanjutnya: buat Page baru dengan nama berbeda, konten lebih hati-hati, dan jangan langsung ulangi kesalahan yang sama. Semua follower yang sudah di-invite ke grup atau punya email list masih bisa diselamatkan.</div>
+      </div>
+
+      <div class="tip t-g"><b>Antisipasi terbaik sebelum kena ban:</b> Dari hari pertama, secara konsisten arahkan follower FB ke Twitter, Telegram, atau email list. Kalau Page FB sampai banned, kamu tidak kehilangan semua audience — mereka sudah ada di platform lain yang kamu kelola. Jangan taruh semua telur di satu keranjang.</div>
+    </div>
+  </div>
+
+  <!-- =================== TWITTER =================== -->
+  <div class="plat-section" id="s-tw">
+    <div class="ch-tabs">
+      <button class="ch-tab tw-on" onclick="showCh('tw','1',this)">1. Buat Akun</button>
+      <button class="ch-tab" onclick="showCh('tw','2',this)">2. Warming Up</button>
+      <button class="ch-tab" onclick="showCh('tw','3',this)">3. Konten Aman</button>
+      <button class="ch-tab" onclick="showCh('tw','4',this)">4. Algoritma X</button>
+      <button class="ch-tab" onclick="showCh('tw','5',this)">5. Growth</button>
+      <button class="ch-tab" onclick="showCh('tw','6',this)">6. Shadowban</button>
+      <button class="ch-tab" onclick="showCh('tw','7',this)">7. Recovery</button>
+    </div>
+
+    <!-- TW BAB 1 -->
+    <div class="ch-panel on" id="tw-1">
+      <div class="chapter-title">Bab 1 — Membuat Akun Twitter/X yang Benar</div>
+      <div class="chapter-sub">Fondasi yang kuat = akun lebih tahan lama. Jangan terburu-buru.</div>
+
+      <div class="tip t-tw"><b>Perbedaan utama Twitter vs Facebook:</b> Twitter jauh lebih toleran terhadap konten, tapi jauh lebih ketat terhadap perilaku akun yang dianggap spam atau manipulasi. Yang bikin banned di Twitter bukan kontennya — tapi pola perilaku akun (follow/unfollow massal, tweet identik, automasi berlebihan).</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn nt">1</div>
+          <div>
+            <div class="s-title">Daftar dengan email baru — satu email per akun</div>
+            <div class="s-desc">Buat email baru di Gmail atau Protonmail khusus untuk akun Twitter ini. Twitter menggunakan email sebagai identifier utama — kalau satu email sudah pernah kena suspend, jangan dipakai lagi untuk akun baru.<br><br>
+            Saat daftar, pilih "Use email instead" untuk lebih privat. Isi nama, username, dan tanggal lahir (18+). Verifikasi email segera setelah daftar.</div>
+            <div class="s-tag ttw">1 email baru = 1 identitas bersih yang belum punya riwayat suspend</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nt">2</div>
+          <div>
+            <div class="s-title">Pilih username yang tepat sejak awal</div>
+            <div class="s-desc">Username di Twitter tidak bisa diubah terlalu sering tanpa mempengaruhi algoritma. Pilih username yang:<br>
+            ✓ Pendek (6–12 karakter ideal)<br>
+            ✓ Mudah diingat dan disebut di platform lain<br>
+            ✓ Relate dengan niche tapi tidak terlalu eksplisit<br>
+            ✓ Tidak menggunakan kata yang bisa trigger filter otomatis<br><br>
+            Contoh: @packindoid, @koleksiexclusive, @updateharian18</div>
+            <div class="s-tag tg">Username = URL permanen yang kamu sebut di semua platform</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nt">3</div>
+          <div>
+            <div class="s-title">Aktifkan pengaturan konten sensitif sebelum posting pertama</div>
+            <div class="s-desc">Ini wajib untuk adult content. Dua setting yang harus diaktifkan:<br><br>
+            <b style="color:var(--text)">Setting 1:</b> Settings → Privacy and Safety → Your Tweets → ✓ Mark media you tweet as sensitive<br><br>
+            <b style="color:var(--text)">Setting 2:</b> Settings → Privacy and Safety → Content you see → ✓ Display media that may contain sensitive content<br><br>
+            Tanpa setting 1, setiap media yang kamu upload akan diblur untuk semua orang dan kamu tidak bisa mengklaim konten tersebut sebagai sensitif — artinya rentan dilaporkan.</div>
+            <div class="s-tag tr">Wajib aktif sebelum posting pertama — ini tidak bisa di-undo retroaktif</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nt">4</div>
+          <div>
+            <div class="s-title">Tambahkan nomor HP untuk keamanan akun</div>
+            <div class="s-desc">Settings → Security → Two-factor authentication → pilih Authentication app atau SMS. Akun dengan 2FA aktif jauh lebih kecil kemungkinannya di-suspend karena dianggap lebih genuine dan dikelola oleh manusia nyata.<br><br>
+            Gunakan nomor HP yang berbeda dari yang dipakai untuk daftar. Simpan backup codes yang diberikan Twitter — ini penting kalau kamu kehilangan akses ke 2FA.</div>
+            <div class="s-tag tg">2FA = proteksi ganda + sinyal positif ke sistem Twitter bahwa akun ini genuine</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TW BAB 2 -->
+    <div class="ch-panel" id="tw-2">
+      <div class="chapter-title">Bab 2 — Warming Up Akun Twitter Baru</div>
+      <div class="chapter-sub">Twitter sistem punya "trust score" untuk setiap akun. Skor dimulai dari 0 dan harus dibangun secara organik.</div>
+
+      <div class="tip t-y"><b>Twitter Trust Score:</b> Sistem internal Twitter yang menentukan seberapa luas tweet kamu didistribusikan dan seberapa cepat akun kamu kena restrict kalau ada laporan. Akun baru punya skor rendah dan perlu dibangun selama 2–4 minggu pertama.</div>
+
+      <div class="sched">
+        <div class="sched-head">Timeline warming up Twitter yang benar</div>
+        <div class="sched-row">
+          <div class="sched-period">Hari 1–3 — Setup & observasi</div>
+          <div class="sched-action">Lengkapi profil (bio, foto, header, link). Follow 20–30 akun yang relevan dengan niche. Jangan posting apapun dulu. Biarkan akun "bernafas" dan sistem Twitter mengenal pola perangkatmu.</div>
+          <div class="sched-result">Tujuan: akun terlihat genuine, bukan bot yang baru dibuat</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-period">Hari 4–7 — Engagement dulu</div>
+          <div class="sched-action">Mulai like dan retweet konten dari akun lain (10–15 per hari). Reply ke 3–5 tweet dengan komentar yang thoughtful. Buat 1–2 tweet personal yang tidak ada linknya. Tujuan: bangun riwayat interaksi yang natural.</div>
+          <div class="sched-result">Tujuan: riwayat engagement yang terlihat manusiawi</div>
+        </div>
+        <div class="sched-row hl">
+          <div class="sched-period">Minggu 2 — Mulai posting konten</div>
+          <div class="sched-action">Posting 3–5 tweet per hari berisi konten (tanpa link eksternal dulu). Campuran: teks, gambar, quote tweet. Terus engage dengan akun lain setiap hari. Pantau apakah ada notifikasi "your account has been limited".</div>
+          <div class="sched-result">Tujuan: pola posting yang terlihat natural dan konsisten</div>
+        </div>
+        <div class="sched-row hl">
+          <div class="sched-period">Minggu 3–4 — Mulai link bicolink bertahap</div>
+          <div class="sched-action">Baru mulai masukkan link bicolink — 1–2 tweet per hari yang berisi link. Rasio: 3 tweet konten tanpa link, 1 tweet dengan link. Monitor engagement rate. Kalau tiba-tiba reach turun drastis, kurangi frekuensi link.</div>
+          <div class="sched-result">Tujuan: link diterima sistem sebagai konten normal, bukan spam</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TW BAB 3 -->
+    <div class="ch-panel" id="tw-3">
+      <div class="chapter-title">Bab 3 — Konten yang Aman vs yang Memicu Suspend di Twitter</div>
+      <div class="chapter-sub">Twitter lebih liberal dari Facebook, tapi ada batasnya. Ini garis yang tidak boleh dilanggar.</div>
+
+      <div class="dd">
+        <div class="d-ok">
+          <div class="dd-title">✅ AMAN di Twitter</div>
+          <div class="dd-item">
+            ✓ Adult content consensual (dengan sensitive setting)<br>
+            ✓ Link di body tweet (bukan spam)<br>
+            ✓ Konten teaser + link bicolink<br>
+            ✓ Thread dengan beberapa tweet<br>
+            ✓ Quote tweet dengan komentar tambahan<br>
+            ✓ Poll dan konten interaktif<br>
+            ✓ Gambar/video dengan watermark sendiri<br>
+            ✓ Hashtag (maksimal 3–5 yang relevan)<br>
+            ✓ Mention akun lain yang relevan<br>
+            ✓ Multi-akun (dengan konten berbeda)
+          </div>
+        </div>
+        <div class="d-no">
+          <div class="dd-title">🚫 BAHAYA di Twitter</div>
+          <div class="dd-item">
+            ✗ CSAM atau konten yang melibatkan minor<br>
+            ✗ Tweet identik di banyak akun (coordinated)<br>
+            ✗ Follow/unfollow massal (100+ per jam)<br>
+            ✗ Auto-reply atau DM massal dengan bot<br>
+            ✗ Hashtag yang tidak relevan (hashtag stuffing)<br>
+            ✗ Membeli follower atau engagement fake<br>
+            ✗ Mention massal ke akun yang tidak kenal kamu<br>
+            ✗ Reply spam di trending topic tidak relevan<br>
+            ✗ Gambar tanpa izin dari kreator lain<br>
+            ✗ Akun yang HANYA posting link tanpa konten lain
+          </div>
+        </div>
+      </div>
+
+      <div class="tip t-r"><b>Rule paling penting Twitter:</b> Akun yang terlihat seperti bot = banned. Yang membuat akun terlihat seperti bot bukan kontennya — tapi polanya. Kalau 100% tweet kamu adalah link bicolink tanpa ada reply, retweet, atau tweet biasa di antaranya = sistem akan flag sebagai spam bot. Rasio ideal: 60% konten biasa, 40% tweet dengan link.</div>
+    </div>
+
+    <!-- TW BAB 4 -->
+    <div class="ch-panel" id="tw-4">
+      <div class="chapter-title">Bab 4 — Memahami Algoritma Twitter/X 2026</div>
+      <div class="chapter-sub">Twitter menggunakan For You Page (FYP) untuk distribusi. Pahami cara kerjanya untuk reach maksimal.</div>
+
+      <div class="sec">Yang meningkatkan distribusi tweet di For You Page</div>
+      <div class="signals">
+        <div class="sig pos">
+          <div class="sig-icon">💬</div>
+          <div class="sig-label">Replies yang banyak</div>
+          <div class="sig-desc">Banyak balasan = topik penting dan kontroversial. Algoritma suka ini. Buat tweet yang memancing diskusi.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">🔄</div>
+          <div class="sig-label">Quote tweet</div>
+          <div class="sig-desc">Quote tweet lebih bernilai dari retweet biasa karena menambah konten baru. Dorong orang untuk quote tweet bukan sekedar RT.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">🔖</div>
+          <div class="sig-label">Bookmark (save)</div>
+          <div class="sig-desc">Orang yang bookmark tweet kamu = mereka anggap kontenmu sangat berharga. Signal terkuat untuk distribusi FYP.</div>
+        </div>
+        <div class="sig pos">
+          <div class="sig-icon">⏱️</div>
+          <div class="sig-label">Engagement dalam 30 menit</div>
+          <div class="sig-desc">Twitter mengukur engagement dalam 30 menit pertama untuk menentukan distribusi. Post di jam aktif audience.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">📤</div>
+          <div class="sig-label">Link keluar di tweet</div>
+          <div class="sig-desc">Twitter algoritma memberi distribusi lebih rendah untuk tweet yang "membawa orang keluar" dari platform. Masukkan link di reply pertama, bukan di tweet utama.</div>
+        </div>
+        <div class="sig neg">
+          <div class="sig-icon">🤖</div>
+          <div class="sig-label">Pola posting sangat teratur</div>
+          <div class="sig-desc">Tweet tiap jam tepat = terlihat seperti bot. Variasikan waktu posting — 10:47, 13:23, 19:08 lebih natural dari 10:00, 13:00, 19:00.</div>
+        </div>
+      </div>
+
+      <div class="tip t-tw"><b>Trick distribusi maksimal:</b> Taruh link bicolink di reply pertama tweet kamu, bukan di tweet utama. Tweet utama berisi konten menarik (media + hook teks) tanpa link → dapat distribusi FYP lebih luas → orang yang tertarik klik tweet → lihat reply pertama dengan link bicolink → klik. Cara ini terbukti meningkatkan distribusi tweet secara signifikan.</div>
+    </div>
+
+    <!-- TW BAB 5 -->
+    <div class="ch-panel" id="tw-5">
+      <div class="chapter-title">Bab 5 — Strategi Growth Organik Twitter</div>
+      <div class="chapter-sub">0 ke ribuan follower tanpa beli followers, tanpa bot, tanpa risiko banned.</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn ng">⚡</div>
+          <div>
+            <div class="s-title">Teknik "Reply Guy" — cara tercepat dapat follower baru</div>
+            <div class="s-desc">Setiap hari, cari 5–10 tweet viral yang relevan dengan niche kamu (100k+ likes atau yang sedang trending). Reply dengan komentar yang menarik, lucu, atau informatif — bukan "bagus" atau "setuju". Komentar yang mendapat banyak likes di thread viral akan dilihat ribuan orang, dan banyak yang akan klik profil kamu lalu follow.<br><br>
+            Ini cara organik paling cepat dan tidak melanggar TOS apapun.</div>
+            <div class="s-tag ttw">1 komentar viral di thread besar = ratusan follower baru dalam 24 jam</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn ng">⚡</div>
+          <div>
+            <div class="s-title">Posting di jam prime time audience Indo</div>
+            <div class="s-desc">Berdasarkan data Twitter Analytics untuk audience Indonesia:<br>
+            ✓ 11:30–13:30 WIB — jam makan siang, traffic tinggi<br>
+            ✓ 19:00–22:00 WIB — prime time malam, engagement tertinggi<br>
+            ✓ Jumat dan Sabtu malam — 40% lebih tinggi dari hari kerja<br><br>
+            Posting di luar jam ini = tweet dilihat lebih sedikit orang karena bersaing dengan lebih sedikit konten tapi audience juga lebih sedikit online.</div>
+            <div class="s-tag tg">Post di jam prime = engagement 2–3x lebih tinggi</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn ng">⚡</div>
+          <div>
+            <div class="s-title">Buat "series" konten yang bikin orang follow untuk lanjutannya</div>
+            <div class="s-desc">Contoh: "Pack #1 dari 7 pack yang akan gw upload minggu ini." Orang yang mau pack 2–7 harus follow supaya tidak ketinggalan. Ini cara paling efektif untuk konversi dari "orang yang lihat tweet" ke "follower" karena ada alasan konkret untuk follow.<br><br>
+            Lakukan ini 1–2 kali per bulan dengan konten yang memang worth di-follow untuk.</div>
+            <div class="s-tag tg">Series konten = alasan konkret untuk follow bukan hanya "sekedar suka konten"</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn ng">⚡</div>
+          <div>
+            <div class="s-title">Kolaborasi dengan akun niche yang sama</div>
+            <div class="s-desc">DM 5–10 akun dengan follower 1.000–10.000 yang satu niche: "Mau saling RT untuk boost masing-masing? Kamu RT konten gw hari ini, gw RT konten kamu besok." Kebanyakan mau karena win-win.<br><br>
+            Pastikan akun yang diajak kolaborasi punya engagement rate yang bagus (like/follower ratio), bukan akun dengan followers banyak tapi likenya sedikit — itu tanda followers fake.</div>
+            <div class="s-tag tg">1 kolaborasi RT = langsung terekspos ke ribuan follower baru</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TW BAB 6 -->
+    <div class="ch-panel" id="tw-6">
+      <div class="chapter-title">Bab 6 — Mendeteksi dan Mengatasi Shadowban Twitter</div>
+      <div class="chapter-sub">Shadowban adalah kondisi di mana akunmu masih aktif tapi tweet tidak muncul di FYP, reply tersembunyi, atau hashtag tidak bekerja.</div>
+
+      <div class="tip t-r"><b>Apa itu shadowban?</b> Twitter tidak pernah mengakui shadowban secara resmi, tapi creator sering merasakannya: tweet tiba-tiba tidak muncul di pencarian, reply tersembunyi, atau reach turun 80%+ tanpa alasan jelas. Ini biasanya terjadi setelah perilaku yang dianggap spam oleh sistem.</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="sn nr">🔍</div>
+          <div>
+            <div class="s-title">Cara cek apakah kamu kena shadowban</div>
+            <div class="s-desc">1. Buka shadowban.eu atau hisubscript.com/shadowban dan masukkan username Twitter kamu<br>
+            2. Logout dari Twitter → cari username kamu di search bar → kalau tweet kamu tidak muncul padahal harusnya ada = shadowban<br>
+            3. Minta teman (yang tidak follow kamu) search username kamu → kalau tidak muncul = kena search suggestion ban<br><br>
+            Ada beberapa jenis shadowban: search ban, reply ban, follower ban, dan trend ban — masing-masing dengan gejala berbeda.</div>
+            <div class="s-tag tr">Cek rutin seminggu sekali di shadowban.eu</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn nr">🔧</div>
+          <div>
+            <div class="s-title">Cara mengatasi shadowban</div>
+            <div class="s-desc">
+            <b style="color:var(--text)">Langkah 1:</b> Stop total semua aktivitas link dan promosi selama 3–7 hari<br>
+            <b style="color:var(--text)">Langkah 2:</b> Hanya posting konten biasa (teks atau gambar tanpa link) dan engage organik dengan reply dan like<br>
+            <b style="color:var(--text)">Langkah 3:</b> Hapus tweet-tweet yang berisi pola yang kemungkinan menyebabkan shadowban (terlalu banyak link, hashtag spam, dll)<br>
+            <b style="color:var(--text)">Langkah 4:</b> Setelah 7 hari, mulai posting link kembali tapi dengan frekuensi yang lebih rendah<br><br>
+            Shadowban biasanya hilang sendiri dalam 7–14 hari kalau kamu stop perilaku yang menyebabkannya.</div>
+            <div class="s-tag ty">7 hari "detox" aktivitas spam biasanya cukup untuk resolve shadowban</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="sn ng">🛡️</div>
+          <div>
+            <div class="s-title">Cara mencegah shadowban sejak awal</div>
+            <div class="s-desc">
+            ✓ Rasio tweet dengan link : tanpa link = maksimal 40:60<br>
+            ✓ Tidak pakai hashtag yang sama berulang di setiap tweet<br>
+            ✓ Jangan follow lebih dari 50 akun baru per hari<br>
+            ✓ Variasikan waktu posting (tidak selalu jam bulat)<br>
+            ✓ Engage secara nyata (like, reply) setiap hari<br>
+            ✓ Jangan copy-paste tweet yang sama persis berkali-kali<br>
+            ✓ Hindari DM massal ke orang yang tidak kenal kamu</div>
+            <div class="s-tag tg">Perilaku natural = tidak kena shadowban</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TW BAB 7 -->
+    <div class="ch-panel" id="tw-7">
+      <div class="chapter-title">Bab 7 — Recovery ketika Kena Suspend di Twitter</div>
+      <div class="chapter-sub">Suspend berbeda dari shadowban — akun dikunci dan tidak bisa diakses. Ini langkah pemulihannya.</div>
+
+      <div class="rec-card urgent">
+        <div class="rec-head"><span class="rec-icon">⚠️</span><div class="rec-title">Temporary lock (akun dikunci, minta verifikasi)</div></div>
+        <div class="rec-body">Twitter sering lock akun baru yang tumbuh cepat sebagai langkah keamanan otomatis. Ini bukan suspend permanen. Selesaikan verifikasi yang diminta (biasanya konfirmasi nomor HP atau email) → akun langsung kembali normal. Kalau diminta nomor HP dan kamu tidak mau pakai nomor asli, bisa pakai nomor virtual seperti TextNow atau Google Voice.</div>
+      </div>
+
+      <div class="rec-card urgent">
+        <div class="rec-head"><span class="rec-icon">🔴</span><div class="rec-title">Suspended karena spam / platform manipulation</div></div>
+        <div class="rec-body">Ajukan appeal di help.twitter.com/forms/account-access. Isi formulir dengan jujur — jelaskan bahwa kamu adalah kreator konten dan aktivitasmu tidak bermaksud spam. Twitter kadang restore akun setelah appeal, terutama untuk akun yang baru pertama kali kena suspend. Proses bisa 3–14 hari. Kalau ditolak, bisa coba appeal sekali lagi maksimal.</div>
+      </div>
+
+      <div class="rec-card ok">
+        <div class="rec-head"><span class="rec-icon">🆕</span><div class="rec-title">Buat akun baru setelah suspend permanen</div></div>
+        <div class="rec-body">Kalau appeal ditolak, buat akun baru dengan email baru, nomor baru, dan — ini penting — <b>ganti perangkat atau pakai VPN/browser baru</b>. Twitter melacak device fingerprint dan IP. Kalau akun baru dibuat dari perangkat dan IP yang sama dengan akun yang banned, sistem bisa langsung flag akun baru tersebut.<br><br>
+        Ini juga alasan kenapa dari awal kamu harus selalu arahkan audience ke platform lain (Linktree, website, Twitter mirror) — kalau 1 akun banned, kamu punya cadangan.</div>
+      </div>
+
+      <div class="tip t-g"><b>Strategi terbaik untuk tidak kehilangan audience saat banned:</b><br>
+      Dari hari pertama, di pinned tweet dan bio, selalu mention akun Twitter backup kamu (@username2) dan Linktree. Kalau akun utama kena suspend, langsung announce di Linktree dan Facebook bahwa kamu pindah ke @username2. Audience yang sudah tahu backup langsung follow tanpa kehilangan koneksi.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPlat(id, btn, cls){
+  document.querySelectorAll('.plat-section').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.plat-btn').forEach(b=>b.classList.remove('fb-on','tw-on'));
+  document.getElementById('s-'+id).classList.add('on');
+  btn.classList.add(cls);
+}
+function showCh(plat, num, btn){
+  document.querySelectorAll('#s-'+plat+' .ch-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#s-'+plat+' .ch-tab').forEach(b=>b.classList.remove('fb-on','tw-on'));
+  document.getElementById(plat+'-'+num).classList.add('on');
+  const cls = plat==='fb'?'fb-on':'tw-on';
+  btn.classList.add(cls);
+}
+</script>
+<script>
+if (window.self === window.top) {
+  var hubBtn = document.createElement('a');
+  hubBtn.href = 'index.html';
+  hubBtn.innerText = '<- Menu Utama';
+  hubBtn.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;background:#14171f;color:#3b82f6;border:1px solid #2a3142;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.6);font-family:sans-serif;transition:0.2s;';
+  hubBtn.onmouseover = function() { hubBtn.style.background = '#1e2433'; };
+  hubBtn.onmouseout = function() { hubBtn.style.background = '#14171f'; };
+  document.body.appendChild(hubBtn);
+}
+</script>
+</body>
+</html>
